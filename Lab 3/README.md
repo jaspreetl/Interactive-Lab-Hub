@@ -87,6 +87,8 @@ You can also play audio files directly with `aplay filename`. Try typing `aplay 
 \*\***Write your own shell file to use your favorite of these TTS engines to have your Pi greet you by name.**\*\*
 (This shell file should be saved to your own repo for this lab.)
 See Lab 3/speech-scripts/hi_jaspreet.sh. 
+<img width="639" height="298" alt="Screenshot 2025-09-24 at 7 24 05 PM" src="https://github.com/user-attachments/assets/2a4a7e13-dd17-448e-afc6-50498613dddd" />
+
 
 ---
 Bonus: For the bonus section, I was able to run both commands and play them on my speaker. I did have to manually download the Lessac model configure it in the terminal. I used ChatGPT to help with this setup. 
@@ -133,6 +135,7 @@ python test_microphone.py -m en
 ```
 </details>
 
+<img width="294" height="485" alt="Screenshot 2025-09-24 at 7 36 12 PM" src="https://github.com/user-attachments/assets/2f7753a5-465a-4efe-b64c-62b5fb598bfc" />
 
 ---
 Bonus:
@@ -318,6 +321,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
