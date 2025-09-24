@@ -33,6 +33,7 @@ Option 2: On your your own GitHub repo, [create pull request](https://github.com
 </details>
 
 ## Part 1.
+<details>
 ### Setup 
 
 Activate your virtual environment
@@ -52,9 +53,10 @@ Next, run the setup script to install additional text-to-speech dependencies:
 ```
 (.venv)pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ ./setup.sh
 ```
+</details>
 
 ### Text to Speech 
-
+</detail>
 In this part of lab, we are going to start peeking into the world of audio on your Pi! 
 
 We will be using the microphone and speaker on your webcamera. In the directory is a folder called `speech-scripts` containing several shell scripts. `cd` to the folder and list out all the files by `ls`:
@@ -80,9 +82,11 @@ Now, you might wonder what exactly is a `.sh` file?
 Typically, a `.sh` file is a shell script which you can execute in a terminal. The example files we offer here are for you to figure out the ways to play with audio on your Pi!
 
 You can also play audio files directly with `aplay filename`. Try typing `aplay lookdave.wav`.
+</detail>
 
 \*\***Write your own shell file to use your favorite of these TTS engines to have your Pi greet you by name.**\*\*
 (This shell file should be saved to your own repo for this lab.)
+See Lab 3/speech-scripts/hi_jaspreet.sh. 
 
 ---
 Bonus:
