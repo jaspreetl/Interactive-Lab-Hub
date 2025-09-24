@@ -56,7 +56,7 @@ Next, run the setup script to install additional text-to-speech dependencies:
 </details>
 
 ### Text to Speech 
-</detail>
+</details>
 In this part of lab, we are going to start peeking into the world of audio on your Pi! 
 
 We will be using the microphone and speaker on your webcamera. In the directory is a folder called `speech-scripts` containing several shell scripts. `cd` to the folder and list out all the files by `ls`:
@@ -82,14 +82,15 @@ Now, you might wonder what exactly is a `.sh` file?
 Typically, a `.sh` file is a shell script which you can execute in a terminal. The example files we offer here are for you to figure out the ways to play with audio on your Pi!
 
 You can also play audio files directly with `aplay filename`. Try typing `aplay lookdave.wav`.
-</detail>
+</details>
 
 \*\***Write your own shell file to use your favorite of these TTS engines to have your Pi greet you by name.**\*\*
 (This shell file should be saved to your own repo for this lab.)
 See Lab 3/speech-scripts/hi_jaspreet.sh. 
 
 ---
-Bonus:
+Bonus: For the bonus section, I was able to run both commands and play them on my speaker. I did have to manually download the Lessac model configure it in the terminal. I used ChatGPT to help with this setup. 
+
 <details>
 [Piper](https://github.com/rhasspy/piper) is another fast neural based text to speech package for raspberry pi which can be installed easily through python with:
 ```
@@ -109,10 +110,10 @@ echo 'This sentence is spoken first. This sentence is synthesized while the firs
   aplay -r 22050 -f S16_LE -t raw -
 ```
 </details>
-For this bonus section, I was able to run both commands and play them on my speaker. I did have to manually download the Lessac model configure it in the terminal. I used ChatGPT to help with this setup. 
 
-### Speech to Text
+### Speech to Text. 
 
+<details>
 Next setup speech to text. We are using a speech recognition engine, [Vosk](https://alphacephei.com/vosk/), which is made by researchers at Carnegie Mellon University. Vosk is amazing because it is an offline speech recognition engine; that is, all the processing for the speech recognition is happening onboard the Raspberry Pi. 
 
 Make sure you're running in your virtual environment with the dependencies already installed:
@@ -130,6 +131,8 @@ You can use vosk with the microphone by running
 ```
 python test_microphone.py -m en
 ```
+</details>
+
 
 ---
 Bonus:
