@@ -90,6 +90,7 @@ See Lab 3/speech-scripts/hi_jaspreet.sh.
 
 ---
 Bonus:
+<details>
 [Piper](https://github.com/rhasspy/piper) is another fast neural based text to speech package for raspberry pi which can be installed easily through python with:
 ```
 pip install piper-tts
@@ -107,7 +108,9 @@ echo 'This sentence is spoken first. This sentence is synthesized while the firs
   piper --model en_US-lessac-medium --output-raw | \
   aplay -r 22050 -f S16_LE -t raw -
 ```
-  
+</details>
+For this bonus section, I was able to run both commands and play them on my speaker. I did have to manually download the Lessac model configure it in the terminal. I used ChatGPT to help with this setup. 
+
 ### Speech to Text
 
 Next setup speech to text. We are using a speech recognition engine, [Vosk](https://alphacephei.com/vosk/), which is made by researchers at Carnegie Mellon University. Vosk is amazing because it is an offline speech recognition engine; that is, all the processing for the speech recognition is happening onboard the Raspberry Pi. 
