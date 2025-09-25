@@ -233,8 +233,8 @@ answer = ask_ai("How should I greet users?")
 
 
 \*\***Try creating a simple voice interaction that combines speech recognition, Ollama processing, and text-to-speech output. Document what you built and how users responded to it.**\*\*
-
-
+See Lab 3/ollama/voice_interaction.py. 
+I built a voice assistant on a Raspberry Pi that uses Ollama to generate AI responses and espeak for text-to-speech output. Users found it engaging, but became frustrated when it failed to recognize their speech. The assistant took some time to response and conversations with it seemed abrupt. For this reason, I scaled back the funcationality of the script. The assistant was quicker to mention when it 'Didn't catch that', but I found it underperformed with voice recognition. 
 
 
 ### Serving Pages
