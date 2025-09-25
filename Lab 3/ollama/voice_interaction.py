@@ -3,11 +3,21 @@ import pyttsx3
 import requests
 
 engine = pyttsx3.init()
-engine.setProperty('rate', 150)  # speech speed
+engine.setProperty('rate', 150)
+
+voices = engine.getProperty('voices')
+voice_found = False
+for v in voices:
+    if 'en' in v.id: 
+        engine.setProperty('voice', v.id)
+        voice_found = True
+        break
+
+if not voice_found:
+    print("No English voice found, using default.")
 
 r = sr.Recognizer()
-
-mic = sr.Microphone(device_index=0)
+mic = sr.Microphone(device_index=2) 
 
 def ask_ai(question):
     response = requests.post(
@@ -17,6 +27,7 @@ def ask_ai(question):
     return response.json().get('response', 'No response')
 
 def speak(text):
+    print(f"Assistant: {text}")
     engine.say(text)
     engine.runAndWait()
 
@@ -30,11 +41,11 @@ while True:
         print(f"You said: {query}")
         if query.lower() in ["quit", "exit"]:
             print("Exiting...")
+            speak("Goodbye!")
             break
         answer = ask_ai(query)
-        print(f"Ollama: {answer}")
         speak(answer)
     except sr.UnknownValueError:
         print("Sorry, I didn't catch that.")
     except sr.RequestError as e:
-        print(f"Speech recognition error; {e}")
+        print(f"Speech recognition error: {e}")
