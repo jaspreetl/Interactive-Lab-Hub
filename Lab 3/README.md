@@ -163,7 +163,8 @@ python faster_whisper_try.py
 ```
 </details>
 \*\***Write your own shell file that verbally asks for a numerical based input (such as a phone number, zipcode, number of pets, etc) and records the answer the respondent provides.**\*\*
-See Lab 3/get_nums.sh. 
+See Lab 3/get_nums.sh. <img width="683" height="486" alt="Screenshot 2025-09-24 at 7 43 50 PM" src="https://github.com/user-attachments/assets/ed9fbca7-11a0-4dd9-9b11-9d3d31b5576b" />
+
 
 ### 🤖 NEW: AI-Powered Conversations with Ollama
 <details>
@@ -329,6 +330,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
