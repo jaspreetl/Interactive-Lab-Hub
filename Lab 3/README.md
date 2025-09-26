@@ -56,7 +56,7 @@ Next, run the setup script to install additional text-to-speech dependencies:
 </details>
 
 ### Text to Speech 
-</details>
+<details>
 In this part of lab, we are going to start peeking into the world of audio on your Pi! 
 
 We will be using the microphone and speaker on your webcamera. In the directory is a folder called `speech-scripts` containing several shell scripts. `cd` to the folder and list out all the files by `ls`:
@@ -330,6 +330,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
