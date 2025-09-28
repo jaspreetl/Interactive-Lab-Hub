@@ -261,10 +261,27 @@ From a remote browser on the same network, check to make sure your webserver is 
 Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.) 
 
 \*\***Post your storyboard and diagram here.**\*\*
+Verplank Diagram: ![image](https://github.com/user-attachments/assets/a676e1f1-bd00-4e3e-a81b-ae6820f4d2f3)
 
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
 
 \*\***Please describe and document your process.**\*\*
+
+Storyboards: 
+![image](https://github.com/user-attachments/assets/ec72df74-1ffa-4157-81e9-a3cd771159b9)  
+
+![image](https://github.com/user-attachments/assets/b7d871d5-e40f-48ab-9207-7c563c5eebd9)  
+
+![image](https://github.com/user-attachments/assets/1c386a16-c252-42ac-9a0f-a62ad8dd8d2c)  
+
+![image](https://github.com/user-attachments/assets/82f579c2-d168-4e0a-8715-d557b530a2bc)  
+
+![image](https://github.com/user-attachments/assets/d882c4b1-b284-47d0-ad05-72246979f4a2)  
+
+![image](https://github.com/user-attachments/assets/50e014e7-3bfe-4d6b-a8e5-627c7050db95)  
+
+![image](https://github.com/user-attachments/assets/eecb0a98-b744-473f-8229-95beea110a34)  
+
 
 ### Acting out the dialogue
 
@@ -330,6 +347,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
