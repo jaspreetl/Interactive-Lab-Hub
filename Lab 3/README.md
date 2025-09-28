@@ -299,6 +299,10 @@ Find a partner, and *without sharing the script with your partner* try out the d
 
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
 
+https://drive.google.com/file/d/1u_3OkhGrxARDf5sqwKVKEyVudCLVKsal/view?usp=drivesdk
+
+Acting out the dialogue did turn ouy as we imagined for the most part. We did find slight differences with what Nudge needed to add, delete and remind the user and at what times. During the acting, we added "Call Mom at 7pm" as a task, but forgot to remind the user despite adding it to the schedule. 
+
 ### Wizarding with the Pi (optional)
 In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
 
@@ -357,6 +361,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
