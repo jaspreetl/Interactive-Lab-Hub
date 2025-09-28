@@ -267,6 +267,16 @@ Write out what you imagine the dialogue to be. Use cards, post-its, or whatever 
 
 \*\***Please describe and document your process.**\*\*
 
+To create the interaction model for our speech-enabled device, Nudge, my partner and I began by brainstorming everyday situations where setting or checking reminders would feel natural. Using digital sticky notes as virtual idea cards, we captured and organized our thoughts into key categories:
+- Setting basic reminders
+- Checking existing reminders (including when none are scheduled)
+- Scheduling for the same day (requiring only a time)
+- Scheduling for a future day (requiring date and time)
+- Handling errors or unclear inputs
+- Managing overlapping reminders
+- End-of-day summaries (reviewing completed tasks and wrapping up)
+With these seven categories defined, we drafted storyboards for each, focusing on how a natural, conversational exchange might unfold between a user and the device.
+
 Storyboards: 
 ![image](https://github.com/user-attachments/assets/ec72df74-1ffa-4157-81e9-a3cd771159b9)  
 
@@ -347,6 +357,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
