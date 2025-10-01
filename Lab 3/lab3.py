@@ -194,7 +194,7 @@ def main():
     if command:
         command_lower = command.lower()
 
-        if "remind" in command_lower:
+        if "remind me" in command_lower:
             reminder = parse_reminder(command)
             reminders.append(reminder)
             save_reminders()
