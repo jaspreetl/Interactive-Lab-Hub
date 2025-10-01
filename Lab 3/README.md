@@ -1,8 +1,8 @@
 # Chatterboxes
-**NAMES OF COLLABORATORS HERE**
-[![Watch the video](https://user-images.githubusercontent.com/1128669/135009222-111fe522-e6ba-46ad-b6dc-d1633d21129c.png)](https://www.youtube.com/embed/Q8FWzLMobx0?start=19)
+**Jaspreet Lal (jl4536), Arya Prasad (ap2535)**
 
 <details>
+  [![Watch the video](https://user-images.githubusercontent.com/1128669/135009222-111fe522-e6ba-46ad-b6dc-d1633d21129c.png)](https://www.youtube.com/embed/Q8FWzLMobx0?start=19)
 In this lab, we want you to design interaction with a speech-enabled device--something that listens and talks to you. This device can do anything *but* control lights (since we already did that in Lab 1).  First, we want you first to storyboard what you imagine the conversational interaction to be like. Then, you will use wizarding techniques to elicit examples of what people might say, ask, or respond.  We then want you to use the examples collected from at least two other people to inform the redesign of the device.
 
 We will focus on **audio** as the main modality for interaction to start; these general techniques can be extended to **video**, **haptics** or other interactive mechanisms in the second part of the Lab.
@@ -56,7 +56,7 @@ Next, run the setup script to install additional text-to-speech dependencies:
 </details>
 
 ### Text to Speech 
-</details>
+<details>
 In this part of lab, we are going to start peeking into the world of audio on your Pi! 
 
 We will be using the microphone and speaker on your webcamera. In the directory is a folder called `speech-scripts` containing several shell scripts. `cd` to the folder and list out all the files by `ls`:
@@ -163,7 +163,8 @@ python faster_whisper_try.py
 ```
 </details>
 \*\***Write your own shell file that verbally asks for a numerical based input (such as a phone number, zipcode, number of pets, etc) and records the answer the respondent provides.**\*\*
-See Lab 3/get_nums.sh. 
+See Lab 3/get_nums.sh. <img width="683" height="486" alt="Screenshot 2025-09-24 at 7 43 50 PM" src="https://github.com/user-attachments/assets/ed9fbca7-11a0-4dd9-9b11-9d3d31b5576b" />
+
 
 ### 🤖 NEW: AI-Powered Conversations with Ollama
 <details>
@@ -260,16 +261,47 @@ From a remote browser on the same network, check to make sure your webserver is 
 Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.) 
 
 \*\***Post your storyboard and diagram here.**\*\*
+Verplank Diagram: ![image](https://github.com/user-attachments/assets/a676e1f1-bd00-4e3e-a81b-ae6820f4d2f3)
 
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
 
 \*\***Please describe and document your process.**\*\*
+
+To create the interaction model for our speech-enabled device, Nudge, my partner and I began by brainstorming everyday situations where setting or checking reminders would feel natural. Using digital sticky notes as virtual idea cards, we captured and organized our thoughts into key categories:
+- Setting basic reminders
+- Checking existing reminders (including when none are scheduled)
+- Scheduling for the same day (requiring only a time)
+- Scheduling for a future day (requiring date and time)
+- Handling errors or unclear inputs
+- Managing overlapping reminders
+- End-of-day summaries (reviewing completed tasks and wrapping up)
+With these seven categories defined, we drafted storyboards for each, focusing on how a natural, conversational exchange might unfold between a user and the device.
+
+Storyboards: 
+![image](https://github.com/user-attachments/assets/ec72df74-1ffa-4157-81e9-a3cd771159b9)  
+
+![image](https://github.com/user-attachments/assets/b7d871d5-e40f-48ab-9207-7c563c5eebd9)  
+
+![image](https://github.com/user-attachments/assets/1c386a16-c252-42ac-9a0f-a62ad8dd8d2c)  
+
+![image](https://github.com/user-attachments/assets/82f579c2-d168-4e0a-8715-d557b530a2bc)  
+
+![image](https://github.com/user-attachments/assets/d882c4b1-b284-47d0-ad05-72246979f4a2)  
+
+![image](https://github.com/user-attachments/assets/50e014e7-3bfe-4d6b-a8e5-627c7050db95)  
+
+![image](https://github.com/user-attachments/assets/eecb0a98-b744-473f-8229-95beea110a34)  
+
 
 ### Acting out the dialogue
 
 Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing.  Please record this interaction (for example, using Zoom's record feature).
 
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
+
+https://drive.google.com/file/d/1u_3OkhGrxARDf5sqwKVKEyVudCLVKsal/view?usp=drivesdk
+
+Acting out the dialogue did turn ouy as we imagined for the most part. We did find slight differences with what Nudge needed to add, delete and remind the user and at what times. During the acting, we added "Call Mom at 7pm" as a task, but forgot to remind the user despite adding it to the schedule. 
 
 ### Wizarding with the Pi (optional)
 In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
@@ -329,6 +361,12 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
+
+
+
+
+
 
 
 
