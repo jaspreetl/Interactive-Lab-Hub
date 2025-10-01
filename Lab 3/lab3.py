@@ -17,11 +17,13 @@ def load_reminders():
             reminders = json.load(f)
 
 def save_reminders():
+    global reminders
     with open(REMINDERS_FILE, "w") as f:
         json.dump(reminders, f, indent=2)
 
 def speak(message):
     os.system(f'espeak "{message}" 2>/dev/null')
+
 def parse_reminder(text):
     """
     Parse 'remind me to X at TIME' or 'by end of day'.
@@ -55,11 +57,9 @@ def parse_reminder(text):
 
     return reminder
 
-
 def mark_complete(command):
     """
-    Very simple matching: looks for a keyword after 'complete'
-    and updates the first matching reminder.
+    Matches after 'complete' and updates the first matching reminder.
     """
     global reminders
     task_match = command.replace("complete", "").strip().lower()
@@ -74,6 +74,24 @@ def mark_complete(command):
     speak("I couldn't find that task to complete.")
     return False
 
+def listen_and_transcribe():
+    model = vosk.Model(lang="en-us")
+    q = queue.Queue()
+
+    def callback(indata, frames, time, status):
+        if status:
+            print(status, flush=True)
+        q.put(bytes(indata))
+
+    with sd.RawInputStream(samplerate=16000, blocksize=8000, dtype='int16',
+                           channels=1, callback=callback):
+        rec = vosk.KaldiRecognizer(model, 16000)
+        speak("I am listening. What would you like me to do?")
+        while True:
+            data = q.get()
+            if rec.AcceptWaveform(data):
+                result = json.loads(rec.Result())
+                return result.get("text", "")
 
 def main():
     load_reminders()
@@ -92,3 +110,6 @@ def main():
         
         else:
             speak("Sorry, I only handle reminders right now.")
+
+if __name__ == "__main__":
+    main()
