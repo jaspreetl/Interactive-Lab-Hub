@@ -33,41 +33,51 @@ def normalize_time_words(text):
     for word, num in NUMBER_WORDS.items():
         text = re.sub(rf"\b{word}\b", str(num), text, flags=re.I)
     return text
-
 def parse_reminder(text):
     """
     Parse 'remind me to X at TIME' or 'by end of day'.
     Adds a default status 'to do'.
     """
+    original_text = text.lower()
+    text = normalize_time_words(original_text)  # convert 'seven' → '7'
+
     reminder = {
-        "task": text,
+        "task": None,
         "time": None,
         "status": "to do"
     }
 
-    text = normalize_time_words(text)  # convert 'seven' → '7'
+    # Default task text = everything after "remind me to"
+    task_text = re.sub(r"^.*remind me to\s*", "", original_text, flags=re.I).strip()
 
-    # Check for explicit 'end of day'
-    if "end of day" in text.lower():
+    # Remove "at TIME" or "by end of day" from task_text
+    task_text = re.sub(r"\bat\s+\d{1,2}(:\d{2})?\s?(am|pm)?", "", task_text, flags=re.I)
+    task_text = re.sub(r"\bby end of day\b", "", task_text, flags=re.I)
+    task_text = task_text.strip()
+
+    reminder["task"] = task_text if task_text else original_text
+
+    # Handle "end of day"
+    if "end of day" in original_text:
         today = datetime.date.today()
         reminder["time"] = str(datetime.datetime.combine(today, datetime.time(23, 59)))
         return reminder
 
-    # Regex for numeric time like '7pm' or '9:30 am'
-    time_match = re.search(r"(\d{1,2})(?:\:(\d{2}))?\s?(am|pm)?", text, re.I)
+    # Handle times
+    time_match = re.search(r"(\d{1,2})(?:\:(\d{2}))?\s?(am|pm)", text, re.I)
     if time_match:
         hour = int(time_match.group(1))
         minute = int(time_match.group(2)) if time_match.group(2) else 0
-        ampm = time_match.group(3)
-        if ampm:
-            if ampm.lower() == "pm" and hour != 12:
-                hour += 12
-            elif ampm.lower() == "am" and hour == 12:
-                hour = 0
+        ampm = time_match.group(3).lower()
+        if ampm == "pm" and hour != 12:
+            hour += 12
+        elif ampm == "am" and hour == 12:
+            hour = 0
         today = datetime.date.today()
         reminder["time"] = str(datetime.datetime.combine(today, datetime.time(hour, minute)))
 
     return reminder
+
 
 
 def mark_complete(command):
