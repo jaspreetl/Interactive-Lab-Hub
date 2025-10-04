@@ -235,6 +235,7 @@ answer = ask_ai("How should I greet users?")
 
 \*\***Try creating a simple voice interaction that combines speech recognition, Ollama processing, and text-to-speech output. Document what you built and how users responded to it.**\*\*
 See Lab 3/ollama/voice_interaction.py. 
+
 I built a voice assistant on a Raspberry Pi that uses Ollama to generate AI responses and espeak for text-to-speech output. Users found it engaging, but became frustrated when it failed to recognize their speech. The assistant took some time to response and conversations with it seemed abrupt. For this reason, I scaled back the funcationality of the script. The assistant was quicker to mention when it 'Didn't catch that', but I found it underperformed with voice recognition. 
 
 
@@ -294,9 +295,6 @@ Storyboards:
 
 
 ### Acting out the dialogue
-
-Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing.  Please record this interaction (for example, using Zoom's record feature).
-
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
 
 https://drive.google.com/file/d/1u_3OkhGrxARDf5sqwKVKEyVudCLVKsal/view?usp=drivesdk
@@ -326,8 +324,10 @@ The system should:
 * require participants to speak to it. 
 
 *Document how the system works*
+Nudge is a voice-activated reminder manager built using Python, Vosk (speech recognition), and eSpeak (text-to-speech). It allows you to add reminders, set them with times, and mark tasks complete using natural speech. Reminders are stored in a JSON file called remidners.json so they persist. 
 
 *Include videos or screencaptures of both the system and the controller.*
+https://drive.google.com/file/d/13rie_ak0-cq1xNEr-kii4EEgyVFGneHg/view?usp=sharing
 
 <details>
   <summary><strong>Submission Cleanup Reminder (Click to Expand)</strong></summary>
@@ -347,30 +347,17 @@ Try to get at least two people to interact with your system. (Ideally, you would
 Answer the following:
 
 ### What worked well about the system and what didn't?
-\*\**your answer here*\*\*
+
+The system was able to capture simple commands, parse out times (like “7 pm” or “end of day”), and store reminders with a status flag. On the other hand, the parsing was somewhat difficult. Variations in phrasing/pronounciation or background noise sometimes led to incorrect transcription. Matching tasks to mark them complete was too strict, so we had to phrase commands very closely to the stored task. 
 
 ### What worked well about the controller and what didn't?
 
-\*\**your answer here*\*\*
+Using voice as the controller made this a hands-free and somewhat natural system, especially for quick reminder setting. The speech feedback with eSpeak provided immediate confirmation. However, the system only supported a very small set of commance (“remind” and “complete”), with little error correction or flexibility. Continuous listening could also be unreliable due to background noise or misrecognition.
 
 ### What lessons can you take away from the WoZ interactions for designing a more autonomous version of the system?
 
-\*\**your answer here*\*\*
-
+The WoZ setup showed how important real-time feedback and flexible interpretation are for users. Since people don’t always phrase commands the same way, the system needs to handle variation gracefully. The WoZ approach underscored that autonomy requires not only good speech recognition, but also context awareness (knowing what the user likely means given time, past tasks, or environment) to reduce friction and errors.
 
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
-\*\**your answer here*\*\*
-
-
-
-
-
-
-
-
-
-
-
-
-
+The system could log every spoken input, the parsed command, and the system’s response, creating a dataset of raw speech → transcription → parsed intent → outcome. This would be useful for training more robust natural language models. Other sensing modalities could include video/gesture input (for confirming or dismissing reminders) or context sensing (such as time of day or location) to better understand when and how users set reminders. 
