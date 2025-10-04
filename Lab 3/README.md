@@ -318,15 +318,10 @@ For Part 2, you will redesign the interaction with the speech-enabled device usi
 
 ## Prototype your system
 
-The system should:
-* use the Raspberry Pi 
-* use one or more sensors
-* require participants to speak to it. 
-
-*Document how the system works*
+*Document how the system works*  
 Nudge is a voice-activated reminder manager built using Python, Vosk (speech recognition), and eSpeak (text-to-speech). It allows you to add reminders, set them with times, and mark tasks complete using natural speech. Reminders are stored in a JSON file called remidners.json so they persist. 
 
-*Include videos or screencaptures of both the system and the controller.*
+*Include videos or screencaptures of both the system and the controller.*  
 https://drive.google.com/file/d/13rie_ak0-cq1xNEr-kii4EEgyVFGneHg/view?usp=sharing
 
 <details>
@@ -361,3 +356,4 @@ The WoZ setup showed how important real-time feedback and flexible interpretatio
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 The system could log every spoken input, the parsed command, and the system’s response, creating a dataset of raw speech → transcription → parsed intent → outcome. This would be useful for training more robust natural language models. Other sensing modalities could include video/gesture input (for confirming or dismissing reminders) or context sensing (such as time of day or location) to better understand when and how users set reminders. 
+
