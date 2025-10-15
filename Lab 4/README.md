@@ -53,11 +53,11 @@ After exploring all ideas, we’ve decided to continue developing the AstroClick
 
 These were the different designs we came up with for the AstroClicker:
 
-![AstroClicker Prototype 1](https://drive.google.com/file/d/1GMzrRrSL4l3woYrJLccYxwP9jXTAnzeE/view?usp=drive_link)
-![AstroClicker Prototype 2](https://drive.google.com/file/d/1POhscVklZM7njbFUzVe2SEgRM2EXgr6x/view?usp=drive_link)
-![AstroClicker Prototype 3](https://drive.google.com/file/d/18dT1ruhAVcGYKWqsz5goETqhqU517WQv/view?usp=drive_link)
-![AstroClicker Prototype 4](https://drive.google.com/file/d/1ZPfyM4x99vHU8GEfVwlT-O0_deb9U7TR/view?usp=drive_link)
-![AstroClicker Prototype 5](https://drive.google.com/file/d/1_Sv7lQg9gYbljeSBiP8plI4wSDGLTxRU/view?usp=drive_link)
+- [AstroClicker Prototype 1](https://drive.google.com/file/d/1GMzrRrSL4l3woYrJLccYxwP9jXTAnzeE/view?usp=drive_link)
+- [AstroClicker Prototype 2](https://drive.google.com/file/d/1POhscVklZM7njbFUzVe2SEgRM2EXgr6x/view?usp=drive_link)
+- [AstroClicker Prototype 3](https://drive.google.com/file/d/18dT1ruhAVcGYKWqsz5goETqhqU517WQv/view?usp=drive_link)
+- [AstroClicker Prototype 4](https://drive.google.com/file/d/1ZPfyM4x99vHU8GEfVwlT-O0_deb9U7TR/view?usp=drive_link)
+- [AstroClicker Prototype 5](https://drive.google.com/file/d/1_Sv7lQg9gYbljeSBiP8plI4wSDGLTxRU/view?usp=drive_link)
 
 Our initial design decisions (based on Prototype 1) were guided by several key considerations. The device is intended to be handheld, so the joystick should be positioned for comfortable and ergonomic use. The speaker must face the user to ensure clear audio output and prevent sound from being muffled. The Raspberry Pi requires adequate ventilation to avoid overheating, and sufficient space must be reserved for a battery compartment.
   
