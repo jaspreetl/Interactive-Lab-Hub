@@ -59,19 +59,19 @@ Video link: [proximity.mov](assets/videos/sensor_tests/proximity.mov)
 
 AstroClicker – This concept helps users navigate the night sky. Using a joystick as the main input, the user can select celestial objects and adjust their view to zoom in or out for a closer look.
 
-![AstroClicker](assets/images/ideas/astro_clicker.png "AstroClicker")
+![AstroClicker](assets/astro_clicker.png "AstroClicker")
 
 City Explorer – This idea focuses on urban exploration. The device helps users discover new places or uncover hidden gems in familiar cities. With a joystick for navigation, the device tracks where the user has already been and suggests new destinations.
-![City Explorer](assets/images/ideas/city_explorer.png "City Explorer")
+![City Explorer](assets/city_explorer.png "City Explorer")
 
 Remote Play – Designed for pet owners, this concept allows users to remotely engage with their pets. It combines joystick input with a gyroscopic ball that moves according to the user’s commands, enabling interactive play from a distance.
-![Remote Play](assets/images/ideas/remote_play.png "Remote Play")
+![Remote Play](assets/remote_play.png "Remote Play")
 
 Flashcard Master – Inspired by learning tools like Anki, this concept turns studying into a more tactile experience. Instead of relying solely on buttons, users navigate flashcards using a joystick for a more dynamic learning interaction.
-![Flashcard Master](assets/images/ideas/flashcard_master.png "Flashcard Master")
+![Flashcard Master](assets/flashcard_master.png "Flashcard Master")
 
 Store Navigator – This concept aims to simplify the grocery shopping experience. The device includes a digital store map and allows users to navigate aisles with a joystick to locate products and check their availability in real time.
-![Store Navigator](assets/images/ideas/store_navigator.png "Store Navigator")
+![Store Navigator](assets/store_navigator.png "Store Navigator")
 
 These sketches raise important design questions:
 * How can we incorporate additional sensory modalities beyond visual displays for interaction?
@@ -84,11 +84,11 @@ After exploring all ideas, we’ve decided to continue developing the AstroClick
 
 These were the different designs we came up with for the AstroClicker:
 
-![AstroClicker Prototype 1](assets/images/placements/prototype_1.png "AstroClicker Prototype 1")
-![AstroClicker Prototype 1](assets/images/placements/prototype_1.png "AstroClicker Prototype 2")
-![AstroClicker Prototype 1](assets/images/placements/prototype_1.png "AstroClicker Prototype 3")
-![AstroClicker Prototype 1](assets/images/placements/prototype_1.png "AstroClicker Prototype 4")
-![AstroClicker Prototype 1](assets/images/placements/prototype_1.png "AstroClicker Prototype 5")
+![AstroClicker Prototype 1](assets/prototype_1.png "AstroClicker Prototype 1")
+![AstroClicker Prototype 1](assets/prototype_2.png "AstroClicker Prototype 2")
+![AstroClicker Prototype 1](assets/prototype_3.png "AstroClicker Prototype 3")
+![AstroClicker Prototype 1](assets/prototype_4.png "AstroClicker Prototype 4")
+![AstroClicker Prototype 1](assets/prototype_5.png "AstroClicker Prototype 5")
 
 Our initial design decisions (based on Prototype 1) were guided by several key considerations. The device is intended to be handheld, so the joystick should be positioned for comfortable and ergonomic use. The speaker must face the user to ensure clear audio output and prevent sound from being muffled. The Raspberry Pi requires adequate ventilation to avoid overheating, and sufficient space must be reserved for a battery compartment.
   
