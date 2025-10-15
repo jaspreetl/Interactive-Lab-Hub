@@ -15,63 +15,38 @@ Video link: [twizzler.mov](assets/videos/sensor_tests/twizzler.mov)
 
 ### Part B
 
-#### Light/Proximity/Gesture sensor (APDS-9960)
+#### Light/Proximity/Gesture sensor (APDS-9960), Rotary Encoder, Joystick, Distance Sensor
 
-Video link: [color_proximity.mov](assets/videos/sensor_tests/color_proximity.mov)
+Video link: https://drive.google.com/file/d/1ehD8bH60lvMCg55lqQrunhwIYdJYobrk/view?usp=drive_link
 
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/color_proximity.mov" type="video/mp4">
-</video>
+Video link: https://drive.google.com/file/d/1W26ObfeldQtcrQ_N_Mj2as69f3vPGz32/view?usp=drive_link
 
-Video link: [color_test.mov](assets/videos/sensor_tests/color_test.mov)
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/color_test.mov" type="video/mp4">
-</video>
+Video link: https://drive.google.com/file/d/1sKus0hbDBE5S6jct1ch_gABQbDqCITnt/view?usp=drive_link
 
-Video link: [gesture_test.mov](assets/videos/sensor_tests/gesture_test.mov)
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/gesture_test.mov" type="video/mp4">
-</video>
+Video link: https://drive.google.com/file/d/1RMcxXh1X0-D-RV6Zxe65zknoet8rwYbv/view?usp=drive_link
 
-#### Rotary Encoder
+Video link: https://drive.google.com/file/d/1q9l43qhkHAv8QIupwswECEeG_p4WJqSi/view?usp=drive_link
 
-Video link: [encoder.mov](assets/videos/sensor_tests/encoder.mov)
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/encoder.mov" type="video/mp4">
-</video>
-
-#### Joystick
-
-Video link: [joystick.mov](assets/videos/sensor_tests/joystick.mov)
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/joystick.mov" type="video/mp4">
-</video>
-
-#### Distance Sensor
-
-Video link: [proximity.mov](assets/videos/sensor_tests/proximity.mov)
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/proximity.mov" type="video/mp4">
-</video>
+Video link: https://drive.google.com/file/d/1DYwKet88xD9-nZ_HSvOKJSka1yBPi9DI/view?usp=drive_link
 
 ### Part C
 ### Physical considerations for sensing
 
 AstroClicker – This concept helps users navigate the night sky. Using a joystick as the main input, the user can select celestial objects and adjust their view to zoom in or out for a closer look.
 
-![AstroClicker](assets/astro_clicker.png "AstroClicker")
+![AstroClicker](https://drive.google.com/file/d/1spiTWBc2pxcqpkH5nn0u24bH49dgJ59T/view?usp=drive_link)
 
 City Explorer – This idea focuses on urban exploration. The device helps users discover new places or uncover hidden gems in familiar cities. With a joystick for navigation, the device tracks where the user has already been and suggests new destinations.
-![City Explorer](assets/city_explorer.png "City Explorer")
+![City Explorer](https://drive.google.com/file/d/1NPo4yFDo4cDgwPx_VDBPNtk57suxaHIC/view?usp=drive_link)
 
 Remote Play – Designed for pet owners, this concept allows users to remotely engage with their pets. It combines joystick input with a gyroscopic ball that moves according to the user’s commands, enabling interactive play from a distance.
-![Remote Play](assets/remote_play.png "Remote Play")
+![Remote Play](https://drive.google.com/file/d/1sIXS5dy5and7Cz--u_Xos0ibYpNgiyjI/view?usp=sharing)
 
 Flashcard Master – Inspired by learning tools like Anki, this concept turns studying into a more tactile experience. Instead of relying solely on buttons, users navigate flashcards using a joystick for a more dynamic learning interaction.
-![Flashcard Master](assets/flashcard_master.png "Flashcard Master")
+![Flashcard Master](https://drive.google.com/file/d/1wz6ATxtC0zEuNmIWsmjTSR9pP1zadzyh/view?usp=drive_link)
 
 Store Navigator – This concept aims to simplify the grocery shopping experience. The device includes a digital store map and allows users to navigate aisles with a joystick to locate products and check their availability in real time.
-![Store Navigator](assets/store_navigator.png "Store Navigator")
+![Store Navigator](https://drive.google.com/file/d/1pvEFYMG4iJKLgn7pzjw0iWjaMWEAnOdl/view?usp=drive_link)
 
 These sketches raise important design questions:
 * How can we incorporate additional sensory modalities beyond visual displays for interaction?
@@ -84,21 +59,18 @@ After exploring all ideas, we’ve decided to continue developing the AstroClick
 
 These were the different designs we came up with for the AstroClicker:
 
-![AstroClicker Prototype 1](assets/prototype_1.png "AstroClicker Prototype 1")
-![AstroClicker Prototype 1](assets/prototype_2.png "AstroClicker Prototype 2")
-![AstroClicker Prototype 1](assets/prototype_3.png "AstroClicker Prototype 3")
-![AstroClicker Prototype 1](assets/prototype_4.png "AstroClicker Prototype 4")
-![AstroClicker Prototype 1](assets/prototype_5.png "AstroClicker Prototype 5")
+![AstroClicker Prototype 1](https://drive.google.com/file/d/1GMzrRrSL4l3woYrJLccYxwP9jXTAnzeE/view?usp=drive_link)
+![AstroClicker Prototype 2](https://drive.google.com/file/d/1POhscVklZM7njbFUzVe2SEgRM2EXgr6x/view?usp=drive_link)
+![AstroClicker Prototype 3](https://drive.google.com/file/d/18dT1ruhAVcGYKWqsz5goETqhqU517WQv/view?usp=drive_link)
+![AstroClicker Prototype 4](https://drive.google.com/file/d/1ZPfyM4x99vHU8GEfVwlT-O0_deb9U7TR/view?usp=drive_link)
+![AstroClicker Prototype 5](https://drive.google.com/file/d/1_Sv7lQg9gYbljeSBiP8plI4wSDGLTxRU/view?usp=drive_link)
 
 Our initial design decisions (based on Prototype 1) were guided by several key considerations. The device is intended to be handheld, so the joystick should be positioned for comfortable and ergonomic use. The speaker must face the user to ensure clear audio output and prevent sound from being muffled. The Raspberry Pi requires adequate ventilation to avoid overheating, and sufficient space must be reserved for a battery compartment.
   
 We then built a cardboard prototype to bring these design choices to life. The prototype incorporates our initial rationale, allowing us to physically test proportions, placement, and usability. For example, we used an Altoids can as a placeholder for the battery, and added a top cutout to represent the ventilation area for the Raspberry Pi.
 
-Here is a video walk-around of the AstroClicker prototype. If this video is not rendering properly, you can view it in the **assets/videos** folder for the mov called **walk_around.mov**.
-
-<video width="300" height="600" controls>
-  <source src="assets/videos/walk_around.mov" type="video/mp4">
-</video>
+See below for a video walk-around of the AstroClicker prototype. 
+https://drive.google.com/file/d/1idpHfScn5C8fBoOJOxdtHWuUTcjamcaN/view?usp=sharing 
 
 # LAB PART 2
 
