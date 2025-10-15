@@ -5,13 +5,7 @@ Collaborators: Sachin Jojode, Viha Srinivas, Arya Prasad
 ## Part A
 ### Capacitive Sensing, a.k.a. Human-Twizzler Interaction
 
-For all sensor testing videos, you can view them in the **Lab 4/assets/videos/sensor_tests** folder. Apologies for the lack of rendering on the GitHub side but they are rendering properly when in VSCode.
-
-Video link: [twizzler.mov](assets/videos/sensor_tests/twizzler.mov)
-
-<video width="300" height="600" controls>
-  <source src="assets/videos/sensor_tests/twizzler.mov" type="video/mp4">
-</video>
+Video link: https://drive.google.com/drive/folders/1evbBFwEqHrcxWKOFQ3EYnI5o_75qGrA3?usp=drive_link
 
 ### Part B
 
