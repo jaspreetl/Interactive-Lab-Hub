@@ -28,19 +28,19 @@ Video link: https://drive.google.com/file/d/1DYwKet88xD9-nZ_HSvOKJSka1yBPi9DI/vi
 
 AstroClicker – This concept helps users navigate the night sky. Using a joystick as the main input, the user can select celestial objects and adjust their view to zoom in or out for a closer look.
 
-![AstroClicker](https://drive.google.com/file/d/1spiTWBc2pxcqpkH5nn0u24bH49dgJ59T/view?usp=drive_link)
+[AstroClicker] : (https://drive.google.com/file/d/1spiTWBc2pxcqpkH5nn0u24bH49dgJ59T/view?usp=drive_link)
 
 City Explorer – This idea focuses on urban exploration. The device helps users discover new places or uncover hidden gems in familiar cities. With a joystick for navigation, the device tracks where the user has already been and suggests new destinations.
-![City Explorer](https://drive.google.com/file/d/1NPo4yFDo4cDgwPx_VDBPNtk57suxaHIC/view?usp=drive_link)
+[City Explorer] : (https://drive.google.com/file/d/1NPo4yFDo4cDgwPx_VDBPNtk57suxaHIC/view?usp=drive_link)
 
 Remote Play – Designed for pet owners, this concept allows users to remotely engage with their pets. It combines joystick input with a gyroscopic ball that moves according to the user’s commands, enabling interactive play from a distance.
-![Remote Play](https://drive.google.com/file/d/1sIXS5dy5and7Cz--u_Xos0ibYpNgiyjI/view?usp=sharing)
+[Remote Play] : (https://drive.google.com/file/d/1sIXS5dy5and7Cz--u_Xos0ibYpNgiyjI/view?usp=sharing)
 
 Flashcard Master – Inspired by learning tools like Anki, this concept turns studying into a more tactile experience. Instead of relying solely on buttons, users navigate flashcards using a joystick for a more dynamic learning interaction.
-![Flashcard Master](https://drive.google.com/file/d/1wz6ATxtC0zEuNmIWsmjTSR9pP1zadzyh/view?usp=drive_link)
+[Flashcard Master] : (https://drive.google.com/file/d/1wz6ATxtC0zEuNmIWsmjTSR9pP1zadzyh/view?usp=drive_link)
 
 Store Navigator – This concept aims to simplify the grocery shopping experience. The device includes a digital store map and allows users to navigate aisles with a joystick to locate products and check their availability in real time.
-![Store Navigator](https://drive.google.com/file/d/1pvEFYMG4iJKLgn7pzjw0iWjaMWEAnOdl/view?usp=drive_link)
+[Store Navigator] : (https://drive.google.com/file/d/1pvEFYMG4iJKLgn7pzjw0iWjaMWEAnOdl/view?usp=drive_link)
 
 These sketches raise important design questions:
 * How can we incorporate additional sensory modalities beyond visual displays for interaction?
