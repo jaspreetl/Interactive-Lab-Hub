@@ -258,6 +258,15 @@ Here's what each action does:
 
 To run the program, the main() function uses argparse to let you choose your output mode when you start the script—either --mode speaker for audio or --mode silent for text only. Exit by hitting Ctrl+C.
 
+Click the Button: Stays on current target; the system reads the object's name and a fun fact, then asks what you want to do next.
+Push Up (Y > 600): Zooms out farther; announces the zoom-out, then the new target's name and type. 
+Push Down (Y < 400): Zooms in closer; announces the zoom-in, then the new target's name and type.
+Push Left (X > 600): Scans to a new target; announces the scan left, then the new target's name and type.
+Push Right (X < 400): Scans to a new target; announces the scan right, then the new target's name and type. 
+
+See here: 
+https://drive.google.com/file/d/1H_HfMfHKVElFFgs2zY64mGC1QpVSKP85/view?usp=sharing
+
 Hardware: The joystick needs to be positioned so you can use it naturally while holding the device and the speaker has to face toward you so the audio comes through clearly and doesn't sound muffled. Also, the Raspberry Pi needs good airflow to stay cool, and we had to leave room for the battery. These priorities were similar to our cardboard prototype, but we made some refinements to make the final version more comfortable and practical to actually use.
 
 Sees picture here: 
