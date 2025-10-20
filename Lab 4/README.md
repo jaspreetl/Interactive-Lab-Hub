@@ -72,10 +72,12 @@ https://drive.google.com/file/d/1idpHfScn5C8fBoOJOxdtHWuUTcjamcaN/view?usp=shari
 
 Following exploration and reflection from Part 1, complete the "looks like," "works like" and "acts like" prototypes for your design, reiterated below.
 
+We first started prototyping the software for the AstroClicker prototype, which you can find in the [astro_clicker_demo.py](astro_clicker_demo.py) file. Our main consideration when desigining teh script was that it should be user-friendly without feeling suffocating. After much prototyping, here is the code diagram that we landed on:
 
 
 ### Part E
 
+<details>
 #### Chaining Devices and Exploring Interaction Effects
 
 For Part 2, you will design and build a fun interactive prototype using multiple inputs and outputs. This means chaining Qwiic and STEMMA QT devices (e.g., buttons, encoders, sensors, servos, displays) and/or combining with traditional breadboard prototyping (e.g., LEDs, buzzers, etc.).
@@ -234,15 +236,42 @@ python pi_servo_hat_test.py
 ```
 For more details and advanced usage, see the [official SparkFun Servo pHAT documentation](https://learn.sparkfun.com/tutorials/pi-servo-phat-v2-hookup-guide/all#resources-and-going-further).
 A servo motor is a rotary actuator that allows for precise control of angular position. The position is set by the width of an electrical pulse (PWM). You can read [this Adafruit guide](https://learn.adafruit.com/adafruit-arduino-lesson-14-servo-motors/servo-motors) to learn more about how servos work.
+</details>
 
----
+Software: The AstroClicker software (see astro_clicker_demo.py) was made to create something that felt natural and intuitive to use—we didn't want it to feel clunky or confusing. We went through several rounds of prototyping and tweaking before landing on this structure. The script imports all the libraries we need to control hardware, handle timing, run shell commands, and parse arguments. We built a speak_text function that uses the espeak program for text-to-speech and logs everything to the console no matter which mode you're running in (speaker or silent). We organized the celestial data into three layers based on distance from Earth:
+- Layer 0 (Closest): Constellations
+- Layer 1 (Middle): Solar System objects
+- Layer 2 (Farthest): Deep space objects
 
+
+The SkyNavigator class is basically the brain of the program. It keeps track of (1) what layer you're currently on (you start at Layer 1 with the Solar System), (2) which objects you've already seen using an unseen_targets list. 
+
+The _set_new_target() method picks a random object from your current layer. Once you've seen everything on a layer, it resets so you can explore it all over again.
+The move(direction) method handles what happens when you move the joystick:
+- 'up' / 'down': Zooms you in or out to a different layer, with safeguards to keep you from going too far in either direction
+ 'left' / 'right': Keeps you on the same layer but picks a new random target to look at
+Whenever you make a move, the system tells you out loud where you are and what you're looking at.
+  
+The Main Loop: The runExample function gets everything set up—it starts the joystick, initializes the SkyNavigator, gives you a welcome message, and announces your first target.
+IOt then runs an infinite loop that's constantly listening to your joystick. It checks which direction you're pushing it (x and y values) and whether you've clicked the button. To prevent accidental double-inputs, there's a debounce timer that gives you a little buffer between actions.
+Here's what each action does:
+
+To run the program, the main() function uses argparse to let you choose your output mode when you start the script—either --mode speaker for audio or --mode silent for text only. Exit by hitting Ctrl+C.
+
+Hardware: The joystick needs to be positioned so you can use it naturally while holding the device and the speaker has to face toward you so the audio comes through clearly and doesn't sound muffled. Also, the Raspberry Pi needs good airflow to stay cool, and we had to leave room for the battery. These priorities were similar to our cardboard prototype, but we made some refinements to make the final version more comfortable and practical to actually use.
+
+Sees picture here: 
+- https://drive.google.com/file/d/1tifWxaHYtIfDRb2sIJ8nEL6bgSCLxXfo/view?usp=sharing 
+- https://drive.google.com/file/d/1e8HCZ9sC3PpO5cFvTWhEP0yuUrxE6XEE/view?usp=sharing
+- https://drive.google.com/file/d/1RwBOhzYwkkrttk4ce2GzSumDK7BMUCWM/view?usp=sharing
 
 ### Part F
 
 ### Record
+See here for video: https://drive.google.com/file/d/1H3ZmqcTg181csqCr8ORDpRanjS9P935U/view?usp=sharing
 
-Document all the prototypes and iterations you have designed and worked on! Again, deliverables for this lab are writings, sketches, photos, and videos that show what your prototype:
-* "Looks like": shows how the device should look, feel, sit, weigh, etc.
-* "Works like": shows what the device can do
-* "Acts like": shows how a person would interact with the device
+AI Contributions: Gemini was used with:
+- Taking our rough paper sketches and turning them into polished images we could actually use
+- Writing and organizing the code for the prototype
+
+Coming up with ideas, gathering feedback, and actually designing and building was done by out team ourselves.
