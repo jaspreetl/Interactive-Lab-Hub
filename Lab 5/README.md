@@ -164,6 +164,15 @@ I created two teachable machines. One identified different objects (pizza, soda 
 
 
 **\*\*\*Describe and detail the interaction, as well as your experimentation here.\*\*\***
+For Part B, I built a simple interaction using a custom image classification model trained in Google Teachable Machines. I created two gesture classes "shushing" (bringing my index finger to my lips) and "head scratch". I tried to explore how subtle, expressive gestures could be detected and mapped to different system responses.
+
+Once trained, I exported the model as a TensorFlow Lite file and ran it on the Raspberry Pi using the webcam feed. The “shush” gesture triggers a visual indicator to mute or quiet the system (for example, dimming the screen or turning off a sound), while the “head scratch” gesture could trigger a help prompt or “confused” state as if the system notices uncertainty and offers assistance. 
+
+To test the interaction, I first verified real-time classification output using the console. I then experimented with adding simple feedback, such as displaying a “Quiet mode activated” overlay or printing “Thinking mode....” This allowed me to observe latency and classification consistency under different lighting and camera angles.
+
+The experiment helped show how gesture-based controls can create a more natural and straight-forward way to communicate intent with a computer that doesn't require touching or speaking to the device. I tried different backgrounds where I was against a wall verses in my room with a messy background. It made me think of edge cases where lighting changes or partially obscured gestures caused misclassifications, which I noted for later improvement.
+
+See files under 'part b' for the Teachable machine screenshots, files, and python code. 
 
 ### Part C
 ### Test the interaction prototype
