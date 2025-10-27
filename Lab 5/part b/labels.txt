@@ -1,2 +1,2 @@
-0 head scratching
-1 shush
+Class 1: Shush
+Class 2: Scratch
