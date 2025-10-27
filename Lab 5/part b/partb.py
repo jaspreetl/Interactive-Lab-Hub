@@ -56,13 +56,13 @@ while True:
 
     # Preprocess the image for model input
     img = cv2.resize(frame, (width, height))
-    img = np.expand_dims(img, axis=0).astype(np.float32)
-    img = (img / 127.5) - 1.0  # normalize to [-1, 1]
+    img = np.expand_dims(img, axis=0).astype(np.uint8)  # uint8, no normalization
 
     # Run inference
     interpreter.set_tensor(input_details[0]['index'], img)
     interpreter.invoke()
     output_data = interpreter.get_tensor(output_details[0]['index'])[0]
+
 
     # Find top prediction
     top_index = np.argmax(output_data)
