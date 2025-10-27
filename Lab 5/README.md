@@ -1,7 +1,6 @@
 # Observant Systems
 
-**NAMES OF COLLABORATORS HERE**
-
+Jaspreet Lal (jl4536)
 
 For lab this week, we focus on creating interactive systems that can detect and respond to events or stimuli in the environment of the Pi, like the Boat Detector we mentioned in lecture. 
 Your **observant device** could, for example, count items, find objects, recognize an event or continuously monitor a room.
@@ -40,7 +39,7 @@ D) [Reflect](#part-d)
 
 ### Part A
 ### Play with different sense-making algorithms.
-
+<details>
 #### Pytorch for object recognition
 
 For this first demo, you will be using PyTorch and running a MobileNet v2 classification model in real time (30 fps+) on the CPU. We will be following steps adapted from [this tutorial](https://pytorch.org/tutorials/intermediate/realtime_rpi.html).
@@ -151,6 +150,10 @@ Teachable machines provides an audio classifier too. If you want to use audio cl
 
 In an earlier version of this class students experimented with foundational computer vision techniques such as face and flow detection. Techniques like these can be sufficient, more performant, and allow non discrete classification. Find the material here:
 [CV_optional/cv.md](CV_optional/cv.md).
+
+</details>
+
+I created two teachable machines. One identified different objects (pizza, soda can, remote control) while the other differentiated between different hand signals (wave, peace sign). Teachable Machine makes it simple to build image (or audio, pose, etc.) classifiers without writing code. I could use it to quickly prototype a Raspberry Pi–based vision project (ie. something that recognizes different objects on a desk or boats in the east river). Once trained, the model can be exported as a TensorFlow Lite model and run efficiently on devices like the Pi for real-time inference. Its main affordance is ease of use and rapid prototyping—it enables anyone to train and export models (as TensorFlow Lite or Keras files) for immediate use on devices like the Raspberry Pi. In contrast, OpenCV focuses on traditional computer vision techniques and requires programming knowledge, offering more granular control but less flexibility for learning-based classification. On the other hand, MediaPipe, provides prebuilt pipelines for specific tasks such as hand tracking, face detection, or pose estimation, making it efficient but less customizable.
 
 ### Part B
 ### Construct a simple interaction.
