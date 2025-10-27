@@ -190,6 +190,15 @@ For example:
 1. How could change your interactive system to address this?
 1. Are there optimizations you can try to do on your sense-making algorithm.
 
+For testing, I ran multiple trials of my “shushing” vs. “head scratch” gesture classifier on the Raspberry Pi. When lighting was consistent and gestures were performed clearly in front of the camera, the model performed as expected — the “shush” gesture reliably triggered the quiet mode response, and the “head scratch” gesture activated the thinking prompt. 
+
+I experienced failures mostly under poor lighting, different backgrounds, or when the gesture was partially visible in the camera frame. For example, if I turned slightly sideways, the “shush” gesture was sometimes misread as “head scratch”. Similarly, quick or subtle motions sometimes confused the model because it relied on static frames rather than motion cues. These errors revealed how sensitive the model is to lighting conditions, background contrast, and gesture positioning. With the first model i created on Teachable Machine, it much more acurately categorized between the pizza and coke can likely because those objects are far more distinct compared to these two hand gentures. 
+
+If someone else were using this system, they might not immediately understand that the computer is uncertain. A missed “shush” might cause an older gesture to stay on, or a false thinking trigger could distract them. To address this, I could design the system to mention confidence levels as shown in the Teachable Machine. For example, it may be better for the code to only act if the model is 90% sure.
+
+Optimization-wise, I could improve accuracy by adding more diverse training samples under different lighting and camera angles, or by including a “background” class to help the model better detect when no gesture is being made. Another improvement could be temporal smoothing.
+
+
 ### Part D
 ### Characterize your own Observant system
 
