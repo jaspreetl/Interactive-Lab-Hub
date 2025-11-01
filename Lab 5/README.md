@@ -204,18 +204,42 @@ Optimization-wise, I could improve accuracy by adding more diverse training samp
 
 Now that you have experimented with one or more of these sense-making systems **characterize their behavior**.
 During the lecture, we mentioned questions to help characterize a material:
-* What can you use X for?
+* What can you use X for?  
+This gesture classification system is well-suited for hands-free, ambient interaction where users want to communicate intent without physical contact or voice commands. Specifically, it is useful for signaling state changes (quiet mode, help requests) in shared spaces, accessibility applications for users who prefer or require gesture-based control, prototyping natural user interfaces before investing in more complex sensor arrays, and educational demonstrations of machine learning classification in action. 
+
 * What is a good environment for X?
+
+From my experiments, the system thrives in consistently well-lit spaces with minimal shadows. Having controlled backgrounds with low visual clutter is also important. I foudn that plain walls work best (I found that the scenary/picture behind me created some issues for the class two: scratching recognition). 
+
 * What is a bad environment for X?
+
+The system struggles when backgrounds are cluttered or backgrounds. Variable lighting conditions (transitioning from bright to dim, backlighting, harsh shadows) also make the system struggle. 
+
 * When will X break?
+
+The system fails when gestures are performed too quickly (model is very slow and only captures frames). Also, if I positioned myself outside of the camera's field of view, it also struggled to pick up the right gesture. 
+The user is partially occluded or outside the camera's field of view. Similar gestures are too visually alike (meaning the "shush" and "head scratch" have similar hand-to-face characteristics). 
+
 * When it breaks how will X break?
+
+The system breaks in predictable yet somewhat concerning ways. Most commonly, it produces silent misclassifications where the system confidently reports the wrong gesture with no indication of uncertainty to the user. This can lead to flickering between states when borderline cases cause rapid switching between gesture classifications, creating a confusing and unreliable user experience. False positives are another failure mode, where random hand movements or casual face-touching are misinterpreted as intentional control gestures. Sometimes the system gets stuck, holding onto a previous classification even when no gesture is currently being performed. What makes these failures particularly challenging is that the system degrades gracefully rather than crashing outright—it simply continues making poor predictions, which can be more problematic than an obvious failure that prompts the user to restart or troubleshoot.
+
 * What are other properties/behaviors of X?
+
+The system is inherently latency-dependent, with a noticeable delay between when a user executes a gesture and when the system responds, which can disrupt the natural flow of interaction. Performance is fundamentally training-data-dependent, meaning the system's accuracy is bounded by the diversity and quality of the examples used during training—it can never reliably recognize patterns it hasn't seen before. The classifier is also context-unaware, lacking any understanding of user intent or situational appropriateness; it simply pattern-matches visual input to learned categories without reasoning about whether the classification makes sense. While the model internally generates confidence scores that vary widely across predictions, the system acts on all predictions equally unless explicit confidence thresholding is implemented. Finally, the system is brittle to novelty - when it encounters gestures, hand positions, or environmental conditions outside its training distribution, it produces unpredictable behavior rather than gracefully indicating uncertainty.
+
 * How does X feel?
 
+Using the gesture recognition system creates a mixed emotional experience that shifts based on performance. When the system works correctly, there's a genuine sense of empowerment and even magic—the feeling that the machine truly "understands" your gesture creates a satisfying moment of seamless human-computer interaction. However, when it fails, the experience becomes frustrating and flow-breaking. Misclassifications force users to repeat gestures, second-guess their movements, or manually recover from incorrect system states. Over time, users develop a tentative relationship with the system, learning to exaggerate their gestures, move more slowly and deliberately, and position themselves carefully to work within its limitations. The interaction feels opaque because without visible confidence indicators, users cannot tell whether the system is certain about its classification or simply guessing, leading to a lack of trust. Overall, the system feels distinctly experimental rather than polished—users approach it with curiosity and willingness to adapt, treating it as an interesting prototype to explore rather than a reliable tool they can depend on for consistent performance.
+
 **\*\*\*Include a short video demonstrating the answers to these questions.\*\*\***
+
+https://drive.google.com/file/d/1URaIKLyhB8KQXM2ud8LqxcH3cIb-UsmH/view?usp=drive_link
 
 ### Part 2.
 
 Following exploration and reflection from Part 1, finish building your interactive system, and demonstrate it in use with a video.
 
 **\*\*\*Include a short video demonstrating the finished result.\*\*\***
+
+See video here: https://drive.google.com/file/d/1p2Mrf4DYJ1-CxL6jTWwJvn529P7b3eF6/view?usp=drive_link
