@@ -1,8 +1,7 @@
 # Distributed Interaction
 
 **NAMES OF COLLABORATORS HERE**
-
-For submission, replace this section with your documentation!
+Nana Takada, Celeste (Lianne) Bisch, Jaspreet Lal
 
 ---
 
