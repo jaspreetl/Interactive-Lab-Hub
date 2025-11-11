@@ -5,6 +5,8 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
+In two terminals, run: 
+python joystick.py '[Player #]'
 python game_server.py
 ```
 
