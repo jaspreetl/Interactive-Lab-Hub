@@ -95,9 +95,10 @@ Team Play: Change win logic to “last team standing.”
 
 6. Distribution of Work
 
-Nana worked on the server code on game folder for two players game
-Celest worked on the controller code on game folder
-Jaspreet worked on documentation & hardware issues
+Nana worked on the server code on game folder for two players game. 
+Celest worked on the controller code on game folder. 
+Iqra worked on modifying the server code to the multiple players game. 
+Jaspreet worked on documentation & troubleshooting hardware issues. 
 
 **AI/Team Contributions**
 Gemini supported this project, particularly during the initial ideation and documentation phases. It was helped refine the visual assets (including the sketch and architecture diagram), and assisting with code development. All team members actively participated in both the ideation and software development stages.
