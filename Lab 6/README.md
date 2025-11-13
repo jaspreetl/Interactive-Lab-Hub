@@ -1,7 +1,7 @@
 # Distributed Interaction
 
 **NAMES OF COLLABORATORS HERE**
-Nana Takada, Celeste (Lianne) Bisch, Jaspreet Lal
+Nana Takada, Celeste (Lianne) Bisch, Jaspreet Lal, Iqra Khan
 
 ---
 
