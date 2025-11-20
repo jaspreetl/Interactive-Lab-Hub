@@ -1,0 +1,21 @@
+# Core web framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+
+# API requests
+requests==2.31.0
+
+# MTA GTFS-Realtime protobuf parsing
+gtfs-realtime-bindings==1.0.0
+protobuf==4.25.1
+
+# GPIO control for LED ring (Raspberry Pi only)
+# Uncomment when deploying to Pi:
+# rpi_ws281x==5.0.0
+# adafruit-circuitpython-neopixel==6.3.11
+
+# Data handling
+python-dateutil==2.8.2
+
+# Optional: For production deployment
+gunicorn==21.2.0

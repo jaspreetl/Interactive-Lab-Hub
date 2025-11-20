@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Roosevelt Transit Lens</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container" id="main-view">
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="current-time">--:--</span>
+            <span>WiFi • <span id="battery">100%</span></span>
+        </div>
+
+        <!-- Header -->
+        <header>
+            <h1>Transit Status</h1>
+            <p class="subtitle">Roosevelt Island • <span id="update-time">Now</span></p>
+        </header>
+
+        <!-- Overall Status Indicator -->
+        <div class="overall-status" id="overall-status">
+            <div class="status-circle" id="status-circle">
+                <span id="status-icon">✓</span>
+            </div>
+            <p id="status-text">All Systems Normal</p>
+        </div>
+
+        <!-- F Train Card -->
+        <div class="transit-card" onclick="showDetail('f-train')">
+            <div class="transit-icon f-train-icon">
+                <span>F</span>
+            </div>
+            <div class="transit-info">
+                <h3>F Train</h3>
+                <p class="status-label" id="f-train-status">On Time</p>
+            </div>
+            <div class="transit-time">
+                <p class="time-label">Next train</p>
+                <p class="time-value" id="f-train-time">--</p>
+            </div>
+        </div>
+
+        <!-- Tram Card -->
+        <div class="transit-card" onclick="showDetail('tram')">
+            <div class="transit-icon tram-icon">
+                <span>🚡</span>
+            </div>
+            <div class="transit-info">
+                <h3>Roosevelt Tram</h3>
+                <p class="status-label" id="tram-status">Operating</p>
+            </div>
+            <div class="transit-time">
+                <p class="time-label">Next departure</p>
+                <p class="time-value" id="tram-time">--</p>
+            </div>
+        </div>
+
+        <!-- Ferry Card -->
+        <div class="transit-card" onclick="showDetail('ferry')">
+            <div class="transit-icon ferry-icon">
+                <span>⛴</span>
+            </div>
+            <div class="transit-info">
+                <h3>NYC Ferry</h3>
+                <p class="status-label" id="ferry-status">Normal Service</p>
+            </div>
+            <div class="transit-time">
+                <p class="time-label">Next arrival</p>
+                <p class="time-value" id="ferry-time">--</p>
+            </div>
+        </div>
+
+        <!-- Weather Card -->
+        <div class="weather-card">
+            <div class="weather-icon" id="weather-icon">⛅</div>
+            <div class="weather-info">
+                <h3 id="weather-condition">Loading...</h3>
+                <p id="weather-details">-- • Wind: --</p>
+            </div>
+            <div class="weather-status">
+                <p id="travel-conditions">Checking conditions</p>
+            </div>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="last-updated">
+            Updated <span id="last-update">--</span> ago • <span class="refresh-btn" onclick="forceRefresh()">Tap to refresh</span>
+        </div>
+    </div>
+
+    <!-- Detail View (hidden by default) -->
+    <div class="container detail-view" id="detail-view" style="display: none;">
+        <div class="status-bar">
+            <span id="detail-time">--:--</span>
+            <span>WiFi • 100%</span>
+        </div>
+
+        <button class="back-btn" onclick="hideDetail()">← Back</button>
+
+        <div class="detail-header" id="detail-header">
+            <!-- Will be populated dynamically -->
+        </div>
+
+        <div class="detail-content" id="detail-content">
+            <!-- Will be populated dynamically -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
