@@ -5,8 +5,8 @@ Store API keys, update intervals, and GPIO pin assignments
 """
 
 # API Configuration
-MTA_API_KEY = "YOUR_MTA_API_KEY_HERE"  # Get from https://api.mta.info/
-OPENWEATHER_API_KEY = "YOUR_OPENWEATHER_API_KEY_HERE"  # Get from https://openweathermap.org/api
+MTA_API_KEY = "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-bdfm"  # Get from https://api.mta.info/
+OPENWEATHER_API_KEY = "b46e07113d0d7d7fde321ba1e0cf2943"  # Get from https://openweathermap.org/api
 
 # MTA GTFS-Realtime Feed URLs
 MTA_FEEDS = {
