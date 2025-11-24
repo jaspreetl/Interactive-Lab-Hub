@@ -34,7 +34,8 @@ MTA_API_KEY = _clean(os.getenv('MTA_API_KEY'))
 OPENWEATHER_API_KEY = _clean(os.getenv('OPENWEATHER_API_KEY'))
 
 # NYC Ferry API
-FERRY_API_URL = _clean(os.getenv('FERRY_API_URL'))
+# Prefer environment/.env value, but fall back to the public dataset URL if not provided.
+FERRY_API_URL = _clean(os.getenv('FERRY_API_URL')) or 'https://data.cityofnewyork.us/resource/7jtt-s6ch.json'
 
 # MTA GTFS-Realtime Feed URLs
 MTA_FEEDS = {
