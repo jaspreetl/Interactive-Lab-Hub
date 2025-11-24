@@ -109,8 +109,9 @@ if __name__ == '__main__':
     print(f"Access the interface at: http://localhost:{config.FLASK_CONFIG['port']}")
     print(f"Or from iPad at: http://[your-pi-ip]:{config.FLASK_CONFIG['port']}")
     
-    app.run(
-        host=config.FLASK_CONFIG['host'],
-        port=config.FLASK_CONFIG['port'],
-        debug=config.FLASK_CONFIG['debug']
-    )
+    # app.run(
+    #     host=config.FLASK_CONFIG['host'],
+    #     port=config.FLASK_CONFIG['port'],
+    #     debug=config.FLASK_CONFIG['debug']
+    # )
+    app.run(host="0.0.0.0", port=5000)

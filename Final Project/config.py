@@ -5,8 +5,36 @@ Store API keys, update intervals, and GPIO pin assignments
 """
 
 # API Configuration
-MTA_API_KEY = "https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-bdfm"  # Get from https://api.mta.info/
-OPENWEATHER_API_KEY = "b46e07113d0d7d7fde321ba1e0cf2943"  # Get from https://openweathermap.org/api
+# Load secrets from environment. If you keep a `.env` file in the same
+# directory as this config, python-dotenv will be used to load it.
+import os
+from pathlib import Path
+
+try:
+    # optional dependency: python-dotenv
+    from dotenv import load_dotenv
+    _env_path = Path(__file__).parent / '.env'
+    if _env_path.exists():
+        load_dotenv(dotenv_path=_env_path)
+except Exception:
+    # If python-dotenv isn't installed, we'll still try to read from the
+    # real environment variables via os.environ.
+    pass
+
+# Environment values may be quoted in the `.env` file; strip quotes if present.
+def _clean(v: str | None) -> str:
+    if not v:
+        return ''
+    v = v.strip()
+    if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
+        return v[1:-1]
+    return v
+
+MTA_API_KEY = _clean(os.getenv('MTA_API_KEY'))
+OPENWEATHER_API_KEY = _clean(os.getenv('OPENWEATHER_API_KEY'))
+
+# NYC Ferry API
+FERRY_API_URL = _clean(os.getenv('FERRY_API_URL'))
 
 # MTA GTFS-Realtime Feed URLs
 MTA_FEEDS = {
@@ -16,9 +44,6 @@ MTA_FEEDS = {
 
 # Roosevelt Island Station ID (F line)
 ROOSEVELT_STATION_ID = 'F09'  # Northbound and southbound
-
-# NYC Ferry API
-FERRY_API_URL = 'https://data.cityofnewyork.us/resource/7jtt-s6ch.json'
 
 # Roosevelt Island Tram (manual schedule - no real-time API available)
 TRAM_SCHEDULE = {
