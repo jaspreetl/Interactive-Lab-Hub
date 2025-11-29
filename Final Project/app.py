@@ -12,6 +12,7 @@ import time
 
 import config
 from data_fetcher import TransitDataFetcher
+from ambient_controller import AmbientLEDController, MockLEDController, NEOPIXEL_AVAILABLE
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -19,6 +20,12 @@ CORS(app)  # Enable CORS for API access
 
 # Initialize data fetcher
 data_fetcher = TransitDataFetcher()
+
+# Initialize LED controller
+if NEOPIXEL_AVAILABLE:
+    led_controller = AmbientLEDController()
+else:
+    led_controller = MockLEDController()
 
 # Global variable to store current transit data
 current_data = {}
@@ -28,6 +35,22 @@ def background_updater():
     """Background thread to continuously fetch transit data"""
     global current_data
     
+    print("Background updater started...")
+    
+    # Do initial fetch immediately
+    try:
+        print("Performing initial data fetch...")
+        new_data = data_fetcher.get_all_transit_data()
+        with data_lock:
+            current_data = new_data
+        
+        # Update LED status
+        led_controller.set_status(new_data['overall_status'])
+        
+        print(f"✓ Initial data loaded successfully")
+    except Exception as e:
+        print(f"✗ Error in initial fetch: {e}")
+    
     while True:
         try:
             # Fetch all transit data
@@ -36,13 +59,16 @@ def background_updater():
             with data_lock:
                 current_data = new_data
             
-            print(f"Data updated at {datetime.now().strftime('%H:%M:%S')}")
+            # Update LED ring with new status
+            led_controller.set_status(new_data['overall_status'])
+            
+            print(f"✓ Data updated at {datetime.now().strftime('%H:%M:%S')}")
             
             # Wait before next update
             time.sleep(config.UPDATE_INTERVALS['transit'])
             
         except Exception as e:
-            print(f"Error in background updater: {e}")
+            print(f"✗ Error in background updater: {e}")
             time.sleep(5)  # Wait a bit before retrying
 
 # Start background updater thread
@@ -95,6 +121,25 @@ def force_refresh():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/api/led/test')
+def test_led():
+    """API endpoint: Test LED ring with rainbow animation"""
+    try:
+        led_controller.rainbow_test()
+        return jsonify({'success': True, 'message': 'Rainbow test running'})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/led/status/<status>')
+def set_led_status(status):
+    """API endpoint: Manually set LED status (for testing)"""
+    valid_statuses = ['normal', 'delays', 'problems', 'offline']
+    if status in valid_statuses:
+        led_controller.set_status(status)
+        return jsonify({'success': True, 'status': status})
+    else:
+        return jsonify({'success': False, 'error': 'Invalid status'}), 400
+
 @app.route('/health')
 def health_check():
     """Health check endpoint"""
@@ -105,13 +150,18 @@ def health_check():
     })
 
 if __name__ == '__main__':
-    print("Starting Roosevelt Transit Lens...")
-    print(f"Access the interface at: http://localhost:{config.FLASK_CONFIG['port']}")
-    print(f"Or from iPad at: http://[your-pi-ip]:{config.FLASK_CONFIG['port']}")
+    print("=" * 60)
+    print("🚇 Starting Roosevelt Transit Lens...")
+    print("=" * 60)
+    print(f"✓ Flask server starting on port {config.FLASK_CONFIG['port']}")
+    print(f"✓ Access locally at: http://localhost:{config.FLASK_CONFIG['port']}")
+    print(f"✓ Access from iPad at: http://[your-pi-ip]:{config.FLASK_CONFIG['port']}")
+    print(f"✓ Background updates every {config.UPDATE_INTERVALS['transit']} seconds")
+    print("=" * 60)
+    print()
     
-    # app.run(
-    #     host=config.FLASK_CONFIG['host'],
-    #     port=config.FLASK_CONFIG['port'],
-    #     debug=config.FLASK_CONFIG['debug']
-    # )
-    app.run(host="0.0.0.0", port=5000)
+    app.run(
+        host=config.FLASK_CONFIG['host'],
+        port=config.FLASK_CONFIG['port'],
+        debug=config.FLASK_CONFIG['debug']
+    )

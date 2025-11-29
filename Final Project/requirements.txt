@@ -9,10 +9,10 @@ requests==2.31.0
 gtfs-realtime-bindings==1.0.0
 protobuf==4.25.1
 
-# GPIO control for LED ring (Raspberry Pi only)
-# Uncomment when deploying to Pi:
-# rpi_ws281x==5.0.0
-# adafruit-circuitpython-neopixel==6.3.11
+# GPIO control for LED ring (Raspberry Pi)
+# Install these on Raspberry Pi:
+rpi_ws281x==5.0.0
+adafruit-circuitpython-neopixel==6.3.11
 
 # Data handling
 python-dateutil==2.8.2
