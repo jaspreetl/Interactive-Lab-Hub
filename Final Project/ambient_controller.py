@@ -185,14 +185,14 @@ class MockLEDController:
     
     def set_status(self, status):
         if status != self.current_status:
-            print(f"🔵 LED Status: {status}")
+            print(f"LED Status: {status}")
             self.current_status = status
     
     def rainbow_test(self):
-        print("🌈 Rainbow test (simulated)")
+        print("Rainbow test (simulated)")
     
     def clear(self):
-        print("⚫ LEDs cleared (simulated)")
+        print("LEDs cleared (simulated)")
     
     def shutdown(self):
         print("LED controller shut down (simulated)")

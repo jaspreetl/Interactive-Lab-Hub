@@ -47,9 +47,9 @@ def background_updater():
         # Update LED status
         led_controller.set_status(new_data['overall_status'])
         
-        print(f"✓ Initial data loaded successfully")
+        print(f"[OK] Initial data loaded successfully")
     except Exception as e:
-        print(f"✗ Error in initial fetch: {e}")
+        print(f"[ERROR] Error in initial fetch: {e}")
     
     while True:
         try:
@@ -62,13 +62,13 @@ def background_updater():
             # Update LED ring with new status
             led_controller.set_status(new_data['overall_status'])
             
-            print(f"✓ Data updated at {datetime.now().strftime('%H:%M:%S')}")
+            print(f"[OK] Data updated at {datetime.now().strftime('%H:%M:%S')}")
             
             # Wait before next update
             time.sleep(config.UPDATE_INTERVALS['transit'])
             
         except Exception as e:
-            print(f"✗ Error in background updater: {e}")
+            print(f"[ERROR] Error in background updater: {e}")
             time.sleep(5)  # Wait a bit before retrying
 
 # Start background updater thread
@@ -151,12 +151,12 @@ def health_check():
 
 if __name__ == '__main__':
     print("=" * 60)
-    print("🚇 Starting Roosevelt Transit Lens...")
+    print("Starting Roosevelt Transit Lens...")
     print("=" * 60)
-    print(f"✓ Flask server starting on port {config.FLASK_CONFIG['port']}")
-    print(f"✓ Access locally at: http://localhost:{config.FLASK_CONFIG['port']}")
-    print(f"✓ Access from iPad at: http://[your-pi-ip]:{config.FLASK_CONFIG['port']}")
-    print(f"✓ Background updates every {config.UPDATE_INTERVALS['transit']} seconds")
+    print(f"[OK] Flask server starting on port {config.FLASK_CONFIG['port']}")
+    print(f"[OK] Access locally at: http://localhost:{config.FLASK_CONFIG['port']}")
+    print(f"[OK] Access from iPad at: http://[your-pi-ip]:{config.FLASK_CONFIG['port']}")
+    print(f"[OK] Background updates every {config.UPDATE_INTERVALS['transit']} seconds")
     print("=" * 60)
     print()
     
