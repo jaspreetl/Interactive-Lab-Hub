@@ -11,8 +11,8 @@ try:
     import neopixel
     NEOPIXEL_AVAILABLE = True
 except (ImportError, NotImplementedError):
-    print("⚠ NeoPixel library not available - LED control disabled")
-    print("  This is normal if not running on Raspberry Pi")
+    print("NeoPixel library not available - LED control disabled")
+    print("This is normal if not running on Raspberry Pi")
     NEOPIXEL_AVAILABLE = False
 
 import config
@@ -34,7 +34,7 @@ class AmbientLEDController:
                     auto_write=False,
                     pixel_order=neopixel.GRB
                 )
-                print("✓ NeoPixel LED ring initialized on GPIO 18")
+                print("NeoPixel LED ring initialized on GPIO 18")
                 self.running = True
                 
                 # Start animation thread
@@ -42,8 +42,8 @@ class AmbientLEDController:
                 self.animation_thread.start()
                 
             except Exception as e:
-                print(f"✗ Failed to initialize NeoPixel: {e}")
-                print("  Make sure you're running as root: sudo python app.py")
+                print(f"Failed to initialize NeoPixel: {e}")
+                print("Make sure you're running as root: sudo python app.py")
                 self.pixels = None
         else:
             print("ℹ Running in simulation mode (no physical LEDs)")
