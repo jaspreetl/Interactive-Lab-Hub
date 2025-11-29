@@ -110,16 +110,6 @@ def test_connection():
         print()
         print("=" * 60)
         print(f"[ERROR] {e}")
-        print("=" * 60)
-        print()
-        print("Troubleshooting tips:")
-        print("1. Make sure your virtual environment has GPIO access")
-        print("2. Check your wiring:")
-        print("   - 5V  → Pin 4")
-        print("   - GND → Pin 6")
-        print("   - DIN → Pin 12 (GPIO 18)")
-        print("3. Try a different GND pin (e.g., Pin 14)")
-        print("4. Verify the NeoPixel ring is the 12-LED version")
         sys.exit(1)
 
 def rainbow_cycle(pixels, wait):
