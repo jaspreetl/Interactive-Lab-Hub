@@ -46,7 +46,7 @@ class AmbientLEDController:
                 print("Make sure you're running as root: sudo python app.py")
                 self.pixels = None
         else:
-            print("ℹ Running in simulation mode (no physical LEDs)")
+            print("Running in simulation mode (no physical LEDs)")
     
     def set_status(self, status):
         """Update LED status (normal, delays, problems, offline)"""
