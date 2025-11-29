@@ -114,7 +114,7 @@ function updateOverallStatus(status) {
         case 'normal':
             statusCircle.classList.add('normal');
             statusText.classList.add('normal');
-            statusIcon.textContent = '✓';
+            statusIcon.textContent = 'OK';
             statusText.textContent = 'All Systems Normal';
             break;
         case 'delays':
@@ -314,7 +314,7 @@ function showFTrainDetail(header, content, data) {
     } else {
         alertsHTML += `
             <div class="alert-item">
-                <strong>✓ No delays or service changes</strong>
+                <strong>No delays or service changes</strong>
                 <p style="margin-top: 8px; font-size: 13px; color: #aaa;">All trains running on schedule</p>
             </div>
         `;

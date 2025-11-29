@@ -61,7 +61,7 @@ LED_CONFIG = {
 FLASK_CONFIG = {
     'host': '0.0.0.0',  # Listen on all interfaces
     'port': 5000,
-    'debug': True
+    'debug': False
 }
 
 # Status Thresholds

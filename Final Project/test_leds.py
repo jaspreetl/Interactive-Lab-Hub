@@ -110,6 +110,8 @@ def test_connection():
         print()
         print("=" * 60)
         print(f"[ERROR] {e}")
+        print("=" * 60)
+
         sys.exit(1)
 
 def rainbow_cycle(pixels, wait):

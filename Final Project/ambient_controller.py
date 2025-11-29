@@ -51,7 +51,7 @@ class AmbientLEDController:
     def set_status(self, status):
         """Update LED status (normal, delays, problems, offline)"""
         if status != self.current_status:
-            print(f"LED Status changed: {self.current_status} → {status}")
+            print(f"LED Status changed: {self.current_status} -> {status}")
             self.current_status = status
     
     def _animate_loop(self):
@@ -160,7 +160,7 @@ class AmbientLEDController:
             self.pixels.show()
             time.sleep(0.01)
         
-        print("✓ Rainbow test complete")
+        print("Rainbow test complete")
     
     def clear(self):
         """Turn off all LEDs"""
