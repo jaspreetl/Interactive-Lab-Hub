@@ -181,7 +181,7 @@ class MockLEDController:
     """Mock LED controller for development without hardware"""
     def __init__(self):
         self.current_status = 'offline'
-        print("ℹ Mock LED controller initialized (no hardware)")
+        print("Info: Mock LED controller initialized (no hardware)")
     
     def set_status(self, status):
         if status != self.current_status:
