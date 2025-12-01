@@ -140,6 +140,17 @@ def set_led_status(status):
     else:
         return jsonify({'success': False, 'error': 'Invalid status'}), 400
 
+@app.route('/api/debug')
+def debug_info():
+    """Debug endpoint: Show current time and detailed status"""
+    now = datetime.now()
+    return jsonify({
+        'current_time': now.strftime('%H:%M:%S'),
+        'current_hour': now.hour,
+        'tram_hours': config.TRAM_SCHEDULE['operating_hours'],
+        'current_data': current_data
+    })
+
 @app.route('/health')
 def health_check():
     """Health check endpoint"""
