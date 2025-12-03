@@ -1,6 +1,9 @@
 # Roosevelt Transit Lens - Final Project [Version 1 of the Project]
 
-[Project Plan](#project-plan) | [Functioning Project](#functioning-project) | [Documentation of Design Process](#documentation-of-design-process) | [Archive of All Code and Design Patterns](#archive-of-all-code-and-design-patterns) | [Video Demo](#video-demo) | [Reflections on Process](#reflections-on-process) | [Group Work Distribution](#group-work-distribution)
+## NOTE
+This is a depricated version of the project. This information is written as one iteration of the project idea. See up-to-date [design documentation here](README.md). 
+
+[Project Plan](#project-plan) | [Functioning Project](#functioning-project) | [Documentation of Design Process](#documentation-of-design-process)
 
 ### Big Idea
 
@@ -94,11 +97,6 @@ The device transforms transit data from something users must actively check into
 **Minimal Viable Product (MVP):**
 If major issues arise, the core functionality will be: Display F train status with LED ambient feedback (green/yellow/red) and basic departure time display. This still demonstrates the central concept of ambient transit awareness.
 
-## Functioning Project
-
-![Final Product](images/final_product.jpg)
-*Caption: Roosevelt Transit Lens installed and operational*
-
 ### Key Features Demonstrated:
 - Real-time MTA F train status display
 - Ambient LED ring showing transit conditions
@@ -109,38 +107,33 @@ If major issues arise, the core functionality will be: Display F train status wi
 
 ### Verplank Diagram
 
-![Verplank Diagram](images/verplank_diagram.jpg)
+![Verplank Diagram](images-v1/verplank-v1.png)
 *How users interact with the device: touch/gesture for active exploration, glance at LEDs for passive awareness, listen for alerts*
 
-![3-D Enclosure Design Plan](images/3d-enclosure.png)
+![3-D Enclosure Design Plan](images-v1/3d-enclosure-v1.png)
 *What the device looks like: the raspberry pi and other wirings will be hidden inside the device with two cutouts where the displays will exist.*
 
 ### Storyboards
 
 #### Scenario 1: Morning Routine
-![Storyboard 1](images/storyboard1.png)
+![Storyboard 1](images-v1/storyboard1.png)
 *User checks device while getting ready; yellow LED indicates delays; user adjusts departure time*
 
 #### Scenario 2: Last-Minute Decision
-![Storyboard 2](images/storyboard2.ong)
+![Storyboard 2](images-v1/storyboard2.ong)
 *Red LED catches user's attention before leaving; touchscreen shows alternative routes*
 
 #### Scenario 3: Ambient Awareness
-![Storyboard 3](images/storyboard3.png)
+![Storyboard 3](images-v1/storyboard3.png)
 *Device provides peripheral awareness throughout the day; user unconsciously learns transit patterns*
 
 #### Scenario 4: Weather Correlation
-![Storyboard 4](images/storyboard4.png)
+![Storyboard 4](images-v1/storyboard4.png)
 *Rainy day; device recommends covered transit options based on weather conditions*
-
-### Wiring Diagram
-
-![Wiring Diagram](images/wiring_diagram.jpg)
-*Complete wiring schematic showing Raspberry Pi GPIO connections to touchscreen, LED ring, sensors, and power supply*
 
 ### Interface Mockups
 
-![Interface Mockups](images/interface_mockups.png)
+![Interface Mockups](images-v1/interface_mockups-v1.png)
 *Left to right: Main dashboard view, route detail view, settings panel*
 
 ## Archive of All Code and Design Patterns

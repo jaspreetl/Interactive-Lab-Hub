@@ -1,6 +1,6 @@
 # Roosevelt Transit Lens - Final Project
 
-[Project Plan](#project-plan) | [Functioning Project](#functioning-project) | [Documentation of Design Process](#documentation-of-design-process) | [Archive of All Code and Design Patterns](#archive-of-all-code-and-design-patterns) | [Video Demo](#video-demo) | [Reflections on Process](#reflections-on-process) | [Group Work Distribution](#group-work-distribution)
+[Project Plan](#project-plan) | [Functioning Project](#functioning-project) | [Documentation of Design Process](#documentation-of-design-process) | [Archive of All Code and Design Patterns](#archive-of-all-code-and-design-patterns) | [Video Demo](#video-demo) | [Reflections on Process](#reflections-on-process) | [Group Work Distribution and AIUsage](#group-work-distribution-and-ai-usage)
 
 ## Project Plan
 
@@ -125,33 +125,22 @@ The project plan was updated to design a better relationship between people and 
 - Touchscreen interface for exploring routes
 - Integration with weather data
 
-## Documentation of Design Process
-
 ### Verplank Diagram
 
-![Verplank Diagram](images/verplank_diagram.jpg)
-*How users interact with the device: touch/gesture for active exploration, glance at LEDs for passive awareness, listen for alerts*
+![Verplank Diagram](images/verplank.png)
+*How users interact with the device: touch/gesture for active exploration, glance at LEDs for passive awareness or listen for alerts*
 
 ![3-D Enclosure Design Plan](images/3d-enclosure.png)
-*What the device looks like: the raspberry pi and other wirings will be hidden inside the device with two cutouts where the displays will exist.*
+*What the device looks like: the raspberry pi and other wirings will be hidden inside behind the frame with a small cutout for wires*
 
 ### Storyboards
 
-#### Scenario 1: Morning Routine
-![Storyboard 1](images/storyboard1.png)
-*User checks device while getting ready; yellow LED indicates delays; user adjusts departure time*
-
-#### Scenario 2: Last-Minute Decision
-![Storyboard 2](images/storyboard2.ong)
-*Red LED catches user's attention before leaving; touchscreen shows alternative routes*
-
-#### Scenario 3: Ambient Awareness
-![Storyboard 3](images/storyboard3.png)
-*Device provides peripheral awareness throughout the day; user unconsciously learns transit patterns*
-
-#### Scenario 4: Weather Correlation
-![Storyboard 4](images/storyboard4.png)
-*Rainy day; device recommends covered transit options based on weather conditions*
+#### Scenario 1-4
+![Storyboard 1-4](images/storyboard1.png)
+*Storyboard 1: User checks device while getting ready; yellow LED indicates delays; user adjusts departure time
+Storyboard 2: Red LED catches user's attention before leaving; touchscreen shows alternative routes
+Storyboard 3: Device provides peripheral awareness throughout the day; user unconsciously learns transit patterns
+Storyboard 4: Rainy day so the device recommends covered transit options based on weather conditions*
 
 ### Wiring Diagram
 
@@ -251,6 +240,8 @@ If I were to continue this project, I would:
 
 The most valuable aspect of this project was learning how to translate abstract transit data into intuitive, ambient awareness that actually influences user behavior.
 
-## Group Work Distribution
+## Group Work Distribution and AI Usage
 
 This is an individual project. All design, development, and testing conducted by Jaspreet. 
+
+AI was used to create the storboard diagrams and assisted in developing the verplank diagram. ChatGPT was also used to create the test_led.py file to make sure that the LEDs were functioning prior to adding them into the project. All other usages of AI are documented in the [WendyTA FinalProject AI interaction log](../WendyTA/logs/FinalProject_ai_interaction_log.md).

@@ -1,5 +1,3 @@
-// script.js - Roosevelt Transit Lens Frontend Logic
-
 let currentData = null;
 let lastUpdateTime = null;
 
@@ -31,7 +29,6 @@ function updateClock() {
     }
 }
 
-// Fetch transit data from API
 async function fetchData() {
     try {
         const response = await fetch('/api/status');
@@ -47,7 +44,6 @@ async function fetchData() {
     }
 }
 
-// Force refresh data
 async function forceRefresh() {
     const refreshBtn = document.querySelector('.refresh-btn');
     refreshBtn.textContent = 'Refreshing...';
@@ -75,32 +71,22 @@ async function forceRefresh() {
 // Update UI with fetched data
 function updateUI(data) {
     if (!data) return;
-    
-    // Update overall status
     updateOverallStatus(data.overall_status);
-    
-    // Update F Train
+
     if (data.f_train) {
         updateTransitCard('f-train', data.f_train);
     }
-    
-    // Update Tram
     if (data.tram) {
         updateTram(data.tram);
     }
-    
-    // Update Ferry
     if (data.ferry) {
         updateFerry(data.ferry);
     }
-    
-    // Update Weather
     if (data.weather) {
         updateWeather(data.weather);
     }
 }
 
-// Update overall status indicator
 function updateOverallStatus(status) {
     const statusCircle = document.getElementById('status-circle');
     const statusIcon = document.getElementById('status-icon');
