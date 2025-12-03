@@ -1,36 +1,30 @@
-TODO:
-* WIRING DIAGRAM
-
-
-
-
-
 # Roosevelt Transit Lens - Final Project
 
 [Project Plan](#project-plan) | [Functioning Project](#functioning-project) | [Documentation of Design Process](#documentation-of-design-process) | [Archive of All Code and Design Patterns](#archive-of-all-code-and-design-patterns) | [Video Demo](#video-demo) | [Reflections on Process](#reflections-on-process) | [Group Work Distribution](#group-work-distribution)
 
 ## Project Plan
 
-This project will be done individually by [Your Name]
+This project will be done individually by Jaspreet
 
 ### Big Idea
 
-Roosevelt Island sits between Manhattan and Queens — connected by subway (F line), tramway, and ferry. Despite its small size, residents rely heavily on these few modes of transit, often without clear visibility into real-time conditions. Current transit apps provide information but require active checking and don't create ambient awareness of conditions.
+Roosevelt Island sits between Manhattan and Queens — connected by subway (F line), tramway, and ferry. Despite its small size, residents rely heavily on these few modes of transit, often without clear visibility into real-time conditions. Current transit apps provide information but require active checking and don't create ambient awareness of transit conditions across the city.
 
-The **Roosevelt Transit Lens** is an interactive, ambient display powered by a Raspberry Pi that visualizes live NYC transit data (subway, tram, ferry) and correlates it with environmental conditions to give users an intuitive sense of mobility around Roosevelt Island. The device acts as a "situational awareness hub" — passively communicating when it's a good time to travel, how crowded stations might be, and how environmental factors impact routes.
+The Roosevelt Transit Lens is an interactive physical transit map powered by a Raspberry Pi that transforms how people understand and interact with real-time NYC transit data. Rather than checking a phone app, users can touch stations directly on a physical subway map to see live transit conditions through an ambient LED display and detailed information screen.
 
-**Why combine multiple feedback modes?**
+**The Interactive Experience**
 
-- **Visual Display** provides detailed information when users actively seek it (departure times, delays, route options)
-- **Ambient LED Feedback** offers passive awareness without demanding attention — users can glance and understand conditions instantly (green = smooth, yellow = delays, red = disruptions)
-- **Optional Audio Cues** deliver timely alerts for significant changes without requiring visual attention (useful when preparing to leave)
+- Physical NYC Subway Map with copper touch sensors behind 12 key stations
+- Touch any station → immediate visual feedback through NeoPixel LED ring
+- LED ring visualization shows train arrival times spatially (each LED = 1 minute countdown)
+- Secondary display (iPad Mini 6) shows detailed train schedules, alerts, and weather
+- Ambient mode provides passive awareness of overall transit health when not actively using
 
-These three interaction modes are complementary rather than redundant. Each serves different user needs:
-- Active exploration (touchscreen) when planning a trip
-- Passive awareness (LEDs) for ongoing background monitoring
-- Alert notifications (audio) for time-sensitive updates
-
-The device transforms transit data from something users must actively check into ambient information that naturally informs daily routines and departure decisions.
+Design Principles:
+- Ambient First: LED shows overall status passively; detailed data only when touched
+- Spatial Mapping: LED position corresponds to time until arrival (intuitive countdown)
+- Progressive Disclosure: Touch reveals more detail; no information overload
+- Focused Context: 12 strategically chosen stations cover Roosevelt Island commute + major Manhattan hubs
 
 ### Timeline
 
@@ -53,61 +47,72 @@ The device transforms transit data from something users must actively check into
 
 **Computing & Backend:**
 - 1x Raspberry Pi 5 (already owned)
-- 1x 32GB MicroSD Card
+- 1x 32GB MicroSD Card with Raspberry Pi OS
 - 1x Power Supply for Raspberry Pi (USB-C, 5V 3A)
 - WiFi connection (for API access and web serving)
 
-**Display:** 
-- 1x iPad Mini (already owned) - serves as web interface display
-- Alternative: Any device with web browser (phone, tablet, laptop)
+**Interactive Map Components:** 
+- 1x MPR121 Capacitive Touch Sensor (already owned) - detects station touches
+- Copper tape 1/4" or 1/2" wide (already owned) - creates touch pads behind stations
+- 1x NYC Subway Map (18"×24" or larger) - printed or purchased poster
+- 1x Foam board or acrylic backing (18"×24") - mounting substrate
+- Clear contact paper or lamination - protects map surface
+- Jumper wires (Female-Female) - connects copper pads to MPR121
 
-**Ambient Feedback:**
-- 1x [NeoPixel Ring - 24 RGB LED](https://www.adafruit.com/product/1586) (for ambient status indication)
-- Alternative: 1x [Pimoroni Unicorn HAT](https://www.adafruit.com/product/2288) (LED matrix for more detailed patterns)
+**Display Components:**
+- 1x display for detailed information
+- 1x NeoPixel Ring - 12 RGB LED (already owned) - ambient status visualization
+- iPad stand or wall mount - positions display near map
 
-**Audio (Optional):**
-- 1x USB Powered Speaker or
-- Use iPad's built-in speakers for audio feedback
+**Physical Construction:**
+- Double-sided tape and hot glue - securing components
+- Cable management clips - organizing wires
+- Frame or shadow box for finished presentation (laser cut)
 
-**Sensors (Optional Enhancement):**
-- 1x [PIR Motion Sensor](https://www.adafruit.com/product/189) (to wake display on approach)
-- 1x [BME280 Sensor](https://www.adafruit.com/product/2652) (local temperature/humidity/pressure)
+**Software/APIs:**
+- MTA GTFS-Realtime API (free) - live train data
+- NYC Open Data API (free) - ferry schedules
+- OpenWeather API (free tier) - weather correlation
+- Python libraries: requests, protobuf, Flask, adafruit-circuitpython-mpr121, adafruit-circuitpython-neopixel
+- Web technologies: HTML5, CSS3, JavaScript (for iPad interface)
 
-**Enclosure & Mounting:**
-- Small enclosure for Raspberry Pi and LED ring
-- Standoffs and mounting hardware
-- Diffuser material for LED ring
-- iPad stand or wall mount (for kiosk-style setup)
-
-**Connectivity:**
-- Dupont jumper wires
-- Breadboard for prototyping
-
-**Software/APIs (Free):**
-- MTA GTFS-Realtime API (free)
-- NYC Open Data API (free)
-- OpenWeather API (free tier)
-- Python libraries: requests, protobuf, matplotlib/plotly, Flask, gpiozero
-- Web technologies: HTML5, CSS3, JavaScript (for responsive interface)
+**LED Visualization Design**
+Ambient Mode (Default):
+- Solid green = All transit systems normal
+- Pulsing yellow = Some delays detected
+- Pulsing red = Major service disruptions
+- Breathing gray = System offline
 
 ### Risks/Contingencies & Fall-back Plan
-
 **Primary Risks:**
-
-1. **API Reliability:** MTA APIs can be unstable or have rate limits
-   - *Contingency:* Cache recent data, implement graceful degradation to show "last known status"
-   - *Fall-back:* Focus on single transit mode (Roosevelt Island Tram) with most reliable data
-
-2. **Hardware Integration Complexity:** Coordinating touchscreen, LEDs, and sensors simultaneously
-   - *Contingency:* Implement features sequentially (display first, then LEDs, then audio)
-   - *Fall-back:* Prioritize touchscreen visualization over ambient feedback if time constrained
-
-3. **Real-time Data Visualization Performance:** Processing and displaying multiple feeds may strain Pi resources
-   - *Contingency:* Optimize update frequency, pre-process data
-   - *Fall-back:* Display one transit mode at a time with toggle interface
+1. **Copper Touch Pad Reliability:** Capacitive sensing can be finicky with varying materials
+   - Contingency: Test different copper pad sizes (1"-2" diameter) and spacing
+   - Fall-back: Use physical buttons if capacitive touch proves unreliable
+2. **MPR121 Sensitivity Tuning:** May detect false touches or miss real ones
+   - Contingency: Adjust threshold values in software, add debouncing
+   - Fall-back: Reduce number of stations to improve signal quality
+3. **Map Construction Complexity:** Aligning copper pads precisely behind stations
+   - Contingency: Create cardboard prototype first, test before final assembly
+   - Fall-back: Simplify to 6 stations if 12 proves too complex
+4. **I2C Bus Conflicts:** MPR121 and potential future sensors share I2C
+   - Contingency: Carefully manage I2C addresses, test each device individually
+   - Fall-back: Prioritize touch sensor over additional sensors
 
 **Minimal Viable Product (MVP):**
-If major issues arise, the core functionality will be: Display F train status with LED ambient feedback (green/yellow/red) and basic departure time display. This still demonstrates the central concept of ambient transit awareness.
+If major issues arise, the core functionality will be: 6 touch-sensitive stations (Roosevelt Island area only), LED ring showing station-specific countdowns, basic web interface showing train times. This still demonstrates the central concept of spatial, interactive transit visualization.
+Future Expansion Possibilities
+
+Multiple MPR121 boards: Scale to 48+ stations (4 boards × 12 inputs)
+Zone-based navigation: Touch neighborhood zones to filter stations
+Historical patterns: Track which stations are touched most, suggest optimal routes
+Sound feedback: Subway door chime when station selected
+Weather integration: LED patterns change based on rain/snow affecting outdoor transit
+Haptic feedback: Vibration motor confirms touch
+
+### Iteration Note
+During the first phase of the project, the Roosevelt Transit Lens was conceived as a multimodal ambient display combining a touchscreen interface, LED ring, and optional audio cues to provide a passive sense of transit conditions around Roosevelt Island. Early prototypes successfully demonstrated real-time F-train status, LED color feedback, and weather integration. See the [initial design document](READMEv1.md) for earlier documentation.
+
+The project plan was updated to design a better relationship between people and transit information. During the functional check-off and after speaking with some peers, I want to create something dynamic that lives in the physical environment, encourages glanceable, ambient interaction, uses spatial touch instead of screens, and feels like an object, not an app. The new scope makes real-time transit status intuitive and embodied, not digital and cognitive. This reframing led to the new direction where I used a physical NYC subway map and created touch-sensitive stations and spatial LED visualizations. 
 
 ## Functioning Project
 
@@ -224,7 +229,7 @@ The most significant challenge was integrating the MTA GTFS-Realtime API. The pr
 Hardware integration presented [describe challenges with GPIO, LED control, etc.]. A particularly tricky issue was [specific problem], which I eventually solved by [solution].
 
 ### User Testing Insights
-Testing with [2-3 Roosevelt Island residents/classmates] revealed surprising insights:
+The original idea 
 - **Glanceability**: Users appreciated being able to understand transit conditions without actively checking, confirming the value of ambient feedback
 - **Confusion points**: [Describe what confused users and how you iterated]
 - **Unexpected use cases**: [Describe behaviors you didn't anticipate]
