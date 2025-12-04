@@ -69,18 +69,32 @@ def on_station_touched(station):
     """Called when a station is touched on the map"""
     global selected_station
     
-    print(f"[APP] Station touched: {station['name']}")
+    timestamp = datetime.now().strftime('%H:%M:%S')
+    print("=" * 60)
+    print(f"[APP] [{timestamp}] TOUCH DETECTED!")
+    print(f"[APP] [{timestamp}] Station: {station['name']}")
+    print(f"[APP] [{timestamp}] Stop ID: {station['stop_id']}")
+    print(f"[APP] [{timestamp}] Line: {station['line']}")
+    print("=" * 60)
+    
     selected_station = station
     
     # Fetch data for this specific station
     try:
+        print(f"[APP] [{timestamp}] Fetching real-time data...")
         station_data = data_fetcher.get_station_data(station['stop_id'], station['line'])
         
         # Update LED to show station status
+        print(f"[APP] [{timestamp}] Updating LED ring and display...")
         led_controller.show_station_status(station_data)
         
+        print(f"[APP] [{timestamp}] ✓ Successfully updated display for {station['name']}")
+        print()
+        
     except Exception as e:
-        print(f"[ERROR] Failed to fetch station data: {e}")
+        print(f"[ERROR] [{timestamp}] Failed to fetch station data: {e}")
+        import traceback
+        traceback.print_exc()
 
 # Initialize touch controller
 if TOUCH_AVAILABLE and TouchController:

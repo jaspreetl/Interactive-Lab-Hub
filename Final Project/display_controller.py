@@ -135,24 +135,43 @@ class DisplayController:
     
     def show_ambient_status(self, overall_status):
         """Show overall transit status in ambient mode"""
+        timestamp = datetime.now().strftime('%H:%M:%S')
+        print(f"[DISPLAY] [{timestamp}] Updating to AMBIENT mode - Status: {overall_status.upper()}")
+        
         if not self.display:
+            print(f"[DISPLAY] [{timestamp}] No physical display - running in console mode")
             return
         
         if self.display_type == 'OLED':
             self._show_ambient_oled(overall_status)
         elif self.display_type == 'PYGAME':
             self._show_ambient_pygame(overall_status)
+        
+        print(f"[DISPLAY] [{timestamp}] ✓ Ambient display updated successfully")
     
     def show_station_detail(self, station_data):
         """Show detailed information for touched station"""
+        timestamp = datetime.now().strftime('%H:%M:%S')
+        station_name = station_data.get('name', 'Unknown')
+        station_line = station_data.get('line', '?')
+        trains_count = len(station_data.get('next_trains', []))
+        
+        print(f"[DISPLAY] [{timestamp}] ⚡ STATION TOUCHED: {station_name} ({station_line} line)")
+        print(f"[DISPLAY] [{timestamp}] → Showing {trains_count} upcoming trains")
+        
         if not self.display:
-            print(f"[DISPLAY] {station_data['name']}")
+            print(f"[DISPLAY] [{timestamp}] No physical display - running in console mode")
+            print(f"[DISPLAY] [{timestamp}] Station: {station_name} | Line: {station_line}")
+            for i, train in enumerate(station_data.get('next_trains', [])[:3], 1):
+                print(f"[DISPLAY] [{timestamp}]   Train {i}: {train.get('minutes', '?')}min to {train.get('direction', 'Unknown')}")
             return
         
         if self.display_type == 'OLED':
             self._show_station_oled(station_data)
         elif self.display_type == 'PYGAME':
             self._show_station_pygame(station_data)
+        
+        print(f"[DISPLAY] [{timestamp}] ✓ Display updated with {station_name} details")
     
     def _show_ambient_oled(self, status):
         """OLED: Show ambient status"""
@@ -187,6 +206,10 @@ class DisplayController:
             # Time
             current_time = datetime.now().strftime('%I:%M %p')
             draw.text((5, 55), current_time, font=font_small, fill=255)
+            
+            # Update indicator
+            update_time = datetime.now().strftime('%H:%M:%S')
+            draw.text((70, 55), "UPD", font=font_small, fill=255)
             
             # Display
             self.display.image(image)
@@ -249,6 +272,10 @@ class DisplayController:
             elif status == 'problems':
                 draw.text((2, 56), "PROBLEMS", font=font_small, fill=255)
             
+            # Update timestamp indicator
+            update_time = datetime.now().strftime('%H:%M')
+            draw.text((90, 56), update_time, font=font_small, fill=255)
+            
             # Display
             self.display.image(image)
             self.display.show()
@@ -293,6 +320,11 @@ class DisplayController:
             current_time = datetime.now().strftime('%I:%M %p')
             time_text = font_small.render(current_time, True, (128, 128, 128))
             self.display.blit(time_text, (20, self.height - 40))
+            
+            # Update indicator
+            update_time = datetime.now().strftime('Updated: %H:%M:%S')
+            update_text = font_small.render(update_time, True, (64, 64, 64))
+            self.display.blit(update_text, (self.width - 200, self.height - 40))
             
             pygame.display.flip()
             
@@ -354,6 +386,16 @@ class DisplayController:
             elif status == 'problems':
                 status_text = font_small.render("SERVICE DISRUPTION", True, (255, 0, 0))
                 self.display.blit(status_text, (20, self.height - 40))
+            
+            # Update timestamp indicator (top right)
+            update_time = datetime.now().strftime('%H:%M:%S')
+            update_text = font_small.render(f"Updated: {update_time}", True, (100, 100, 100))
+            update_rect = update_text.get_rect()
+            self.display.blit(update_text, (self.width - update_rect.width - 10, 5))
+            
+            # Visual indicator that this is a station view
+            indicator_text = font_small.render("STATION VIEW", True, (0, 255, 0))
+            self.display.blit(indicator_text, (20, self.height - 60))
             
             pygame.display.flip()
             
