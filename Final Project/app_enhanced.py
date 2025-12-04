@@ -9,6 +9,11 @@ from datetime import datetime
 import threading
 import time
 
+# Ensure local project directory is on sys.path so local modules import reliably
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.resolve()))
+
 import config
 from data_fetcher import TransitDataFetcher
 
@@ -21,7 +26,11 @@ try:
 except ImportError as e:
     print(f"[WARNING] Import error: {e}")
     # Fallback to original controllers if enhanced not available
-    from ambient_controller import AmbientLEDController as EnhancedLEDController, MockLEDController as MockEnhancedLEDController, NEOPIXEL_AVAILABLE
+    try:
+        from ambient_controller import AmbientLEDController as EnhancedLEDController, MockLEDController as MockEnhancedLEDController, NEOPIXEL_AVAILABLE
+    except Exception as e2:
+        # If ambient_controller cannot be imported, raise a clearer error
+        raise ImportError(f"Required module missing: {e2}")
     TOUCH_AVAILABLE = False
     DISPLAY_AVAILABLE = False
     TouchController = None
