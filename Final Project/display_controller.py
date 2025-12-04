@@ -5,10 +5,21 @@ Supports multiple display types: OLED, TFT, HDMI
 """
 
 import time
+import os
 from datetime import datetime
 
 # Try to import display libraries
 DISPLAY_TYPE = None
+
+# Configure for VNC/X11 display if needed
+if 'DISPLAY' not in os.environ:
+    # Try to detect common VNC display settings
+    if os.path.exists('/tmp/.X11-unix'):
+        # X11 is available, set default display
+        os.environ['DISPLAY'] = ':0'
+    else:
+        # Try to find active display
+        os.environ['DISPLAY'] = ':0'
 
 try:
     import board
@@ -20,8 +31,11 @@ try:
 except ImportError:
     try:
         import pygame
+        # Set SDL to use X11 for VNC compatibility
+        if 'SDL_VIDEODRIVER' not in os.environ:
+            os.environ['SDL_VIDEODRIVER'] = 'x11'
         DISPLAY_TYPE = 'PYGAME'
-        print("[INFO] Using pygame for display (HDMI/TFT)")
+        print("[INFO] Using pygame for display (HDMI/TFT/VNC)")
     except ImportError:
         print("[WARNING] No display library available")
         DISPLAY_TYPE = None
@@ -37,7 +51,11 @@ class DisplayController:
         self.height = 64
         
         if display_type == 'auto':
-            display_type = DISPLAY_TYPE
+            # Check for environment variable to force pygame mode (useful for VNC)
+            if os.environ.get('FORCE_PYGAME_DISPLAY', '').lower() in ('1', 'true', 'yes'):
+                display_type = 'PYGAME'
+            else:
+                display_type = DISPLAY_TYPE
         
         if display_type == 'OLED':
             self._init_oled()
@@ -67,11 +85,32 @@ class DisplayController:
             self.display = None
     
     def _init_pygame(self):
-        """Initialize pygame for HDMI display"""
+        """Initialize pygame for HDMI display or VNC"""
         try:
+            # Ensure DISPLAY is set for VNC
+            if 'DISPLAY' not in os.environ:
+                os.environ['DISPLAY'] = ':0'
+            
+            # Initialize pygame with error handling
             pygame.init()
-            self.width = 480
-            self.height = 320
+            
+            # Try to get display info to determine size
+            try:
+                # Get available video modes
+                modes = pygame.display.list_modes()
+                if modes and modes[0] != -1:
+                    # Use first available mode or default
+                    self.width = min(800, modes[0][0] if isinstance(modes[0], tuple) else 480)
+                    self.height = min(600, modes[0][1] if isinstance(modes[0], tuple) else 320)
+                else:
+                    self.width = 480
+                    self.height = 320
+            except:
+                # Default size if we can't detect
+                self.width = 480
+                self.height = 320
+            
+            # Create display window
             self.display = pygame.display.set_mode((self.width, self.height))
             pygame.display.set_caption("Roosevelt Transit Lens")
             self.display_type = 'PYGAME'
@@ -80,9 +119,12 @@ class DisplayController:
             self.display.fill((0, 0, 0))
             pygame.display.flip()
             
-            print("[OK] Pygame display initialized (480x320)")
+            print(f"[OK] Pygame display initialized ({self.width}x{self.height})")
+            print(f"[INFO] DISPLAY={os.environ.get('DISPLAY', 'not set')}")
         except Exception as e:
             print(f"[ERROR] Failed to initialize pygame: {e}")
+            print(f"[INFO] DISPLAY={os.environ.get('DISPLAY', 'not set')}")
+            print("[INFO] Try: export DISPLAY=:0")
             self.display = None
     
     def _init_tft(self):
