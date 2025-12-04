@@ -18,8 +18,10 @@ except (ImportError, NotImplementedError):
 import config
 
 class AmbientLEDController:
-    def __init__(self):
+    def __init__(self, display_controller=None):
         self.current_status = 'offline'
+        # optional display controller reference (enhanced apps may pass this)
+        self.display_controller = display_controller
         self.pixels = None
         self.animation_thread = None
         self.running = False
@@ -179,8 +181,10 @@ class AmbientLEDController:
 # Create a mock controller for development without hardware
 class MockLEDController:
     """Mock LED controller for development without hardware"""
-    def __init__(self):
+    def __init__(self, display_controller=None):
         self.current_status = 'offline'
+        # accept optional display controller for API compatibility
+        self.display_controller = display_controller
         print("Info: Mock LED controller initialized (no hardware)")
     
     def set_status(self, status):
