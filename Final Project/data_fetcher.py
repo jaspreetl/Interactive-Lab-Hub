@@ -217,6 +217,11 @@ class TransitDataFetcher:
             print(f"Error fetching F train data: {e}")
             return self._get_mock_train_data()
     
+    def get_f_train_status(self):
+        """Fetch F train real-time data (Roosevelt Island line)"""
+        # Convenience method: fetch F train data from Roosevelt Island station
+        return self.get_station_data('F09', 'F')
+    
     def _get_mock_train_data(self):
         """Return mock train data for development"""
         import random
@@ -452,7 +457,7 @@ class TransitDataFetcher:
         """Fetch all transit data and return combined status"""
         print("Fetching all transit data...")
         
-        f_train = self.get_f_train_status()
+        # Get F train status from Roosevelt Island station
         f_train = self.get_station_data('F09', 'F')
         tram = self.get_tram_status()
         ferry = self.get_ferry_status()

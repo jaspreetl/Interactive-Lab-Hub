@@ -265,4 +265,4 @@ The most valuable aspect of this project was learning how to translate abstract 
 
 This is an individual project. All design, development, and testing conducted by Jaspreet. 
 
-AI was used to create the storboard diagrams and assisted in developing the verplank diagram. ChatGPT was also used to create the test_led.py file to make sure that the LEDs were functioning prior to adding them into the project. All other usages of AI are documented in the [WendyTA FinalProject AI interaction log](../WendyTA/logs/FinalProject_ai_interaction_log.md). Most use cases included fixing import or file errors due to project pivot & confusions between v1 and v2 files. 
+AI was used to create the storboard diagrams and assisted in developing the verplank diagram. ChatGPT was also used to create the test_led.py file to make sure that the LEDs were functioning prior to adding them into the project. All other usages of AI are documented in the [WendyTA FinalProject AI interaction log](../WendyTA/logs/FinalProject_ai_interaction_log.md). Most use cases included debugging imports or file errors due to project pivot & confusions between v1 and v2 files. 
