@@ -453,6 +453,7 @@ class TransitDataFetcher:
         print("Fetching all transit data...")
         
         f_train = self.get_f_train_status()
+        f_train = self.get_station_data('F09', 'F')
         tram = self.get_tram_status()
         ferry = self.get_ferry_status()
         weather = self.get_weather_data()
