@@ -5,10 +5,27 @@ Store API keys, update intervals, and GPIO pin assignments
 """
 from dotenv import load_dotenv
 import os
+from pathlib import Path
+
+# Load .env from the same directory as this file (if present)
+_env_path = Path(__file__).parent / '.env'
+if _env_path.exists():
+    load_dotenv(dotenv_path=_env_path)
+else:
+    # fallback to default loader which looks at current working dir
+    load_dotenv()
+
+def _clean(v: str | None) -> str:
+    if not v:
+        return ''
+    v = v.strip()
+    if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
+        return v[1:-1]
+    return v
 
 # API Configuration
-MTA_API_KEY = os.getenv("MTA_API_KEY")
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+MTA_API_KEY = _clean(os.getenv("MTA_API_KEY"))
+OPENWEATHER_API_KEY = _clean(os.getenv("OPENWEATHER_API_KEY"))
 if not MTA_API_KEY:
     raise ValueError("Missing MTA_API_KEY in .env")
 if not OPENWEATHER_API_KEY:
