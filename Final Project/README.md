@@ -83,6 +83,26 @@ Ambient Mode (Default):
 - Pulsing red = Major service disruptions
 - Breathing gray = System offline
 
+
+
+<!-- EDIT -->
+Station Selection (12 Touch Points)
+Local to Roosevelt Island (6 stations):
+1. Roosevelt Island (F)
+2. Lexington Av/63 St (F, Q)
+3. 21 St-Queensbridge (F)
+4. Queens Plaza (E, M, R)
+5. Roosevelt Island Tram
+6. Roosevelt Island Ferry
+
+Major Manhattan Hubs (6 stations):
+7. Times Sq-42 St (1, 2, 3, 7, N, Q, R, W, S)
+8. Grand Central-42 St (4, 5, 6, 7, S)
+9. 34 St-Herald Sq (B, D, F, M, N, Q, R, W)
+10. Union Sq-14 St (4, 5, 6, L, N, Q, R, W)
+11. Canal St (J, Z, N, Q, R, W, 6)
+12. WTC/Fulton St (A, C, E, 2, 3, 4, 5, J, Z, R, W)
+
 ### Risks/Contingencies & Fall-back Plan
 **Primary Risks:**
 1. **Copper Touch Pad Reliability:** Capacitive sensing can be finicky with varying materials
@@ -99,7 +119,8 @@ Ambient Mode (Default):
    - Fall-back: Prioritize touch sensor over additional sensors
 
 **Minimal Viable Product (MVP):**
-If major issues arise, the core functionality will be: 6 touch-sensitive stations (Roosevelt Island area only), LED ring showing station-specific countdowns, basic web interface showing train times. This still demonstrates the central concept of spatial, interactive transit visualization.
+If major issues arise, the core functionality will be: 6 touch-sensitive stations (Roosevelt Island area only), LED ring showing station-specific countdowns, basic web interface showing train times. This still demonstrates the central concept of spatial, interactive transit visualization. 
+
 Future Expansion Possibilities
 
 Multiple MPR121 boards: Scale to 48+ stations (4 boards × 12 inputs)
@@ -208,9 +229,9 @@ roosevelt-transit-lens/
 ## Reflections on Process
 
 ### Design Phase
-I began by developing a clear concept for why ambient transit awareness would be valuable for Roosevelt Island residents. The Verplank diagram helped me think through different interaction modalities (touch, look, listen) and when each would be most appropriate. Creating storyboards for four distinct scenarios revealed that users need both active exploration (touchscreen) and passive awareness (LEDs) — these aren't redundant but serve different contexts.
+I began by developing a clear concept for why ambient transit awareness would be valuable for Roosevelt Island residents. The Verplank diagram helped me think through different interaction modalities (touch, look, listen) and when each would be most appropriate. Creating storyboards for four distinct scenarios revealed that users need both active exploration (touchscreen) and passive awareness (LEDs). These aren't redundant but instead serve different contexts.
 
-Presenting the initial proposal to the class generated valuable feedback. This led me to adjust how I would wire the project and inspired me to include an enclosure for the ipad and ring light. 
+Presenting the initial proposal to the class generated valuable feedback. This led me to adjust how I would wire the project and inspired me to include an enclosure for the RaspberryPi and ring light. 
 
 ### Technical Implementation
 The most significant challenge was integrating the MTA GTFS-Realtime API. The protocol buffer format required careful parsing, and [describe specific technical hurdles]. I overcame this by [solution approach].
