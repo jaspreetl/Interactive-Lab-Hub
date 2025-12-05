@@ -88,7 +88,7 @@ def on_station_touched(station):
         print(f"[APP] [{timestamp}] Updating LED ring and display...")
         led_controller.show_station_status(station_data)
         
-        print(f"[APP] [{timestamp}] ✓ Successfully updated display for {station['name']}")
+        print(f"[APP] [{timestamp}] [OK] Successfully updated display for {station['name']}")
         print()
         
     except Exception as e:
