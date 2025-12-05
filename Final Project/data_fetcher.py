@@ -363,9 +363,9 @@ class TransitDataFetcher:
         import random
         
         conditions = [
-            ('Clear', 'Clear Sky', 'sun', 68),
-            ('Clouds', 'Partly Cloudy', 'cloud', 65),
-            ('Rain', 'Light Rain', 'rain', 58),
+            ('Clear', 'Clear Sky', '☀️', 68),
+            ('Clouds', 'Partly Cloudy', '⛅', 65),
+            ('Rain', 'Light Rain', '🌧️', 58),
         ]
         
         condition = random.choice(conditions)

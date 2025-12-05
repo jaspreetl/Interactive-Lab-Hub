@@ -147,7 +147,7 @@ class DisplayController:
         elif self.display_type == 'PYGAME':
             self._show_ambient_pygame(overall_status)
         
-            print(f"[DISPLAY] [{timestamp}] [OK] Ambient display updated successfully")
+        print(f"[DISPLAY] [{timestamp}] ✓ Ambient display updated successfully")
     
     def show_station_detail(self, station_data):
         """Show detailed information for touched station"""
@@ -156,9 +156,8 @@ class DisplayController:
         station_line = station_data.get('line', '?')
         trains_count = len(station_data.get('next_trains', []))
         
-        # Use ASCII-only logging to avoid encoding issues on terminals with latin-1
-        print(f"[DISPLAY] [{timestamp}] STATION TOUCHED: {station_name} ({station_line} line)")
-        print(f"[DISPLAY] [{timestamp}] Showing {trains_count} upcoming trains")
+        print(f"[DISPLAY] [{timestamp}] ⚡ STATION TOUCHED: {station_name} ({station_line} line)")
+        print(f"[DISPLAY] [{timestamp}] → Showing {trains_count} upcoming trains")
         
         if not self.display:
             print(f"[DISPLAY] [{timestamp}] No physical display - running in console mode")
@@ -172,7 +171,7 @@ class DisplayController:
         elif self.display_type == 'PYGAME':
             self._show_station_pygame(station_data)
         
-            print(f"[DISPLAY] [{timestamp}] [OK] Display updated with {station_name} details")
+        print(f"[DISPLAY] [{timestamp}] ✓ Display updated with {station_name} details")
     
     def _show_ambient_oled(self, status):
         """OLED: Show ambient status"""
