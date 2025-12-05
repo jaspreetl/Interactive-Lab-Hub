@@ -48,9 +48,6 @@ LINE_TO_FEED = {
     'L': 'l',
 }
 
-# NYC Ferry API
-FERRY_API_URL = 'https://data.cityofnewyork.us/resource/7jtt-s6ch.json'
-
 # Roosevelt Island Tram (manual schedule - no real-time API available)
 TRAM_SCHEDULE = {
     'frequency_minutes': 7.5,  # Every 7.5 minutes during peak
@@ -66,8 +63,7 @@ WEATHER_LOCATION = {
 # Update Intervals (in seconds)
 UPDATE_INTERVALS = {
     'transit': 30,      # Update transit data every 30 seconds
-    'weather': 300,     # Update weather every 5 minutes
-    'ferry': 60         # Update ferry every minute
+    'weather': 300      # Update weather every 5 minutes
 }
 
 # GPIO Pin Assignments (for Raspberry Pi)

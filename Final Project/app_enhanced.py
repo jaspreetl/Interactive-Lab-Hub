@@ -157,14 +157,13 @@ def index():
 def get_status():
     """Get all transit status data"""
     with data_lock:
-        response = current_data if current_data else {
+        return jsonify(current_data if current_data else {
             'overall_status': 'offline',
             'f_train': {'status': 'offline', 'next_trains': [], 'alerts': []},
             'tram': {'status': 'offline'},
-            'ferry': {'status': 'offline'},
             'weather': {},
             'timestamp': datetime.now().isoformat()
-        }
+        })
         
         # Add selected station if any
         if selected_station:
@@ -187,9 +186,6 @@ def get_station_detail(stop_id):
             line = 'N'
         elif stop_id == 'TRAM':
             return jsonify(data_fetcher.get_tram_status())
-        elif stop_id == 'FERRY':
-            return jsonify(data_fetcher.get_ferry_status())
-        else:
             return jsonify({'error': 'Unknown station'}), 404
         
         station_data = data_fetcher.get_station_data(stop_id, line)

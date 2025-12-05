@@ -88,7 +88,6 @@ def get_status():
             'overall_status': 'offline',
             'f_train': {'status': 'offline', 'next_trains': [], 'alerts': []},
             'tram': {'status': 'offline'},
-            'ferry': {'status': 'offline'},
             'weather': {},
             'timestamp': datetime.now().isoformat()
         })
