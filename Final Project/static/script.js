@@ -196,14 +196,14 @@ function updateWeather(data) {
     
     // Set weather icon based on condition
     const iconMap = {
-        'Clear': '☀️',
-        'Clouds': '⛅',
-        'Rain': '🌧️',
-        'Snow': '❄️',
-        'Thunderstorm': '⛈️',
-        'Drizzle': '🌦️',
-        'Mist': '🌫️',
-        'Fog': '🌫️'
+        'Clear': 'sun',
+        'Clouds': 'cloud',
+        'Rain': 'rain',
+        'Snow': 'snow',
+        'Thunderstorm': 'storm',
+        'Drizzle': 'drizzle',
+        'Mist': 'mist',
+        'Fog': 'fog'
     };
     
     weatherIcon.textContent = iconMap[data.condition] || '⛅';
