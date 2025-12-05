@@ -3,33 +3,10 @@
 Configuration file for Roosevelt Transit Lens
 Store API keys, update intervals, and GPIO pin assignments
 """
-from dotenv import load_dotenv
-import os
-from pathlib import Path
-
-# Load .env from the same directory as this file (if present)
-_env_path = Path(__file__).parent / '.env'
-if _env_path.exists():
-    load_dotenv(dotenv_path=_env_path)
-else:
-    # fallback to default loader which looks at current working dir
-    load_dotenv()
-
-def _clean(v: str | None) -> str:
-    if not v:
-        return ''
-    v = v.strip()
-    if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
-        return v[1:-1]
-    return v
 
 # API Configuration
-MTA_API_KEY = _clean(os.getenv("MTA_API_KEY"))
-OPENWEATHER_API_KEY = _clean(os.getenv("OPENWEATHER_API_KEY"))
-if not MTA_API_KEY:
-    raise ValueError("Missing MTA_API_KEY in .env")
-if not OPENWEATHER_API_KEY:
-    raise ValueError("Missing OPENWEATHER_API_KEY in .env")
+MTA_API_KEY = "YOUR_MTA_API_KEY_HERE"  # Get from https://api.mta.info/
+OPENWEATHER_API_KEY = "YOUR_OPENWEATHER_API_KEY_HERE"  # Get from https://openweathermap.org/api
 
 # MTA GTFS-Realtime Feed URLs
 # These feeds cover all the lines we need
@@ -48,15 +25,15 @@ STATION_IDS = {
     'F09': {'name': 'Roosevelt Island', 'lines': ['F']},
     'F11': {'name': 'Lexington Av/63 St', 'lines': ['F', 'Q']},
     'F08': {'name': '21 St-Queensbridge', 'lines': ['F']},
-    'R20': {'name': 'Lexington Av/59 St', 'lines': ['N', 'R', 'W', '4', '5', '6']},
+    'F15': {'name': '57 St-7 Av', 'lines': ['F']},
     'G08': {'name': 'Queens Plaza', 'lines': ['E', 'M', 'R']},
     'G06': {'name': 'Court Sq-23 St', 'lines': ['E', 'M', 'G']},
-    '902': {'name': 'Times Sq-42 St', 'lines': ['1', '2', '3', '7', 'N', 'Q', 'R', 'W', 'S']},
-    'D16': {'name': '34 St-Herald Sq', 'lines': ['B', 'D', 'F', 'M', 'N', 'Q', 'R', 'W']},
+    'E12': {'name': '5 Av/53 St', 'lines': ['E', 'M']},
     '631': {'name': 'Grand Central-42 St', 'lines': ['4', '5', '6', '7', 'S']},
+    'R09': {'name': 'Queensboro Plaza', 'lines': ['N', 'W', '7']},
+    'E13': {'name': 'Lexington Av/53 St', 'lines': ['E', 'M']},
     '635': {'name': 'Union Sq-14 St', 'lines': ['4', '5', '6', 'L', 'N', 'Q', 'R', 'W']},
-    'M22': {'name': 'Canal St', 'lines': ['J', 'Z', 'N', 'Q', 'R', 'W', '6']},
-    'A38': {'name': 'WTC/Fulton St', 'lines': ['A', 'C', 'E', '2', '3', '4', '5', 'J', 'Z', 'R', 'W']},
+    '902': {'name': 'Times Sq-42 St', 'lines': ['1', '2', '3', '7', 'N', 'Q', 'R', 'W', 'S']},
 }
 
 # Map lines to feed URLs

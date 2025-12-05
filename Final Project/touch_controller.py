@@ -28,15 +28,15 @@ class TouchController:
             0: {'name': 'Roosevelt Island', 'line': 'F', 'stop_id': 'F09'},
             1: {'name': 'Lexington Av/63 St', 'line': 'F', 'stop_id': 'F11'},
             2: {'name': '21 St-Queensbridge', 'line': 'F', 'stop_id': 'F08'},
-            3: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'R20'},
+            3: {'name': '57 St-7 Av', 'line': 'F', 'stop_id': 'F15'},
             4: {'name': 'Queens Plaza', 'line': 'E', 'stop_id': 'G08'},
             5: {'name': 'Court Sq-23 St', 'line': 'E', 'stop_id': 'G06'},
-            6: {'name': 'Times Sq-42 St', 'line': 'S', 'stop_id': '902'},
-            7: {'name': '34 St-Herald Sq', 'line': 'B', 'stop_id': 'D16'},
-            8: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
-            9: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
-            10: {'name': 'Canal St', 'line': 'J', 'stop_id': 'M22'},
-            11: {'name': 'WTC/Fulton St', 'line': 'A', 'stop_id': 'A38'},
+            6: {'name': '34 St-Penn Station', 'line': 'A', 'stop_id': 'A28'},
+            7: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
+            8: {'name': 'Queensboro Plaza', 'line': 'N', 'stop_id': 'R09'},
+            9: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'E13'},
+            10: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
+            11: {'name': 'Times Sq-42 St', 'line': 'N', 'stop_id': '902'},
         }
         
         if TOUCH_AVAILABLE:
@@ -110,46 +110,33 @@ class MockTouchController:
         self.on_touch_callback = on_touch_callback
         print("[INFO] Mock touch controller initialized")
         print("[INFO] Use /api/touch/<station_id> to simulate touches")
-    
-    def simulate_touch(self, pad_number):
-        """Simulate a touch event (for testing)"""
-        station_map = {
+        
+        # Keep mock map in sync with real map
+        self.station_map = {
             0: {'name': 'Roosevelt Island', 'line': 'F', 'stop_id': 'F09'},
             1: {'name': 'Lexington Av/63 St', 'line': 'F', 'stop_id': 'F11'},
             2: {'name': '21 St-Queensbridge', 'line': 'F', 'stop_id': 'F08'},
-            3: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'R20'},
+            3: {'name': '57 St-7 Av', 'line': 'F', 'stop_id': 'F15'},
             4: {'name': 'Queens Plaza', 'line': 'E', 'stop_id': 'G08'},
             5: {'name': 'Court Sq-23 St', 'line': 'E', 'stop_id': 'G06'},
-            6: {'name': 'Times Sq-42 St', 'line': 'S', 'stop_id': '902'},
-            7: {'name': '34 St-Herald Sq', 'line': 'B', 'stop_id': 'D16'},
-            8: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
-            9: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
-            10: {'name': 'Canal St', 'line': 'J', 'stop_id': 'M22'},
-            11: {'name': 'WTC/Fulton St', 'line': 'A', 'stop_id': 'A38'},
+            6: {'name': '34 St-Penn Station', 'line': 'A', 'stop_id': 'A28'},
+            7: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
+            8: {'name': 'Queensboro Plaza', 'line': 'N', 'stop_id': 'R09'},
+            9: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'E13'},
+            10: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
+            11: {'name': 'Times Sq-42 St', 'line': 'N', 'stop_id': '902'},
         }
-        
-        station = station_map.get(pad_number)
+    
+    def simulate_touch(self, pad_number):
+        """Simulate a touch event (for testing)"""
+        station = self.station_map.get(pad_number)
         if station and self.on_touch_callback:
             print(f"[SIMULATED TOUCH] {station['name']}")
             self.on_touch_callback(station)
     
     def get_station_info(self, pad_number):
         """Get station information"""
-        station_map = {
-            0: {'name': 'Roosevelt Island', 'line': 'F', 'stop_id': 'F09'},
-            1: {'name': 'Lexington Av/63 St', 'line': 'F', 'stop_id': 'F11'},
-            2: {'name': '21 St-Queensbridge', 'line': 'F', 'stop_id': 'F08'},
-            3: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'R20'},
-            4: {'name': 'Queens Plaza', 'line': 'E', 'stop_id': 'G08'},
-            5: {'name': 'Court Sq-23 St', 'line': 'E', 'stop_id': 'G06'},
-            6: {'name': 'Times Sq-42 St', 'line': 'S', 'stop_id': '902'},
-            7: {'name': '34 St-Herald Sq', 'line': 'B', 'stop_id': 'D16'},
-            8: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
-            9: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
-            10: {'name': 'Canal St', 'line': 'J', 'stop_id': 'M22'},
-            11: {'name': 'WTC/Fulton St', 'line': 'A', 'stop_id': 'A38'},
-        }
-        return station_map.get(pad_number)
+        return self.station_map.get(pad_number)
     
     def shutdown(self):
         print("[INFO] Mock touch controller shut down")
