@@ -1,276 +1,157 @@
-# app_enhanced.py
+#!/usr/bin/env python3
 """
-Enhanced Flask app with interactive touch map support
+Roosevelt Transit Lens - Enhanced App
+Web-based transit information display without LED controller
 """
 
 from flask import Flask, render_template, jsonify
-from flask_cors import CORS
-from datetime import datetime
 import threading
 import time
-
-# Ensure local project directory is on sys.path so local modules import reliably
-import sys
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.resolve()))
-
-import config
+from datetime import datetime
 from data_fetcher import TransitDataFetcher
+import config
 
-# Import enhanced controllers
-try:
-    from touch_controller import TouchController, MockTouchController, TOUCH_AVAILABLE
-    from enhanced_ambient_controller import EnhancedLEDController, MockEnhancedLEDController, NEOPIXEL_AVAILABLE
-    from display_controller import DisplayController, MockDisplayController
-    DISPLAY_AVAILABLE = True
-except ImportError as e:
-    print(f"[WARNING] Import error: {e}")
-    # Fallback to original controllers if enhanced not available
-    try:
-        from ambient_controller import AmbientLEDController as EnhancedLEDController, MockLEDController as MockEnhancedLEDController, NEOPIXEL_AVAILABLE
-    except Exception as e2:
-        # If ambient_controller cannot be imported, raise a clearer error
-        raise ImportError(f"Required module missing: {e2}")
-    TOUCH_AVAILABLE = False
-    DISPLAY_AVAILABLE = False
-    TouchController = None
-    MockTouchController = None
-    DisplayController = None
-    MockDisplayController = None
-
-# Initialize Flask app
 app = Flask(__name__)
-CORS(app)
 
-# Initialize data fetcher
-data_fetcher = TransitDataFetcher()
+# Global state
+transit_data = {
+    'overall_status': 'offline',
+    'f_train': None,
+    'weather': None,
+    'timestamp': None
+}
 
-# Global variables
-current_data = {}
-selected_station = None
 data_lock = threading.Lock()
 
-# Initialize display controller first
-if DISPLAY_AVAILABLE and DisplayController:
-    display_controller = DisplayController(display_type='auto')
-elif MockDisplayController:
-    display_controller = MockDisplayController()
-else:
-    display_controller = None
-
-# Initialize LED controller with display reference
-if NEOPIXEL_AVAILABLE:
-    led_controller = EnhancedLEDController(display_controller=display_controller)
-else:
-    led_controller = MockEnhancedLEDController(display_controller=display_controller)
-
-# Touch event handler
-def on_station_touched(station):
-    """Called when a station is touched on the map"""
-    global selected_station
+def fetch_transit_data():
+    """Background thread to fetch transit data periodically"""
+    global transit_data
     
-    timestamp = datetime.now().strftime('%H:%M:%S')
-    print("=" * 60)
-    print(f"[APP] [{timestamp}] TOUCH DETECTED!")
-    print(f"[APP] [{timestamp}] Station: {station['name']}")
-    print(f"[APP] [{timestamp}] Stop ID: {station['stop_id']}")
-    print(f"[APP] [{timestamp}] Line: {station['line']}")
-    print("=" * 60)
-    
-    selected_station = station
-    
-    # Fetch data for this specific station
-    try:
-        print(f"[APP] [{timestamp}] Fetching real-time data...")
-        station_data = data_fetcher.get_station_data(station['stop_id'], station['line'])
-        
-        # Update LED to show station status
-        print(f"[APP] [{timestamp}] Updating LED ring and display...")
-        led_controller.show_station_status(station_data)
-        
-        print(f"[APP] [{timestamp}] [OK] Successfully updated display for {station['name']}")
-        print()
-        
-    except Exception as e:
-        print(f"[ERROR] [{timestamp}] Failed to fetch station data: {e}")
-        import traceback
-        traceback.print_exc()
-
-# Initialize touch controller
-if TOUCH_AVAILABLE and TouchController:
-    touch_controller = TouchController(on_touch_callback=on_station_touched)
-elif MockTouchController:
-    touch_controller = MockTouchController(on_touch_callback=on_station_touched)
-else:
-    touch_controller = None
-
-def background_updater():
-    """Background thread to continuously fetch transit data"""
-    global current_data
-    
-    print("Background updater started...")
-    
-    # Initial fetch
-    try:
-        print("Performing initial data fetch...")
-        new_data = data_fetcher.get_all_transit_data()
-        with data_lock:
-            current_data = new_data
-        
-        # Update ambient LED status
-        led_controller.set_ambient_status(new_data['overall_status'])
-        
-        print(f"[OK] Initial data loaded successfully")
-    except Exception as e:
-        print(f"[ERROR] Error in initial fetch: {e}")
+    fetcher = TransitDataFetcher()
     
     while True:
         try:
-            # Fetch all transit data
-            new_data = data_fetcher.get_all_transit_data()
+            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Fetching transit data...")
             
+            # Fetch all data
+            data = fetcher.get_all_transit_data()
+            
+            # Update global state
             with data_lock:
-                current_data = new_data
+                transit_data = data
             
-            # Update ambient LED (only if not showing station detail)
-            if led_controller.mode == 'ambient':
-                led_controller.set_ambient_status(new_data['overall_status'])
-            
-            print(f"[OK] Data updated at {datetime.now().strftime('%H:%M:%S')}")
-            
-            time.sleep(config.UPDATE_INTERVALS['transit'])
+            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Data updated successfully")
             
         except Exception as e:
-            print(f"[ERROR] Error in background updater: {e}")
-            time.sleep(5)
+            print(f"[APP] Error fetching data: {e}")
+        
+        # Wait before next update
+        time.sleep(config.UPDATE_INTERVALS['transit'])
 
-# Start background updater
-updater_thread = threading.Thread(target=background_updater, daemon=True)
-updater_thread.start()
+# Start background data fetching
+data_thread = threading.Thread(target=fetch_transit_data, daemon=True)
+data_thread.start()
 
 @app.route('/')
 def index():
-    """Serve main dashboard page"""
+    """Main page"""
     return render_template('index.html')
 
 @app.route('/api/status')
-def get_status():
-    """Get all transit status data"""
+def api_status():
+    """Get current transit status"""
     with data_lock:
-        return jsonify(current_data if current_data else {
-            'overall_status': 'offline',
-            'f_train': {'status': 'offline', 'next_trains': [], 'alerts': []},
-            'tram': {'status': 'offline'},
-            'weather': {},
-            'timestamp': datetime.now().isoformat()
-        })
-        
-        # Add selected station if any
-        if selected_station:
-            response['selected_station'] = selected_station
-        
-        return jsonify(response)
-
-@app.route('/api/station/<stop_id>')
-def get_station_detail(stop_id):
-    """Get detailed data for specific station"""
-    try:
-        # Determine line from stop_id
-        if stop_id.startswith('F'):
-            line = 'F'
-        elif stop_id.startswith('Q'):
-            line = 'Q'
-        elif stop_id.startswith('E'):
-            line = 'E'
-        elif stop_id.startswith('N'):
-            line = 'N'
-        else:
-            return jsonify({'error': 'Unknown station'}), 404
-        
-        station_data = data_fetcher.get_station_data(stop_id, line)
-        return jsonify(station_data)
-        
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-@app.route('/api/touch/<int:pad_number>')
-def simulate_touch(pad_number):
-    """Simulate touching a station (for testing without hardware)"""
-    if touch_controller:
-        station = touch_controller.get_station_info(pad_number)
-        if station:
-            on_station_touched(station)
-            return jsonify({
-                'success': True,
-                'station': station,
-                'message': f'Simulated touch on {station["name"]}'
-            })
-    
-    return jsonify({'success': False, 'error': 'Touch controller not available'}), 400
-
-@app.route('/api/led/ambient')
-def return_to_ambient():
-    """Return LED display to ambient mode"""
-    global selected_station
-    selected_station = None
-    led_controller.return_to_ambient()
-    return jsonify({'success': True, 'mode': 'ambient'})
-
-@app.route('/api/led/test')
-def test_led():
-    """Test LED ring with rainbow animation"""
-    try:
-        led_controller.rainbow_test()
-        return jsonify({'success': True, 'message': 'Rainbow test running'})
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)}), 500
-
-@app.route('/api/debug')
-def debug_info():
-    """Debug endpoint"""
-    now = datetime.now()
-    return jsonify({
-        'current_time': now.strftime('%H:%M:%S'),
-        'led_mode': led_controller.mode if hasattr(led_controller, 'mode') else 'unknown',
-        'selected_station': selected_station,
-        'touch_available': TOUCH_AVAILABLE,
-        'led_available': NEOPIXEL_AVAILABLE
-    })
-
-@app.route('/health')
-def health_check():
-    """Health check endpoint"""
-    return jsonify({
-        'status': 'healthy',
-        'timestamp': datetime.now().isoformat(),
-        'features': {
-            'touch': TOUCH_AVAILABLE,
-            'led': NEOPIXEL_AVAILABLE
-        }
-    })
+        return jsonify(transit_data)
 
 @app.route('/api/station/<stop_id>/<line>')
 def get_station_detail(stop_id, line):
     """Get detailed information for a specific station and line"""
     try:
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Fetching station: {stop_id} ({line} line)")
+        
         fetcher = TransitDataFetcher()
         station_data = fetcher.get_station_data(stop_id, line)
+        
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Station data retrieved:")
+        print(f"[APP]   Name: {station_data.get('name')}")
+        print(f"[APP]   Status: {station_data.get('status')}")
+        print(f"[APP]   Trains: {len(station_data.get('next_trains', []))}")
+        
         return jsonify(station_data)
     except Exception as e:
-        print(f"Error fetching station detail: {e}")
+        print(f"[APP] Error fetching station detail: {e}")
         return jsonify({'error': str(e)}), 500
 
+@app.route('/api/refresh')
+def api_refresh():
+    """Force refresh all data"""
+    try:
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Force refresh requested")
+        
+        fetcher = TransitDataFetcher()
+        data = fetcher.get_all_transit_data()
+        
+        with data_lock:
+            global transit_data
+            transit_data = data
+        
+        return jsonify({'success': True, 'data': data})
+    except Exception as e:
+        print(f"[APP] Error refreshing: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/touch/<stop_id>/<line>')
+def api_touch(stop_id, line):
+    """Handle station touch event (for hardware integration)"""
+    try:
+        print(f"\n{'='*60}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] TOUCH DETECTED!")
+        
+        # Get station info
+        station_info = config.STATION_IDS.get(stop_id, {})
+        station_name = station_info.get('name', 'Unknown')
+        
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Station: {station_name}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Stop ID: {stop_id}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Line: {line}")
+        print(f"{'='*60}")
+        
+        # Fetch station data
+        fetcher = TransitDataFetcher()
+        station_data = fetcher.get_station_data(stop_id, line)
+        
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Data fetched - Status: {station_data.get('status')}")
+        
+        # Log train arrivals
+        trains = station_data.get('next_trains', [])
+        if trains:
+            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Upcoming trains:")
+            for i, train in enumerate(trains[:5], 1):
+                print(f"[APP]   Train {i}: {train['minutes']}min to {train['direction']}")
+        else:
+            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] No upcoming trains")
+        
+        return jsonify({
+            'success': True,
+            'station': station_name,
+            'data': station_data
+        })
+        
+    except Exception as e:
+        print(f"[APP] Error handling touch: {e}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 if __name__ == '__main__':
-    print("=" * 60)
-    print("Roosevelt Transit Lens - Interactive Map Edition")
-    print("=" * 60)
-    print(f"[OK] Flask server starting on port {config.FLASK_CONFIG['port']}")
-    print(f"[OK] Touch support: {'Enabled' if TOUCH_AVAILABLE else 'Simulation mode'}")
-    print(f"[OK] LED support: {'Enabled' if NEOPIXEL_AVAILABLE else 'Simulation mode'}")
-    print(f"[OK] Display support: {'Enabled' if DISPLAY_AVAILABLE else 'Simulation mode'}")
-    print(f"[OK] Access at: http://192.168.1.40:{config.FLASK_CONFIG['port']}")
-    print("=" * 60)
-    print()
+    print("\n" + "="*60)
+    print("Roosevelt Transit Lens - Enhanced App")
+    print("="*60)
+    print(f"Starting server at http://{config.FLASK_CONFIG['host']}:{config.FLASK_CONFIG['port']}")
+    print("Press Ctrl+C to stop")
+    print("="*60 + "\n")
+    
+    # Give the data thread a moment to fetch initial data
+    print("Fetching initial transit data...")
+    time.sleep(2)
     
     app.run(
         host=config.FLASK_CONFIG['host'],
