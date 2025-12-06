@@ -153,39 +153,39 @@ function updateTransitCard(cardId, data) {
     }
 }
 
-// Update tram card
-function updateTram(data) {
-    const statusLabel = document.getElementById('tram-status');
-    const timeValue = document.getElementById('tram-time');
+// // Update tram card
+// function updateTram(data) {
+//     const statusLabel = document.getElementById('tram-status');
+//     const timeValue = document.getElementById('tram-time');
     
-    statusLabel.classList.remove('normal', 'delays', 'problems');
+//     statusLabel.classList.remove('normal', 'delays', 'problems');
     
-    if (data.status === 'normal') {
-        statusLabel.classList.add('normal');
-        statusLabel.textContent = 'Operating';
-        timeValue.textContent = data.next_departure ? `${data.next_departure} min` : '--';
-    } else {
-        statusLabel.textContent = 'Not Operating';
-        timeValue.textContent = '--';
-    }
-}
+//     if (data.status === 'normal') {
+//         statusLabel.classList.add('normal');
+//         statusLabel.textContent = 'Operating';
+//         timeValue.textContent = data.next_departure ? `${data.next_departure} min` : '--';
+//     } else {
+//         statusLabel.textContent = 'Not Operating';
+//         timeValue.textContent = '--';
+//     }
+// }
 
-// Update ferry card
-function updateFerry(data) {
-    const statusLabel = document.getElementById('ferry-status');
-    const timeValue = document.getElementById('ferry-time');
+// // Update ferry card
+// function updateFerry(data) {
+//     const statusLabel = document.getElementById('ferry-status');
+//     const timeValue = document.getElementById('ferry-time');
     
-    statusLabel.classList.remove('normal', 'delays', 'problems');
-    statusLabel.classList.add(data.status);
+//     statusLabel.classList.remove('normal', 'delays', 'problems');
+//     statusLabel.classList.add(data.status);
     
-    if (data.status === 'normal') {
-        statusLabel.textContent = 'Normal Service';
-        timeValue.textContent = data.next_arrival ? `${data.next_arrival} min` : '--';
-    } else {
-        statusLabel.textContent = 'Service Issue';
-        timeValue.textContent = '--';
-    }
-}
+//     if (data.status === 'normal') {
+//         statusLabel.textContent = 'Normal Service';
+//         timeValue.textContent = data.next_arrival ? `${data.next_arrival} min` : '--';
+//     } else {
+//         statusLabel.textContent = 'Service Issue';
+//         timeValue.textContent = '--';
+//     }
+// }
 
 // Update weather card
 function updateWeather(data) {
@@ -311,55 +311,55 @@ function showFTrainDetail(header, content, data) {
     content.innerHTML = trainsHTML + alertsHTML;
 }
 
-// Show Tram detail
-function showTramDetail(header, content, data) {
-    header.innerHTML = `
-        <div class="transit-icon tram-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
-            <span>🚡</span>
-        </div>
-        <h2>Roosevelt Tram</h2>
-        <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
-    `;
+// // Show Tram detail
+// function showTramDetail(header, content, data) {
+//     header.innerHTML = `
+//         <div class="transit-icon tram-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
+//             <span>🚡</span>
+//         </div>
+//         <h2>Roosevelt Tram</h2>
+//         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
+//     `;
     
-    content.innerHTML = `
-        <div class="upcoming-trains">
-            <h3>Schedule Information</h3>
-            <div class="train-item">
-                <div class="train-time">${data.next_departure ? `${data.next_departure} min` : 'Not operating'}</div>
-                <div class="train-info">${data.frequency}</div>
-            </div>
-            <p style="margin-top: 20px; color: #888; font-size: 13px;">
-                The Roosevelt Island Tramway operates daily from 6:00 AM to 2:00 AM.
-                Frequency increases during rush hours.
-            </p>
-        </div>
-    `;
-}
+//     content.innerHTML = `
+//         <div class="upcoming-trains">
+//             <h3>Schedule Information</h3>
+//             <div class="train-item">
+//                 <div class="train-time">${data.next_departure ? `${data.next_departure} min` : 'Not operating'}</div>
+//                 <div class="train-info">${data.frequency}</div>
+//             </div>
+//             <p style="margin-top: 20px; color: #888; font-size: 13px;">
+//                 The Roosevelt Island Tramway operates daily from 6:00 AM to 2:00 AM.
+//                 Frequency increases during rush hours.
+//             </p>
+//         </div>
+//     `;
+// }
 
-// Show Ferry detail
-function showFerryDetail(header, content, data) {
-    header.innerHTML = `
-        <div class="transit-icon ferry-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
-            <span>⛴</span>
-        </div>
-        <h2>NYC Ferry</h2>
-        <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
-    `;
+// // Show Ferry detail
+// function showFerryDetail(header, content, data) {
+//     header.innerHTML = `
+//         <div class="transit-icon ferry-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
+//             <span></span>
+//         </div>
+//         <h2>NYC Ferry</h2>
+//         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
+//     `;
     
-    content.innerHTML = `
-        <div class="upcoming-trains">
-            <h3>Next Arrival</h3>
-            <div class="train-item">
-                <div class="train-time">${data.next_arrival ? `${data.next_arrival} min` : '--'}</div>
-                <div class="train-info">${data.route}</div>
-            </div>
-            <p style="margin-top: 20px; color: #888; font-size: 13px;">
-                NYC Ferry provides service between Roosevelt Island and various NYC locations.
-                Check weather conditions for outdoor travel comfort.
-            </p>
-        </div>
-    `;
-}
+//     content.innerHTML = `
+//         <div class="upcoming-trains">
+//             <h3>Next Arrival</h3>
+//             <div class="train-item">
+//                 <div class="train-time">${data.next_arrival ? `${data.next_arrival} min` : '--'}</div>
+//                 <div class="train-info">${data.route}</div>
+//             </div>
+//             <p style="margin-top: 20px; color: #888; font-size: 13px;">
+//                 NYC Ferry provides service between Roosevelt Island and various NYC locations.
+//                 Check weather conditions for outdoor travel comfort.
+//             </p>
+//         </div>
+//     `;
+// }
 
 // Hide detail view
 function hideDetail() {
