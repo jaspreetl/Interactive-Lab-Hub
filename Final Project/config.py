@@ -34,6 +34,9 @@ STATION_IDS = {
     'E13': {'name': 'Lexington Av/53 St', 'lines': ['E', 'M']},
     '635': {'name': 'Union Sq-14 St', 'lines': ['4', '5', '6', 'L', 'N', 'Q', 'R', 'W']},
     '902': {'name': 'Times Sq-42 St', 'lines': ['1', '2', '3', '7', 'N', 'Q', 'R', 'W', 'S']},
+    'A28': {'name': 'W 4 St-Washington Sq', 'lines': ['A', 'C', 'E', 'B', 'D', 'F', 'M']},
+    'D16': {'name': '34 St-Herald Sq', 'lines': ['B', 'D', 'F', 'M', 'N', 'Q', 'R', 'W']},
+    'A38': {'name': 'Fulton St', 'lines': ['A', 'C', 'J', 'Z', '2', '3', '4', '5']},
 }
 
 # Map lines to feed URLs
@@ -53,6 +56,9 @@ TRAM_SCHEDULE = {
     'frequency_minutes': 7.5,  # Every 7.5 minutes during peak
     'operating_hours': {'start': '06:00', 'end': '02:00'}
 }
+
+# NYC Ferry API
+FERRY_API_URL = "https://data.cityofnewyork.us/resource/sqhz-wtqh.json"
 
 # Weather API Configuration
 WEATHER_LOCATION = {
@@ -95,4 +101,28 @@ FLASK_CONFIG = {
 DELAY_THRESHOLDS = {
     'minor': 5,   # 5+ minutes = yellow
     'major': 10   # 10+ minutes = red
+}
+
+# MTA Official Line Colors (for display purposes)
+MTA_LINE_COLORS = {
+    # IRT Broadway-Seventh Avenue Line (Red)
+    '1': '#EE352E', '2': '#EE352E', '3': '#EE352E',
+    # IRT Lexington Avenue Line (Green)
+    '4': '#00933C', '5': '#00933C', '6': '#00933C',
+    # IRT Flushing Line (Purple)
+    '7': '#B933AD',
+    # BMT Canarsie Line (Gray)
+    'L': '#A7A9AC',
+    # IND Eighth Avenue Line (Blue)
+    'A': '#0039A6', 'C': '#0039A6', 'E': '#0039A6',
+    # IND Sixth Avenue Line (Orange)
+    'B': '#FF6319', 'D': '#FF6319', 'F': '#FF6319', 'M': '#FF6319',
+    # IND Crosstown Line (Light Green)
+    'G': '#6CBE45',
+    # BMT Broadway Line (Yellow)
+    'N': '#FCCC0A', 'Q': '#FCCC0A', 'R': '#FCCC0A', 'W': '#FCCC0A',
+    # BMT Nassau Street Line (Brown)
+    'J': '#996633', 'Z': '#996633',
+    # Shuttles (Gray)
+    'S': '#808183'
 }

@@ -261,6 +261,34 @@ async function showDetail(stationId, line) {
     }
 }
 
+// MTA Line Colors (official colors)
+const MTA_COLORS = {
+    // IRT Broadway-Seventh Avenue Line
+    '1': '#EE352E', '2': '#EE352E', '3': '#EE352E',
+    // IRT Lexington Avenue Line
+    '4': '#00933C', '5': '#00933C', '6': '#00933C',
+    // IRT Flushing Line
+    '7': '#B933AD',
+    // BMT Canarsie Line
+    'L': '#A7A9AC',
+    // IND Eighth Avenue Line
+    'A': '#0039A6', 'C': '#0039A6', 'E': '#0039A6',
+    // IND Sixth Avenue Line
+    'B': '#FF6319', 'D': '#FF6319', 'F': '#FF6319', 'M': '#FF6319',
+    // IND Crosstown Line
+    'G': '#6CBE45',
+    // BMT Broadway Line
+    'N': '#FCCC0A', 'Q': '#FCCC0A', 'R': '#FCCC0A', 'W': '#FCCC0A',
+    // BMT Nassau Street Line
+    'J': '#996633', 'Z': '#996633',
+    // Shuttles
+    'S': '#808183'
+};
+
+function getLineColor(line) {
+    return MTA_COLORS[line] || '#808183';
+}
+
 // Show station detail directly (used by both manual clicks and automatic touch detection)
 function showStationDetailDirect(data) {
     isDetailViewOpen = true;
@@ -273,12 +301,15 @@ function showStationDetailDirect(data) {
     mainView.style.display = 'none';
     detailView.style.display = 'block';
     
+    const lineColor = getLineColor(data.line);
+    const stationName = data.name || 'Unknown Station';
+    
     // Create header with station info
     detailHeader.innerHTML = `
-        <div class="transit-icon f-train-icon" style="width: 60px; height: 60px; font-size: 30px; margin: 0 auto 15px;">
+        <div class="transit-icon" style="width: 60px; height: 60px; font-size: 30px; margin: 0 auto 15px; background: ${lineColor}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
             <span>${data.line}</span>
         </div>
-        <h2>${data.name}</h2>
+        <h2>${stationName}</h2>
         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
     `;
     
