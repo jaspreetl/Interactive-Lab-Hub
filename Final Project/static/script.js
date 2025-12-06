@@ -76,12 +76,6 @@ function updateUI(data) {
     if (data.f_train) {
         updateTransitCard('f-train', data.f_train);
     }
-    if (data.tram) {
-        updateTram(data.tram);
-    }
-    if (data.ferry) {
-        updateFerry(data.ferry);
-    }
     if (data.weather) {
         updateWeather(data.weather);
     }
@@ -153,40 +147,6 @@ function updateTransitCard(cardId, data) {
     }
 }
 
-// // Update tram card
-// function updateTram(data) {
-//     const statusLabel = document.getElementById('tram-status');
-//     const timeValue = document.getElementById('tram-time');
-    
-//     statusLabel.classList.remove('normal', 'delays', 'problems');
-    
-//     if (data.status === 'normal') {
-//         statusLabel.classList.add('normal');
-//         statusLabel.textContent = 'Operating';
-//         timeValue.textContent = data.next_departure ? `${data.next_departure} min` : '--';
-//     } else {
-//         statusLabel.textContent = 'Not Operating';
-//         timeValue.textContent = '--';
-//     }
-// }
-
-// // Update ferry card
-// function updateFerry(data) {
-//     const statusLabel = document.getElementById('ferry-status');
-//     const timeValue = document.getElementById('ferry-time');
-    
-//     statusLabel.classList.remove('normal', 'delays', 'problems');
-//     statusLabel.classList.add(data.status);
-    
-//     if (data.status === 'normal') {
-//         statusLabel.textContent = 'Normal Service';
-//         timeValue.textContent = data.next_arrival ? `${data.next_arrival} min` : '--';
-//     } else {
-//         statusLabel.textContent = 'Service Issue';
-//         timeValue.textContent = '--';
-//     }
-// }
-
 // Update weather card
 function updateWeather(data) {
     const weatherIcon = document.getElementById('weather-icon');
@@ -196,14 +156,14 @@ function updateWeather(data) {
     
     // Set weather icon based on condition
     const iconMap = {
-        'Clear': 'sun',
-        'Clouds': 'cloud',
-        'Rain': 'rain',
-        'Snow': 'snow',
-        'Thunderstorm': 'storm',
-        'Drizzle': 'drizzle',
-        'Mist': 'mist',
-        'Fog': 'fog'
+        'Clear': '☀️',
+        'Clouds': '⛅',
+        'Rain': '🌧️',
+        'Snow': '❄️',
+        'Thunderstorm': '⛈️',
+        'Drizzle': '🌦️',
+        'Mist': '🌫️',
+        'Fog': '🌫️'
     };
     
     weatherIcon.textContent = iconMap[data.condition] || '⛅';
@@ -240,8 +200,8 @@ function updateTimeAgo() {
     document.getElementById('last-update').textContent = timeAgo;
 }
 
-// Show detail view
-function showDetail(type) {
+// Show detail view - ENHANCED for multi-line display
+async function showDetail(stationId, line) {
     const mainView = document.getElementById('main-view');
     const detailView = document.getElementById('detail-view');
     const detailHeader = document.getElementById('detail-header');
@@ -250,42 +210,78 @@ function showDetail(type) {
     mainView.style.display = 'none';
     detailView.style.display = 'block';
     
-    if (type === 'f-train' && currentData && currentData.f_train) {
-        showFTrainDetail(detailHeader, detailContent, currentData.f_train);
-    } else if (type === 'tram' && currentData && currentData.tram) {
-        showTramDetail(detailHeader, detailContent, currentData.tram);
-    } else if (type === 'ferry' && currentData && currentData.ferry) {
-        showFerryDetail(detailHeader, detailContent, currentData.ferry);
+    // Show loading state
+    detailHeader.innerHTML = `
+        <h2>Loading station data...</h2>
+    `;
+    detailContent.innerHTML = '<p style="text-align: center; color: #888;">Fetching real-time arrivals...</p>';
+    
+    try {
+        // Fetch station-specific data
+        const response = await fetch(`/api/station/${stationId}/${line}`);
+        const data = await response.json();
+        
+        if (data && data.next_trains) {
+            showStationDetail(detailHeader, detailContent, data);
+        } else {
+            detailContent.innerHTML = '<p style="text-align: center; color: #e74c3c;">Unable to load station data</p>';
+        }
+    } catch (error) {
+        console.error('Error fetching station detail:', error);
+        detailContent.innerHTML = '<p style="text-align: center; color: #e74c3c;">Connection error</p>';
     }
 }
 
-// Show F Train detail
-function showFTrainDetail(header, content, data) {
+// Show Station detail with grouped trains by direction
+function showStationDetail(header, content, data) {
+    // Create header with station info
     header.innerHTML = `
         <div class="transit-icon f-train-icon" style="width: 60px; height: 60px; font-size: 30px; margin: 0 auto 15px;">
-            <span>F</span>
+            <span>${data.line}</span>
         </div>
-        <h2>F Train Details</h2>
+        <h2>${data.name}</h2>
         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
     `;
     
-    let trainsHTML = '<div class="upcoming-trains"><h3>Upcoming Trains</h3>';
+    // Group trains by direction
+    const trainsByDirection = {};
     
     if (data.next_trains && data.next_trains.length > 0) {
-        data.next_trains.forEach((train, index) => {
-            trainsHTML += `
-                <div class="train-item ${index === 0 ? 'next' : ''}">
-                    <div class="train-time">${train.minutes} min</div>
-                    <div class="train-info">To ${train.direction}</div>
-                </div>
-            `;
+        data.next_trains.forEach(train => {
+            const dir = train.direction;
+            if (!trainsByDirection[dir]) {
+                trainsByDirection[dir] = [];
+            }
+            trainsByDirection[dir].push(train);
+        });
+    }
+    
+    // Build trains HTML grouped by direction
+    let trainsHTML = '<div class="upcoming-trains">';
+    
+    if (Object.keys(trainsByDirection).length > 0) {
+        // Show each direction as a group
+        Object.keys(trainsByDirection).forEach(direction => {
+            const trains = trainsByDirection[direction];
+            
+            trainsHTML += `<h3 style="margin-top: 20px; margin-bottom: 10px; color: #fff; font-size: 18px;">${direction}</h3>`;
+            
+            trains.forEach((train, index) => {
+                trainsHTML += `
+                    <div class="train-item ${index === 0 ? 'next' : ''}">
+                        <div class="train-time">${train.minutes} min</div>
+                        <div class="train-info">${train.route || data.line} train</div>
+                    </div>
+                `;
+            });
         });
     } else {
-        trainsHTML += '<p style="color: #888;">No upcoming trains</p>';
+        trainsHTML += '<p style="color: #888; text-align: center;">No upcoming trains</p>';
     }
     
     trainsHTML += '</div>';
     
+    // Add service alerts section
     let alertsHTML = '<div class="alerts-section"><h3>Service Alerts</h3>';
     
     if (data.alerts && data.alerts.length > 0) {
@@ -310,56 +306,6 @@ function showFTrainDetail(header, content, data) {
     
     content.innerHTML = trainsHTML + alertsHTML;
 }
-
-// // Show Tram detail
-// function showTramDetail(header, content, data) {
-//     header.innerHTML = `
-//         <div class="transit-icon tram-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
-//             <span>🚡</span>
-//         </div>
-//         <h2>Roosevelt Tram</h2>
-//         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
-//     `;
-    
-//     content.innerHTML = `
-//         <div class="upcoming-trains">
-//             <h3>Schedule Information</h3>
-//             <div class="train-item">
-//                 <div class="train-time">${data.next_departure ? `${data.next_departure} min` : 'Not operating'}</div>
-//                 <div class="train-info">${data.frequency}</div>
-//             </div>
-//             <p style="margin-top: 20px; color: #888; font-size: 13px;">
-//                 The Roosevelt Island Tramway operates daily from 6:00 AM to 2:00 AM.
-//                 Frequency increases during rush hours.
-//             </p>
-//         </div>
-//     `;
-// }
-
-// // Show Ferry detail
-// function showFerryDetail(header, content, data) {
-//     header.innerHTML = `
-//         <div class="transit-icon ferry-icon" style="width: 60px; height: 60px; font-size: 35px; margin: 0 auto 15px;">
-//             <span></span>
-//         </div>
-//         <h2>NYC Ferry</h2>
-//         <p class="status-label ${data.status}">${getStatusText(data.status)}</p>
-//     `;
-    
-//     content.innerHTML = `
-//         <div class="upcoming-trains">
-//             <h3>Next Arrival</h3>
-//             <div class="train-item">
-//                 <div class="train-time">${data.next_arrival ? `${data.next_arrival} min` : '--'}</div>
-//                 <div class="train-info">${data.route}</div>
-//             </div>
-//             <p style="margin-top: 20px; color: #888; font-size: 13px;">
-//                 NYC Ferry provides service between Roosevelt Island and various NYC locations.
-//                 Check weather conditions for outdoor travel comfort.
-//             </p>
-//         </div>
-//     `;
-// }
 
 // Hide detail view
 function hideDetail() {
