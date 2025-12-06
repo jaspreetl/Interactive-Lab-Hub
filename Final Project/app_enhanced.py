@@ -249,6 +249,17 @@ def health_check():
         }
     })
 
+@app.route('/api/station/<stop_id>/<line>')
+def get_station_detail(stop_id, line):
+    """Get detailed information for a specific station and line"""
+    try:
+        fetcher = TransitDataFetcher()
+        station_data = fetcher.get_station_data(stop_id, line)
+        return jsonify(station_data)
+    except Exception as e:
+        print(f"Error fetching station detail: {e}")
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     print("=" * 60)
     print("Roosevelt Transit Lens - Interactive Map Edition")
