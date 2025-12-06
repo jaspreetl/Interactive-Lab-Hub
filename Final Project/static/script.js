@@ -1,5 +1,6 @@
 let currentData = null;
 let lastUpdateTime = null;
+let isDetailViewOpen = false;
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     fetchData();
     setInterval(fetchData, 30000); // Update every 30 seconds
+    
+    // Check for station updates more frequently (every 2 seconds)
+    setInterval(checkCurrentStation, 2000);
     
     setInterval(updateTimeAgo, 1000); // Update "time ago" every second
 });
@@ -41,6 +45,29 @@ async function fetchData() {
     } catch (error) {
         console.error('Error fetching data:', error);
         showError();
+    }
+}
+
+async function checkCurrentStation() {
+    // Only check if detail view is not manually open
+    if (isDetailViewOpen) {
+        return;
+    }
+    
+    try {
+        const response = await fetch('/api/current_station');
+        
+        if (response.ok) {
+            const stationData = await response.json();
+            
+            // Automatically show detail view when station is touched
+            if (stationData && stationData.name) {
+                console.log('[JS] Station touched detected:', stationData.name);
+                showStationDetailDirect(stationData);
+            }
+        }
+    } catch (error) {
+        // No current station - that's ok
     }
 }
 
@@ -200,8 +227,10 @@ function updateTimeAgo() {
     document.getElementById('last-update').textContent = timeAgo;
 }
 
-// Show detail view - ENHANCED for multi-line display
+// Show detail view by fetching station data
 async function showDetail(stationId, line) {
+    isDetailViewOpen = true;
+    
     const mainView = document.getElementById('main-view');
     const detailView = document.getElementById('detail-view');
     const detailHeader = document.getElementById('detail-header');
@@ -222,7 +251,7 @@ async function showDetail(stationId, line) {
         const data = await response.json();
         
         if (data && data.next_trains) {
-            showStationDetail(detailHeader, detailContent, data);
+            showStationDetailDirect(data);
         } else {
             detailContent.innerHTML = '<p style="text-align: center; color: #e74c3c;">Unable to load station data</p>';
         }
@@ -232,10 +261,20 @@ async function showDetail(stationId, line) {
     }
 }
 
-// Show Station detail with grouped trains by direction
-function showStationDetail(header, content, data) {
+// Show station detail directly (used by both manual clicks and automatic touch detection)
+function showStationDetailDirect(data) {
+    isDetailViewOpen = true;
+    
+    const mainView = document.getElementById('main-view');
+    const detailView = document.getElementById('detail-view');
+    const detailHeader = document.getElementById('detail-header');
+    const detailContent = document.getElementById('detail-content');
+    
+    mainView.style.display = 'none';
+    detailView.style.display = 'block';
+    
     // Create header with station info
-    header.innerHTML = `
+    detailHeader.innerHTML = `
         <div class="transit-icon f-train-icon" style="width: 60px; height: 60px; font-size: 30px; margin: 0 auto 15px;">
             <span>${data.line}</span>
         </div>
@@ -304,11 +343,12 @@ function showStationDetail(header, content, data) {
     
     alertsHTML += '</div>';
     
-    content.innerHTML = trainsHTML + alertsHTML;
+    detailContent.innerHTML = trainsHTML + alertsHTML;
 }
 
 // Hide detail view
 function hideDetail() {
+    isDetailViewOpen = false;
     document.getElementById('main-view').style.display = 'block';
     document.getElementById('detail-view').style.display = 'none';
 }

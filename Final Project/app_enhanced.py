@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Roosevelt Transit Lens - Enhanced App
-Web-based transit information display without LED controller
+Roosevelt Transit Lens - Enhanced App with Touch Controller Integration
+Web-based transit information display with physical touch sensor support
 """
 
 from flask import Flask, render_template, jsonify
@@ -9,6 +9,7 @@ import threading
 import time
 from datetime import datetime
 from data_fetcher import TransitDataFetcher
+from touch_controller import TouchController, MockTouchController, TOUCH_AVAILABLE
 import config
 
 app = Flask(__name__)
@@ -21,6 +22,7 @@ transit_data = {
     'timestamp': None
 }
 
+current_station_data = None
 data_lock = threading.Lock()
 
 def fetch_transit_data():
@@ -48,6 +50,53 @@ def fetch_transit_data():
         # Wait before next update
         time.sleep(config.UPDATE_INTERVALS['transit'])
 
+def handle_station_touch(station_info):
+    """
+    Callback function for when a station is touched
+    Updates the display with station-specific data
+    """
+    global current_station_data
+    
+    try:
+        print(f"\n{'='*60}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] TOUCH DETECTED!")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Station: {station_info['name']}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Stop ID: {station_info['stop_id']}")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Line: {station_info['line']}")
+        print(f"{'='*60}")
+        
+        # Fetch real-time data for this station
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Fetching real-time data...")
+        fetcher = TransitDataFetcher()
+        station_data = fetcher.get_station_data(station_info['stop_id'], station_info['line'])
+        
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Updating display...")
+        
+        # Update current station data
+        with data_lock:
+            current_station_data = station_data
+        
+        # Log train information
+        trains = station_data.get('next_trains', [])
+        if trains:
+            print(f"[DISPLAY] [{datetime.now().strftime('%H:%M:%S')}] STATION TOUCHED: {station_info['name']} ({station_info['line']} line)")
+            print(f"[DISPLAY] [{datetime.now().strftime('%H:%M:%S')}] Showing {len(trains)} upcoming trains")
+            print(f"[DISPLAY] [{datetime.now().strftime('%H:%M:%S')}] No physical display - running in console mode")
+            print(f"[DISPLAY] [{datetime.now().strftime('%H:%M:%S')}] Station: {station_info['name']} | Line: {station_info['line']}")
+            for i, train in enumerate(trains[:5], 1):
+                print(f"[DISPLAY] [{datetime.now().strftime('%H:%M:%S')}]   Train {i}: {train['minutes']}min to {train['direction']}")
+        
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] [OK] Successfully updated display for {station_info['name']}")
+        
+    except Exception as e:
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] [ERROR] Failed to handle touch: {e}")
+
+# Initialize touch controller with callback
+if TOUCH_AVAILABLE:
+    touch_controller = TouchController(on_touch_callback=handle_station_touch)
+else:
+    touch_controller = MockTouchController(on_touch_callback=handle_station_touch)
+
 # Start background data fetching
 data_thread = threading.Thread(target=fetch_transit_data, daemon=True)
 data_thread.start()
@@ -63,11 +112,20 @@ def api_status():
     with data_lock:
         return jsonify(transit_data)
 
+@app.route('/api/current_station')
+def api_current_station():
+    """Get currently selected station data"""
+    with data_lock:
+        if current_station_data:
+            return jsonify(current_station_data)
+        else:
+            return jsonify({'error': 'No station selected'}), 404
+
 @app.route('/api/station/<stop_id>/<line>')
 def get_station_detail(stop_id, line):
     """Get detailed information for a specific station and line"""
     try:
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Fetching station: {stop_id} ({line} line)")
+        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] API request for station: {stop_id} ({line} line)")
         
         fetcher = TransitDataFetcher()
         station_data = fetcher.get_station_data(stop_id, line)
@@ -77,9 +135,38 @@ def get_station_detail(stop_id, line):
         print(f"[APP]   Status: {station_data.get('status')}")
         print(f"[APP]   Trains: {len(station_data.get('next_trains', []))}")
         
+        # Also update current station data
+        with data_lock:
+            global current_station_data
+            current_station_data = station_data
+        
         return jsonify(station_data)
     except Exception as e:
         print(f"[APP] Error fetching station detail: {e}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/simulate_touch/<int:pad_number>')
+def simulate_touch(pad_number):
+    """Simulate a touch event (for testing without hardware)"""
+    try:
+        station_info = touch_controller.get_station_info(pad_number)
+        
+        if not station_info:
+            return jsonify({'error': f'Invalid pad number: {pad_number}'}), 400
+        
+        print(f"\n[API] Simulating touch on pad {pad_number}")
+        
+        # Trigger the touch callback
+        handle_station_touch(station_info)
+        
+        return jsonify({
+            'success': True,
+            'station': station_info['name'],
+            'pad': pad_number
+        })
+        
+    except Exception as e:
+        print(f"[API] Error simulating touch: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/refresh')
@@ -100,51 +187,11 @@ def api_refresh():
         print(f"[APP] Error refreshing: {e}")
         return jsonify({'success': False, 'error': str(e)}), 500
 
-@app.route('/api/touch/<stop_id>/<line>')
-def api_touch(stop_id, line):
-    """Handle station touch event (for hardware integration)"""
-    try:
-        print(f"\n{'='*60}")
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] TOUCH DETECTED!")
-        
-        # Get station info
-        station_info = config.STATION_IDS.get(stop_id, {})
-        station_name = station_info.get('name', 'Unknown')
-        
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Station: {station_name}")
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Stop ID: {stop_id}")
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Line: {line}")
-        print(f"{'='*60}")
-        
-        # Fetch station data
-        fetcher = TransitDataFetcher()
-        station_data = fetcher.get_station_data(stop_id, line)
-        
-        print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Data fetched - Status: {station_data.get('status')}")
-        
-        # Log train arrivals
-        trains = station_data.get('next_trains', [])
-        if trains:
-            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] Upcoming trains:")
-            for i, train in enumerate(trains[:5], 1):
-                print(f"[APP]   Train {i}: {train['minutes']}min to {train['direction']}")
-        else:
-            print(f"[APP] [{datetime.now().strftime('%H:%M:%S')}] No upcoming trains")
-        
-        return jsonify({
-            'success': True,
-            'station': station_name,
-            'data': station_data
-        })
-        
-    except Exception as e:
-        print(f"[APP] Error handling touch: {e}")
-        return jsonify({'success': False, 'error': str(e)}), 500
-
 if __name__ == '__main__':
     print("\n" + "="*60)
     print("Roosevelt Transit Lens - Enhanced App")
     print("="*60)
+    print(f"Touch Controller: {'Hardware MPR121' if TOUCH_AVAILABLE else 'Mock/Simulation'}")
     print(f"Starting server at http://{config.FLASK_CONFIG['host']}:{config.FLASK_CONFIG['port']}")
     print("Press Ctrl+C to stop")
     print("="*60 + "\n")
@@ -153,8 +200,12 @@ if __name__ == '__main__':
     print("Fetching initial transit data...")
     time.sleep(2)
     
-    app.run(
-        host=config.FLASK_CONFIG['host'],
-        port=config.FLASK_CONFIG['port'],
-        debug=config.FLASK_CONFIG['debug']
-    )
+    try:
+        app.run(
+            host=config.FLASK_CONFIG['host'],
+            port=config.FLASK_CONFIG['port'],
+            debug=config.FLASK_CONFIG['debug']
+        )
+    finally:
+        print("\nShutting down touch controller...")
+        touch_controller.shutdown()
