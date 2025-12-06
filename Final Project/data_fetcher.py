@@ -217,6 +217,10 @@ class TransitDataFetcher:
             print(f"Error fetching F train data: {e}")
             return self._get_mock_train_data()
     
+    def get_f_train_status(self):
+        """Fetch F train status from Roosevelt Island station"""
+        return self.get_station_data('F09', 'F')
+    
     def _get_mock_train_data(self):
         """Return mock train data for development"""
         import random
@@ -453,26 +457,14 @@ class TransitDataFetcher:
         print("Fetching all transit data...")
         
         f_train = self.get_f_train_status()
-        tram = self.get_tram_status()
-        ferry = self.get_ferry_status()
         weather = self.get_weather_data()
         
-        # Determine overall status
-        statuses = [f_train['status'], tram['status'], ferry['status']]
-        if 'problems' in statuses:
-            overall = 'problems'
-        elif 'delays' in statuses:
-            overall = 'delays'
-        elif all(s == 'normal' for s in statuses):
-            overall = 'normal'
-        else:
-            overall = 'delays'
+        # Determine overall status based on F train only
+        overall = f_train.get('status', 'offline')
         
         result = {
             'overall_status': overall,
             'f_train': f_train,
-            'tram': tram,
-            'ferry': ferry,
             'weather': weather,
             'timestamp': datetime.now().isoformat()
         }

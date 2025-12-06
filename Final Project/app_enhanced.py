@@ -184,8 +184,7 @@ def get_station_detail(stop_id):
             line = 'E'
         elif stop_id.startswith('N'):
             line = 'N'
-        elif stop_id == 'TRAM':
-            return jsonify(data_fetcher.get_tram_status())
+        else:
             return jsonify({'error': 'Unknown station'}), 404
         
         station_data = data_fetcher.get_station_data(stop_id, line)
