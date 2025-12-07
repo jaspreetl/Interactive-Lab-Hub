@@ -98,48 +98,75 @@ async function forceRefresh() {
 // Update UI with fetched data
 function updateUI(data) {
     if (!data) return;
-    updateOverallStatus(data.overall_status);
 
+    if (data.f_train) {
+        updateRooseveltStation(data.f_train);
+    }
     if (data.weather) {
         updateWeather(data.weather);
     }
 }
 
-function updateOverallStatus(status) {
-    const statusCircle = document.getElementById('status-circle');
-    const statusIcon = document.getElementById('status-icon');
-    const statusText = document.getElementById('status-text');
+// Update Roosevelt Island F Train section
+function updateRooseveltStation(data) {
+    const statusLabel = document.getElementById('roosevelt-status');
+    const trainsContainer = document.getElementById('roosevelt-trains');
     
-    // Remove all status classes
-    statusCircle.classList.remove('normal', 'delays', 'problems');
-    statusText.classList.remove('normal', 'delays', 'problems');
+    // Update status
+    statusLabel.classList.remove('normal', 'delays', 'problems');
+    statusLabel.classList.add(data.status);
     
-    switch(status) {
+    switch(data.status) {
         case 'normal':
-            statusCircle.classList.add('normal');
-            statusText.classList.add('normal');
-            statusIcon.textContent = 'OK';
-            statusText.textContent = 'All Systems Normal';
+            statusLabel.textContent = 'On Time';
             break;
         case 'delays':
-            statusCircle.classList.add('delays');
-            statusText.classList.add('delays');
-            statusIcon.textContent = '⚠';
-            statusText.textContent = 'Some Delays';
+            statusLabel.textContent = 'Delays';
             break;
         case 'problems':
-            statusCircle.classList.add('problems');
-            statusText.classList.add('problems');
-            statusIcon.textContent = '✕';
-            statusText.textContent = 'Service Issues';
+            statusLabel.textContent = 'Service Issues';
             break;
         default:
-            statusIcon.textContent = '?';
-            statusText.textContent = 'Status Unknown';
+            statusLabel.textContent = 'Unknown';
+    }
+    
+    // Group trains by direction
+    const trainsByDirection = {};
+    
+    if (data.next_trains && data.next_trains.length > 0) {
+        data.next_trains.forEach(train => {
+            const dir = train.direction;
+            if (!trainsByDirection[dir]) {
+                trainsByDirection[dir] = [];
+            }
+            trainsByDirection[dir].push(train);
+        });
+        
+        // Build HTML for trains grouped by direction
+        let html = '';
+        Object.keys(trainsByDirection).forEach(direction => {
+            const trains = trainsByDirection[direction];
+            
+            html += `<div class="trains-by-direction">`;
+            html += `<div class="direction-header">${direction}</div>`;
+            
+            trains.forEach((train, index) => {
+                html += `
+                    <div class="train-item ${index === 0 ? 'next' : ''}">
+                        <div class="train-time">${train.minutes} min</div>
+                        <div class="train-info">F train</div>
+                    </div>
+                `;
+            });
+            
+            html += `</div>`;
+        });
+        
+        trainsContainer.innerHTML = html;
+    } else {
+        trainsContainer.innerHTML = '<div class="no-trains">No upcoming trains</div>';
     }
 }
-
-// Update overall status (now includes counts or details if needed)
 function updateWeather(data) {
     const weatherIcon = document.getElementById('weather-icon');
     const weatherCondition = document.getElementById('weather-condition');
