@@ -338,7 +338,7 @@
         <!-- Touch Prompt Card -->
         <div class="touch-prompt-card">
             <div class="touch-icon">
-                <span>👆</span>
+                <img src="{{ url_for('static', filename='images/touch.jpg') }}" alt="Touch icon" style="width: 56px; height: 56px; object-fit: contain;">
             </div>
             <div class="touch-info">
                 <h3>Touch a Station</h3>
@@ -348,7 +348,9 @@
 
         <!-- Weather Card -->
         <div class="weather-card">
-            <div class="weather-icon" id="weather-icon">⛅</div>
+            <div class="weather-icon" id="weather-icon">
+                <img src="{{ url_for('static', filename='images/weather.png') }}" alt="Weather icon" style="width: 48px; height: 48px; object-fit: contain;">
+            </div>
             <div class="weather-info">
                 <h3 id="weather-condition">Loading...</h3>
                 <p id="weather-details">-- • Wind: --</p>
