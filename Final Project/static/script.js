@@ -100,9 +100,6 @@ function updateUI(data) {
     if (!data) return;
     updateOverallStatus(data.overall_status);
 
-    if (data.f_train) {
-        updateTransitCard('f-train', data.f_train);
-    }
     if (data.weather) {
         updateWeather(data.weather);
     }
@@ -142,39 +139,7 @@ function updateOverallStatus(status) {
     }
 }
 
-// Update transit card (F Train)
-function updateTransitCard(cardId, data) {
-    const statusLabel = document.getElementById(`${cardId}-status`);
-    const timeValue = document.getElementById(`${cardId}-time`);
-    
-    // Update status
-    statusLabel.classList.remove('normal', 'delays', 'problems');
-    statusLabel.classList.add(data.status);
-    
-    switch(data.status) {
-        case 'normal':
-            statusLabel.textContent = 'On Time';
-            break;
-        case 'delays':
-            statusLabel.textContent = 'Delays';
-            break;
-        case 'problems':
-            statusLabel.textContent = 'Service Issues';
-            break;
-        default:
-            statusLabel.textContent = 'Unknown';
-    }
-    
-    // Update next train time
-    if (data.next_trains && data.next_trains.length > 0) {
-        const nextTrain = data.next_trains[0];
-        timeValue.textContent = `${nextTrain.minutes} min`;
-    } else {
-        timeValue.textContent = '--';
-    }
-}
-
-// Update weather card
+// Update overall status (now includes counts or details if needed)
 function updateWeather(data) {
     const weatherIcon = document.getElementById('weather-icon');
     const weatherCondition = document.getElementById('weather-condition');

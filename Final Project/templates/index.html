@@ -95,21 +95,39 @@
         #status-text.delays { color: #f1c40f; }
         #status-text.problems { color: #e74c3c; }
 
-        .transit-card {
-            background: #1a1a1a;
+        .touch-prompt-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border: 2px dashed #444;
             border-radius: 16px;
-            padding: 20px;
+            padding: 30px 20px;
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
+            gap: 20px;
+            text-align: left;
         }
 
-        .transit-card:active {
-            transform: scale(0.98);
-            background: #252525;
+        .touch-icon {
+            font-size: 56px;
+            flex-shrink: 0;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .touch-info h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .touch-info p {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.4;
         }
 
         .transit-icon {
@@ -317,18 +335,14 @@
             <p id="status-text">All Systems Normal</p>
         </div>
 
-        <!-- F Train Card - Updated to pass station ID and line -->
-        <div class="transit-card" onclick="showDetail('F09', 'F')">
-            <div class="transit-icon f-train-icon">
-                <span>F</span>
+        <!-- Touch Prompt Card -->
+        <div class="touch-prompt-card">
+            <div class="touch-icon">
+                <span>👆</span>
             </div>
-            <div class="transit-info">
-                <h3>F Train</h3>
-                <p class="status-label" id="f-train-status">On Time</p>
-            </div>
-            <div class="transit-time">
-                <p class="time-label">Next train</p>
-                <p class="time-value" id="f-train-time">--</p>
+            <div class="touch-info">
+                <h3>Touch a Station</h3>
+                <p>Touch any station on the physical map to see real-time train arrivals</p>
             </div>
         </div>
 
