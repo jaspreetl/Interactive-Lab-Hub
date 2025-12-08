@@ -31,12 +31,12 @@ class TouchController:
             3: {'name': '57 St-7 Av', 'line': 'F', 'stop_id': 'F15'},
             4: {'name': 'Queens Plaza', 'line': 'E', 'stop_id': 'G08'},
             5: {'name': 'Court Sq-23 St', 'line': 'E', 'stop_id': 'G06'},
-            6: {'name': 'W 4 St-Washington Sq', 'line': 'A', 'stop_id': 'A28'},
+            6: {'name': '34 St-Penn Station', 'line': 'A', 'stop_id': 'A28'},
             7: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
             8: {'name': 'Queensboro Plaza', 'line': 'N', 'stop_id': 'R09'},
-            9: {'name': 'Lexington Av/53 St', 'line': 'E', 'stop_id': 'E13'},
+            9: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'E13'},
             10: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
-            11: {'name': 'Times Sq-42 St', 'line': '1', 'stop_id': '902'},
+            11: {'name': 'Times Sq-42 St', 'line': 'N', 'stop_id': '902'},
         }
         
         if TOUCH_AVAILABLE:
@@ -109,7 +109,7 @@ class MockTouchController:
     def __init__(self, on_touch_callback=None):
         self.on_touch_callback = on_touch_callback
         print("[INFO] Mock touch controller initialized")
-        print("[INFO] Use /api/simulate_touch/<pad_number> to simulate touches")
+        print("[INFO] Use /api/touch/<station_id> to simulate touches")
         
         # Keep mock map in sync with real map
         self.station_map = {
@@ -119,12 +119,12 @@ class MockTouchController:
             3: {'name': '57 St-7 Av', 'line': 'F', 'stop_id': 'F15'},
             4: {'name': 'Queens Plaza', 'line': 'E', 'stop_id': 'G08'},
             5: {'name': 'Court Sq-23 St', 'line': 'E', 'stop_id': 'G06'},
-            6: {'name': 'W 4 St-Washington Sq', 'line': 'A', 'stop_id': 'A28'},
+            6: {'name': '34 St-Penn Station', 'line': 'A', 'stop_id': 'A28'},
             7: {'name': 'Grand Central-42 St', 'line': '4', 'stop_id': '631'},
             8: {'name': 'Queensboro Plaza', 'line': 'N', 'stop_id': 'R09'},
-            9: {'name': 'Lexington Av/53 St', 'line': 'E', 'stop_id': 'E13'},
+            9: {'name': 'Lexington Av/59 St', 'line': 'N', 'stop_id': 'E13'},
             10: {'name': 'Union Sq-14 St', 'line': '4', 'stop_id': '635'},
-            11: {'name': 'Times Sq-42 St', 'line': '1', 'stop_id': '902'},
+            11: {'name': 'Times Sq-42 St', 'line': 'N', 'stop_id': '902'},
         }
     
     def simulate_touch(self, pad_number):
