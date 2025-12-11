@@ -4,7 +4,7 @@
 
 ## Project Plan
 
-This project will be done individually by Jaspreet
+This project will be done individually by Jaspreet Lal (jl4536). 
 
 ### Big Idea
 
@@ -122,13 +122,11 @@ Major Manhattan Hubs (6 stations):
 If major issues arise, the core functionality will be: 6 touch-sensitive stations (Roosevelt Island area only), LED ring showing station-specific countdowns, basic web interface showing train times. This still demonstrates the central concept of spatial, interactive transit visualization. 
 
 Future Expansion Possibilities
-
-Multiple MPR121 boards: Scale to 48+ stations (4 boards × 12 inputs)
-Zone-based navigation: Touch neighborhood zones to filter stations
-Historical patterns: Track which stations are touched most, suggest optimal routes
-Sound feedback: Subway door chime when station selected
-Weather integration: LED patterns change based on rain/snow affecting outdoor transit
-Haptic feedback: Vibration motor confirms touch
+- Multiple MPR121 boards: Scale to 48+ stations (4 boards × 12 inputs)
+- Zone-based navigation: Touch neighborhood zones to filter stations
+- Historical patterns: Track which stations are touched most, suggest optimal routes
+- Weather integration: LED patterns change based on rain/snow affecting outdoor transit
+- Haptic feedback: Vibration motor confirms touch
 
 ### Iteration Note
 During the first phase of the project, the Roosevelt Transit Lens was conceived as a multimodal ambient display combining a touchscreen interface, LED ring, and optional audio cues to provide a passive sense of transit conditions around Roosevelt Island. Early prototypes successfully demonstrated real-time F-train status, LED color feedback, and weather integration. See the [initial design document](READMEv1.md) for earlier documentation.
@@ -137,8 +135,8 @@ The project plan was updated to design a better relationship between people and 
 
 ## Functioning Project
 
-![Final Product](images/final_product.jpg)
-*Caption: Roosevelt Transit Lens installed and operational*
+![Final Product](images/in-class-test.jpg)
+*Caption: Image of another student trying out the Roosevelt Transit Lens during demo presentations.*
 
 ### Key Features Demonstrated:
 - Real-time MTA F train status display
@@ -151,8 +149,7 @@ The project plan was updated to design a better relationship between people and 
 ![Verplank Diagram](images/verplank.png)
 *How users interact with the device: touch/gesture for active exploration, glance at LEDs for passive awareness or listen for alerts*
 
-![3-D Enclosure Design Plan](images/3d-enclosure.png)
-*What the device looks like: the raspberry pi and other wirings will be hidden inside behind the frame with a small cutout for wires*
+3-D Enclosure Design Plan: While the original design plan for the enclosure including hiding the raspbery pi and other wirings behind a laser-cutted frame, I pivoted to use a picture frame with a thin film. the raspberry pi could be taped and hidden in the back of the frame as were the wires. 
 
 ### Storyboards
 
@@ -175,7 +172,7 @@ Storyboard 4: Rainy day so the device recommends covered transit options based o
 
 ## Archive of All Code and Design Patterns
 
-**View source code:** [GitHub Repository](https://github.com/yourusername/roosevelt-transit-lens)
+**View source code:** [GitHub Repository](https://github.com/jaspreetl/Interactive-Lab-Hub/tree/Fall2025/Final%20Project)
 
 ### Project Structure:
 ```
@@ -197,33 +194,21 @@ roosevelt-transit-lens/
 ### Development Progress:
 
 **API Integration Demo:**
-![API Demo](images/api_demo.png)
-*Successful data retrieval from MTA GTFS-Realtime feed showing F train status*
-
-**LED Pattern Tests:**
-![LED Patterns](images/led_patterns.jpg)
-*Testing different LED color patterns for various transit conditions*
+![API Demo](images/api_demo.jpg)
+*Successful data retrieval from MTA GTFS-Realtime feed showing F train status at Roosevelt Island*
 
 **Hardware Assembly:**
 ![Assembly Process](images/assembly.jpg)
-*Connecting components: Raspberry Pi, touchscreen, and LED ring*
+*Connecting components: Copper tape, jumper wires, MPR121, raspberry pi*
 
 **Functional Checkoff - Tech Demo**
-
 ![Tech Demo](https://youtu.be/your-video-id)
 *Click image to watch: Working prototype displaying live MTA data with LED ambient feedback*
 
-## Video Demo
-
-[![Final Demo Video](images/demo_thumbnail.png)](https://youtu.be/your-final-video-id)
-*Click to watch the complete demonstration*
-
 **Video includes:**
 - Device overview and physical design
-- User interaction with touchscreen interface
+- User interaction with interface on VNC viewer.
 - Real-time transit data updates
-- LED ambient feedback responding to changing conditions
-- Audio alert demonstration
 - User testimonial from testing session
 
 ## Reflections on Process
@@ -234,35 +219,52 @@ I began by developing a clear concept for why ambient transit awareness would be
 Presenting the initial proposal to the class generated valuable feedback. This led me to adjust how I would wire the project and inspired me to include an enclosure for the RaspberryPi and ring light. 
 
 ### Technical Implementation
-The most significant challenge was integrating the MTA GTFS-Realtime API. The protocol buffer format required careful parsing, and [describe specific technical hurdles]. I overcame this by [solution approach].
+Integrating the MTA GTFS-Realtime API was a challenge I faced. Although the MTA provides a Protobuf feed, the data inside it is not normalized or consistently structured, so I had to implement several safeguards in TransitDataFetcher. One issue was that TripUpdate entries don’t always include StopTimeUpdates for the station as the MTA skips intermediate stops sometimes. Because of that, my code would occasionally say “no trains” even though trains were definitely running. I fixed it by using prefix matching on stop IDs to catch both northbound/southbound variants and fallback IDs, and by filtering out any partial or incomplete trip updates so only reliable data got through.
 
-Hardware integration presented [describe challenges with GPIO, LED control, etc.]. A particularly tricky issue was [specific problem], which I eventually solved by [solution].
+Hardware integration presented its own set of challenges, especially with GPIO coordination, LED control, and sensor input timing. A particularly tricky issue was accidentally damaging an MPR121 capacitive touch sensor by plugging it into 5V instead of the required 3.3V. This fried the board almost instantly and caused hours of confusing debugging because the failure mode looked like a wiring or I2C addressing issue. I eventually solved the problem by tracking voltage across every component with a multimeter, isolating the dead board and replacing it.
 
 ### User Testing Insights
-The original idea 
-- **Glanceability**: Users appreciated being able to understand transit conditions without actively checking, confirming the value of ambient feedback
-- **Confusion points**: [Describe what confused users and how you iterated]
-- **Unexpected use cases**: [Describe behaviors you didn't anticipate]
-- **Feature requests**: Testers suggested [additional features they wanted]
+The original idea included an LED ring for ambient feedback and audio alerts, but through the development process, I simplified to focus on the core interaction: physical touch + immediate visual feedback on a display.
 
-Based on this feedback, I made the following iterations: [describe changes]
+**Testing the Touch + Display Interface:**
+- **Intuitive Interaction**: Users immediately understood the touch-to-query model. The physical map made it obvious where to touch, and the visual display responding within 1-2 seconds felt natural and responsive. 
+- **Directional Grouping Success**: Showing trains grouped by direction (Manhattan vs Queens, Uptown vs Downtown) was significantly clearer than a flat list. Users could quickly identify "my direction" without reading every entry.
+- **Weather Integration**: The weather card at the bottom was useful context but didn't distract from the primary transit information.
+
+**What Didn't Work Initially:**
+- **Emoji Rendering**: Initial design used emoji icons (☀️🌧️👆) which rendered inconsistently across devices. Switched to static images for reliability.
+- **Overall Status Circle**: The green/yellow/red status circle at the top was removed because users found it redundant—they wanted specific station data, not system-wide status.
+
+**Unexpected Use Cases:**
+- Users touched stations they weren't planning to use just to explore: "I wonder what trains go to Grand Central right now?" The system became a tool for route discovery, not just checking known commutes.
+- During service disruptions, users would touch multiple stations to understand the geographic extent of delays ("Is it just F train or all of Queens Plaza?")
+
+**Feature Requests:**
+- Personalizing or 'favoriting' a station 
+- Multimodal comparison where you check the walk/bike ride time
+
+### Iterations Made:
+1. **Removed LED Ring**: Originally planned for ambient awareness, but the always-on display served this purpose better. The LED became redundant. 
+2. **Simplified Home Screen**: Removed "overall status" and "touch prompt" elements. Final design shows Roosevelt Island F train by default with weather context below. 
+3. **Added MTA Official Colors**: Used authentic line colors (#FF6319 for F, #0039A6 for A, etc.) to make the interface feel familiar to NYC riders.
+4. **Fixed Station Names**: Corrected "Unknown" to proper names like "W 4 St-Washington Sq" using the MTA STATION_IDS mapping.
 
 ### Key Learnings
-1. **Real-time APIs are unpredictable**: Building robust error handling and caching was essential
-2. **Ambient information has limits**: Too much passive information becomes noise; finding the right balance was crucial
-3. **Context matters**: Transit decisions depend on many factors beyond just delay times (weather, time of day, crowding)
-4. **Hardware debugging**: [Specific lessons about Raspberry Pi GPIO, LED control, etc.]
+1. Real-time APIs are unpredictable. The MTA GTFS-Realtime API returns protocol buffer data that requires careful parsing, and feed availability varies by line. Building mock data modes was essential for development when API keys weren't configured or feeds were down. Error handling with try-catch blocks and fallback data prevented the entire system from crashing when one feed failed.
+
+2. Capacitive touch is fragile but reliable. The MPR121 sensor required careful calibration-copper pad size, spacing, and debouncing thresholds all affected sensitivity. I used a 0.3-second debounce delay in `touch_controller.py`. I also learned that the sensor needed to be on a separate I2C address and that testing each pad individually before full assembly saved hours of debugging.
+
+3. Managing shared data between the background fetching thread and Flask request handlers required proper locking (`threading.Lock()`). The `current_station_data` global variable needed careful coordination so the web interface could poll for touch events without blocking the main data fetch loop.
+
+4. Transit decisions depend on many factors beyond just delay times—weather affects whether people want to wait outside for the tram vs take the underground F train, time of day affects crowding expectations, and seeing multiple directions at once helps users make route choices they wouldn't have considered otherwise. 
 
 ### Future Improvements
-If I were to continue this project, I would:
-- Add [feature 1]
-- Improve [aspect 2]
-- Explore [idea 3]
+If I were to continue this project, I would let users assign their most-used stations to specific touch pads, or highlight frequently-checked routes on the default screen. NYC recently started providing real-time train capacity information, so showing "next train: 3 min (crowded)" vs "following train: 7 min (seats available)" might be valuable for commuters. I would also expand to more stations by using multiple MPR121 boards (each handling 12 pads), so I could scale to 24, 36, or even 48 stations. 
 
-The most valuable aspect of this project was learning how to translate abstract transit data into intuitive, ambient awareness that actually influences user behavior.
+I could also improve this project for when a line has delays and automatically highlighting alternative routes. For example, if F train is delayed, suggest "Consider: Tram or Queensboro Plaza to N train" with total time estimates. Tracking and displaying when stations are busier or quieter can help users plan around typical rush hour patterns. 
 
 ## Group Work Distribution and AI Usage
 
 This is an individual project. All design, development, and testing conducted by Jaspreet. 
 
-AI was used to create the storboard diagrams and assisted in developing the verplank diagram. ChatGPT was also used to create the test_led.py file to make sure that the LEDs were functioning prior to adding them into the project. All other usages of AI are documented in the [WendyTA FinalProject AI interaction log](../WendyTA/logs/FinalProject_ai_interaction_log.md). Most use cases included debugging imports or file errors due to project pivot & confusions between v1 and v2 files. 
+AI was used to create the storboard diagrams and assisted in developing the verplank diagram. ChatGPT was also used to create the test_led.py file to make sure that the LEDs were functioning prior to adding them into the project. I used Claude Code to write the HTML/script.js. All other usages of AI are documented in the [WendyTA FinalProject AI interaction log](../WendyTA/logs/FinalProject_ai_interaction_log.md). Most use cases included debugging imports or file errors due to project pivot & confusions between v1 and v2 files. 
