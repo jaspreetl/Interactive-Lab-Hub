@@ -84,24 +84,22 @@ Ambient Mode (Default):
 - Breathing gray = System offline
 
 
-
-<!-- EDIT -->
 Station Selection (12 Touch Points)
 Local to Roosevelt Island (6 stations):
 1. Roosevelt Island (F)
-2. Lexington Av/63 St (F, Q)
+2. Lexington Av/63 St (F)
 3. 21 St-Queensbridge (F)
-4. Queens Plaza (E, M, R)
-5. Roosevelt Island Tram
-6. Roosevelt Island Ferry
+4. Queens Plaza (E)
+5. 57 St-7 Av (F)
+6. Court Sq-23 St (F)
 
 Major Manhattan Hubs (6 stations):
-7. Times Sq-42 St (1, 2, 3, 7, N, Q, R, W, S)
-8. Grand Central-42 St (4, 5, 6, 7, S)
-9. 34 St-Herald Sq (B, D, F, M, N, Q, R, W)
-10. Union Sq-14 St (4, 5, 6, L, N, Q, R, W)
-11. Canal St (J, Z, N, Q, R, W, 6)
-12. WTC/Fulton St (A, C, E, 2, 3, 4, 5, J, Z, R, W)
+7. Times Sq-42 St (N)
+8. Grand Central-42 St (4)
+9. 5 Av/53 St (E)
+10. Union Sq-14 St (4)
+11. Queensboro Plaza (N)
+12. Lexington Av/53 St (E)
 
 ### Risks/Contingencies & Fall-back Plan
 **Primary Risks:**
@@ -167,8 +165,8 @@ Storyboard 4: Rainy day so the device recommends covered transit options based o
 
 ### Interface Mockups
 
-![Interface Mockups](images/interface_mockups.png)
-*Left to right: Main dashboard view, route detail view, settings panel*
+![Interface Mockups](images-v1/interface_mockups-v1.png)
+*Left to right: Main dashboard view, route detail view, settings panel. As the project progressed, some features had to be removed so we could focus on the primary functionality of the project of using APIs to locate train times for different stations. *
 
 ## Archive of All Code and Design Patterns
 
@@ -198,11 +196,11 @@ roosevelt-transit-lens/
 *Successful data retrieval from MTA GTFS-Realtime feed showing F train status at Roosevelt Island*
 
 **Hardware Assembly:**
-![Assembly Process](images/assembly.jpg)
+![Assembly Process](images/assembly.png)
 *Connecting components: Copper tape, jumper wires, MPR121, raspberry pi*
 
 **Functional Checkoff - Tech Demo**
-![Tech Demo](https://youtu.be/your-video-id)
+![Tech Demo](https://drive.google.com/file/d/1kl0ry_ReeNxQ03jjQ4elGzRuam2pTI57/view?usp=sharing)
 *Click image to watch: Working prototype displaying live MTA data with LED ambient feedback*
 
 **Video includes:**
