@@ -55,19 +55,16 @@ Design Principles:
 - 1x MPR121 Capacitive Touch Sensor (already owned) - detects station touches
 - Copper tape 1/4" or 1/2" wide (already owned) - creates touch pads behind stations
 - 1x NYC Subway Map (18"×24" or larger) - printed or purchased poster
-- 1x Foam board or acrylic backing (18"×24") - mounting substrate
 - Clear contact paper or lamination - protects map surface
 - Jumper wires (Female-Female) - connects copper pads to MPR121
 
 **Display Components:**
 - 1x display for detailed information
-- 1x NeoPixel Ring - 12 RGB LED (already owned) - ambient status visualization
-- iPad stand or wall mount - positions display near map
+- iPad stand or wall mount or laptop - positions display near map
 
 **Physical Construction:**
 - Double-sided tape and hot glue - securing components
-- Cable management clips - organizing wires
-- Frame or shadow box for finished presentation (laser cut)
+- Frame or shadow box for finished presentation 
 
 **Software/APIs:**
 - MTA GTFS-Realtime API (free) - live train data
@@ -138,8 +135,7 @@ The project plan was updated to design a better relationship between people and 
 
 ### Key Features Demonstrated:
 - Real-time MTA F train status display
-- Ambient LED ring showing transit conditions
-- Touchscreen interface for exploring routes
+- Interface for viewing train time data
 - Integration with weather data
 
 ### Verplank Diagram
@@ -158,9 +154,11 @@ Storyboard 2: Red LED catches user's attention before leaving; touchscreen shows
 Storyboard 3: Device provides peripheral awareness throughout the day; user unconsciously learns transit patterns
 Storyboard 4: Rainy day so the device recommends covered transit options based on weather conditions*
 
+Iteration Note: Since the LED light was removed, the train status is now shown on the app interface instead. 
+
 ### Wiring Diagram
 
-![Wiring Diagram](images/wiring_diagram.jpg)
+![Wiring Diagram](images/wiring.jpeg)
 *Complete wiring schematic showing Raspberry Pi GPIO connections to touchscreen, LED ring, sensors, and power supply*
 
 ### Interface Mockups
@@ -174,21 +172,31 @@ Storyboard 4: Rainy day so the device recommends covered transit options based o
 
 ### Project Structure:
 ```
-roosevelt-transit-lens/
-├── src/
-│   ├── data_fetcher.py      # MTA GTFS-RT and NYC Open Data API integration
-│   ├── visualization.py     # Transit status visualization with Matplotlib/Plotly
-│   ├── ambient_controller.py # LED ring control based on transit status
-│   ├── main_app.py          # Flask/Streamlit interface coordination
-│   └── config.py            # API keys, update intervals, GPIO pin assignments
-├── tests/
-│   ├── api_test.py
-│   └── led_patterns_test.py
-├── images/                   # Documentation images
-├── requirements.txt
-└── README.md
+Final Project/
+├── __pycache__/             # Python compiled bytecode
+├── images/                  # Documentation images for README
+├── images-v1/               # Original design iteration images
+├── static/                  # Flask static assets
+│   ├── script.js            # Frontend JavaScript for UI updates
+│   └── style.css            # CSS styling (if separated from HTML)
+├── templates/               # Flask HTML templates
+│   ├── index.html           # Main interface template
+│   ├── touch.jpg            # Touch prompt icon
+│   └── weather.png          # Weather icon
+├── v1_files/                # Original version files (archived)
+├── .env                     # Environment variables (API keys - not in git)
+├── app_enhanced.py          # Main Flask application with touch integration
+├── config.py                # API keys, MTA feeds, station mappings, GPIO pins
+├── data_fetcher.py          # MTA GTFS-Realtime API integration
+├── display_controller.py    # Display update logic (if used)
+├── enhanced_ambient_controller.py  # LED controller (deprecated/unused)
+├── README.md                # Main project documentation
+├── READMEv1.md              # Original design documentation
+├── requirements.txt         # Python dependencies
+├── test_leds.py             # LED testing script (deprecated)
+├── touch_controller.py      # MPR121 capacitive touch sensor handler
+└── touch_test.py            # Touch sensor testing script
 ```
-
 ### Development Progress:
 
 **API Integration Demo:**
